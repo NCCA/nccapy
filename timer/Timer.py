@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from __future__ import print_function
+
 from datetime import datetime
 
 """
@@ -68,18 +69,22 @@ class Timer:
 
 
 if __name__ == "__main__":
-    import time
+    import time  # only need this for tests
 
-    print("Running Timer Test")
+    print("Running Timer Tests")
+    print("using with clause")
     with Timer() as t:
         time.sleep(1)
+    print("Test adding named timer")
     Timer.add_timer("TestTimer")
     Timer.start_timer("TestTimer")
     for i in range(0, 5):
         time.sleep(1)
         print("Getting elapsed {} ms".format(Timer.get_elapsed_ms("TestTimer")))
+    print("test remove timer and call")
     Timer.remove_timer("TestTimer")
     try:
         Timer.get_elapsed_ms("TestTimer")
     except TimerNotFoundException:
-        print("Test timer doesn't exist")
+        print("Named timer doesn't exist")
+    print("end of tests")
