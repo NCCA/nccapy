@@ -4,7 +4,11 @@ Simple Float only Vec3 class for 3D graphics, very similar to the pyngl ones
 import math
 from nccapy.Math.Util import clamp
 
+
 class Vec3:
+
+    __slots__ = ["x", "y", "z"]
+    "by using slots we fix our class attributes to x,y,z"
     def __init__(self, x=0.0, y=0.0, z=0.0):
         """will force float only construction raise ValueError if not capable"""
         try:
@@ -56,12 +60,25 @@ class Vec3:
     def length(self):
         "length of vector"
         return math.sqrt(self.x**2 + self.y**2 + self.z**2)
+
     def length_squared(self):
         "square length of vector"
         return self.x**2 + self.y**2 + self.z**2
 
-    def inner(self,rhs) :
-        return (self.x *rhs.x) +(self.y *rhs.y) + (self.z * rhs.z)
+    def inner(self, rhs):
+        return (self.x * rhs.x) + (self.y * rhs.y) + (self.z * rhs.z)
+
+    def null(self):
+        self.x = 0.0
+        self.y = 0.0
+        self.z = 0.0
+
+    def cross(self, rhs):
+        return Vec3(
+            self.y * rhs.z - self.z * rhs.y,
+            self.z * rhs.x - self.x * rhs.z,
+            self.x * rhs.y - self.y * rhs.x,
+        )
 
     def normalize(self):
         "normalize this vector"
@@ -73,15 +90,17 @@ class Vec3:
         except ZeroDivisionError:
             raise
 
-    def reflect(self,n):
-        d=self.dot(n)
+    def reflect(self, n):
+        d = self.dot(n)
         #  I - 2.0 * dot(N, I) * N
-        return Vec3( self.x-2.0*d*n.x, self.y-2.0*d*n.y, self.z-2.0*d*n.z)
+        return Vec3(
+            self.x - 2.0 * d * n.x, self.y - 2.0 * d * n.y, self.z - 2.0 * d * n.z
+        )
 
-    def clamp(self,low,high):
-        self.x=clamp(self.x,low,high)
-        self.y=clamp(self.y,low,high)
-        self.z=clamp(self.z,low,high)
+    def clamp(self, low, high):
+        self.x = clamp(self.x, low, high)
+        self.y = clamp(self.y, low, high)
+        self.z = clamp(self.z, low, high)
 
     def __repr__(self):
         return "Vec3 [{},{},{}]".format(self.x, self.y, self.z)
@@ -94,5 +113,5 @@ Vec3.up = Vec3(0.0, 1.0, 0.0)
 Vec3.down = Vec3(0.0, -1.0, 0.0)
 Vec3.left = Vec3(-1.0, 0.0, 0.0)
 Vec3.right = Vec3(1.0, 0.0, 0.0)
-Vec3.inwards = Vec3(0.0, 0.0, -1.0)
-Vec3.outwards = Vec3(0.0, 0.0, 1.0)
+Vec3.inwards = Vec3(0.0, 0.0, 1.0)
+Vec3.outwards = Vec3(0.0, 0.0, -1.0)

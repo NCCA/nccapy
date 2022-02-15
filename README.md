@@ -15,3 +15,12 @@ export PYTHONPATH=$PYTHONPATH:~/nccapy
 ## Modules
 
 [Timer]() this class is a simple execution timer used to demonstate various 
+
+[Math]() this module includes a number of classes used for 3D maths.
+
+Vec3 a simple Vec3 class
+Mat3 a simple Mat3 class
+Util a number of different utility classes
+
+
+

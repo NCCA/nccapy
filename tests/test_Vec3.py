@@ -87,36 +87,53 @@ class TestVec3(unittest.TestCase):
         self.assertTrue(a != b)
 
     def test_inner(self):
-        a=Vec3(1.0,2.0,3.0)
-        b=Vec3(3.0,4.0,5.0)
-        self.assertAlmostEqual(a.inner(b),26.0)
-
+        a = Vec3(1.0, 2.0, 3.0)
+        b = Vec3(3.0, 4.0, 5.0)
+        self.assertAlmostEqual(a.inner(b), 26.0)
 
     def test_length_squared(self):
-        a=Vec3(22,1,32)
-        self.assertAlmostEqual(a.length_squared(),1509.0)
+        a = Vec3(22, 1, 32)
+        self.assertAlmostEqual(a.length_squared(), 1509.0)
 
     def test_reflect(self):
-        N=Vec3(0,1,0)
-        a=Vec3(2,2,0)
+        N = Vec3(0, 1, 0)
+        a = Vec3(2, 2, 0)
         a.normalize()
-        ref=a.reflect(N)
-        self.assertAlmostEqual(ref.x, 0.707,places=3)
-        self.assertAlmostEqual(ref.y, -0.707,places=3)
+        ref = a.reflect(N)
+        self.assertAlmostEqual(ref.x, 0.707, places=3)
+        self.assertAlmostEqual(ref.y, -0.707, places=3)
         self.assertAlmostEqual(ref.z, 0)
 
     def test_clamp(self):
-        a=Vec3(0.1,5.0,1.7)
-        a.clamp(0.5,1.8)
-        self.assertAlmostEqual(a.x,0.5)
-        self.assertAlmostEqual(a.y,1.8)
-        self.assertAlmostEqual(a.z,1.7)
-        
-
-        
-
+        a = Vec3(0.1, 5.0, 1.7)
+        a.clamp(0.5, 1.8)
+        self.assertAlmostEqual(a.x, 0.5)
+        self.assertAlmostEqual(a.y, 1.8)
+        self.assertAlmostEqual(a.z, 1.7)
 
     def test_outer(self):
         self.assertFalse(True)
+    
+    def test_null(self):
+        a=Vec3(2,3,5)
+        a.null()
+        self.assertAlmostEqual(a.x, 0.0)
+        self.assertAlmostEqual(a.y, 0.0)
+        self.assertAlmostEqual(a.z, 0.0)
 
+    def test_cross(self):
+        a=Vec3.up
+        b=Vec3.left
+        c=a.cross(b)
+        self.assertEqual(c,Vec3.inwards)
+
+    def test_getAttr(self):
+        a=Vec3(1,2,3)
+        self.assertAlmostEqual(getattr(a,'x'),1.0)
+        self.assertAlmostEqual(getattr(a,'y'),2.0)
+        self.assertAlmostEqual(getattr(a,'z'),3.0)
+        # check to see if we can get non attr
+        self.assertRaises(AttributeError,getattr,a,'b')
+        # check to see that adding an attrib fails
+        self.assertRaises(AttributeError,setattr,a,'b',20.0)
         
