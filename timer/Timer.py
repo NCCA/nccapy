@@ -3,6 +3,7 @@ from __future__ import print_function
 
 # from datetime import datetime
 import time
+from typing import Dict, Optional
 
 """
 Simple Timer class module, used to allow either simple elapsed time using
@@ -19,7 +20,7 @@ class TimerNotFoundException(Exception):
 class Timer:
     """Simple elapsed timer class can be used in a with clause or as stand alone named timers."""
 
-    timers = {}
+    timers: Dict[str, Optional[int]] = {}
     """this is a class attribute used by the class methods"""
 
     def __init__(self):
@@ -59,7 +60,7 @@ class Timer:
             raise TimerNotFoundException
 
     @classmethod
-    def get_elapsed_ms(cls, name: str) -> int:
+    def get_elapsed_ms(cls, name: str) -> float:
         """Get elapsed time as ms for named timer"""
         if Timer.timers.get(name) is not None:
             end = time.time_ns()
@@ -70,7 +71,7 @@ class Timer:
             raise TimerNotFoundException
 
     @classmethod
-    def get_elapsed_ns(cls, name: str) -> int:
+    def get_elapsed_ns(cls, name: str) -> float:
         """Get elapsed time as nano seconds for named timer"""
         if Timer.timers.get(name) is not None:
             end = time.time_ns()
@@ -80,7 +81,7 @@ class Timer:
             raise TimerNotFoundException
 
     @classmethod
-    def get_elapsed_s(cls, name: str) -> int:
+    def get_elapsed_s(cls, name: str) -> float:
         """Get elapsed time as seconds for named timer"""
         if Timer.timers.get(name) is not None:
             end = time.time_ns()

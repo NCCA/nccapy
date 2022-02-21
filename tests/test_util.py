@@ -1,7 +1,7 @@
+import math
 import unittest
 
 from Math.Util import clamp
-import math
 
 
 class TestUtil(unittest.TestCase):

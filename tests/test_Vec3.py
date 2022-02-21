@@ -1,7 +1,7 @@
+import math
 import unittest
 
 from Math.Vec3 import Vec3
-import math
 
 
 class TestVec3(unittest.TestCase):
@@ -16,7 +16,6 @@ class TestVec3(unittest.TestCase):
         self.assertAlmostEqual(v.x, 2.0)
         self.assertAlmostEqual(v.y, 3.0)
         self.assertAlmostEqual(v.z, 4.0)
-     
 
     def test_ctor_single_value(self):
         v = Vec3(x=2.0)
@@ -105,27 +104,26 @@ class TestVec3(unittest.TestCase):
 
     def test_outer(self):
         self.assertFalse(True)
-    
+
     def test_null(self):
-        a=Vec3(2,3,5)
+        a = Vec3(2, 3, 5)
         a.null()
         self.assertAlmostEqual(a.x, 0.0)
         self.assertAlmostEqual(a.y, 0.0)
         self.assertAlmostEqual(a.z, 0.0)
 
     def test_cross(self):
-        a=Vec3.up
-        b=Vec3.left
-        c=a.cross(b)
-        self.assertEqual(c,Vec3.inwards)
+        a = Vec3(0.0, 1.0, 0.0)
+        b = Vec3(-1.0, 0.0, 0.0)
+        c = a.cross(b)
+        self.assertEqual(c, Vec3(0.0, 0.0, 1.0))
 
     def test_getAttr(self):
-        a=Vec3(1,2,3)
-        self.assertAlmostEqual(getattr(a,'x'),1.0)
-        self.assertAlmostEqual(getattr(a,'y'),2.0)
-        self.assertAlmostEqual(getattr(a,'z'),3.0)
+        a = Vec3(1, 2, 3)
+        self.assertAlmostEqual(getattr(a, "x"), 1.0)
+        self.assertAlmostEqual(getattr(a, "y"), 2.0)
+        self.assertAlmostEqual(getattr(a, "z"), 3.0)
         # check to see if we can get non attr
-        self.assertRaises(AttributeError,getattr,a,'b')
+        self.assertRaises(AttributeError, getattr, a, "b")
         # check to see that adding an attrib fails
-        self.assertRaises(AttributeError,setattr,a,'b',20.0)
-        
+        self.assertRaises(AttributeError, setattr, a, "b", 20.0)
