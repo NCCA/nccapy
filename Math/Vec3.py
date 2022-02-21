@@ -9,15 +9,11 @@ class Vec3:
 
     __slots__ = ["x", "y", "z"]
     "by using slots we fix our class attributes to x,y,z"
-    def __init__(self, x=0.0, y=0.0, z=0.0):
+    def __init__(self, x : float=0.0, y: float=0.0, z: float=0.0):
         """will force float only construction raise ValueError if not capable"""
-        try:
-            self.x = float(x)
-            self.y = float(y)
-            self.z = float(z)
-        except ValueError:
-            print("need float params")
-            raise
+        self.x = x
+        self.y = y
+        self.z = z
 
     def __add__(self, rhs):
         "return a+b vector addition"

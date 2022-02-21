@@ -16,15 +16,7 @@ class TestVec3(unittest.TestCase):
         self.assertAlmostEqual(v.x, 2.0)
         self.assertAlmostEqual(v.y, 3.0)
         self.assertAlmostEqual(v.z, 4.0)
-
-    def test_errorCtor(self):
-        self.assertRaises(ValueError, Vec3, 2, 3, "hello")
-
-    def test_ctor_from_float_str(self):
-        v = Vec3("2.2", "5.6", "0")
-        self.assertAlmostEqual(v.x, 2.2)
-        self.assertAlmostEqual(v.y, 5.6)
-        self.assertAlmostEqual(v.z, 0)
+     
 
     def test_ctor_single_value(self):
         v = Vec3(x=2.0)
