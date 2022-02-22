@@ -1,6 +1,6 @@
 import math
 import unittest
-from Math.Mat3 import Mat3, Mat3NotSquare,Mat3Error
+from Math.Mat3 import Mat3, Mat3NotSquare, Mat3Error
 from Math.Vec3 import Vec3
 
 
@@ -100,10 +100,11 @@ class TestMat3(unittest.TestCase):
         for r, v in zip(result, value):
             self.assertAlmostEqual(r, v, places=4)
 
-    def test_mult_error(self) :
-        with self.assertRaises(Mat3Error) :
-            a=Mat3()
-            c=a*2
+    def test_mult_error(self):
+        with self.assertRaises(Mat3Error):
+            a = Mat3()
+            c = a * 2
+
     def test_mult_mat3_equal(self):
         t1 = Mat3()
         t2 = Mat3()
