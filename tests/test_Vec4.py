@@ -52,6 +52,7 @@ class TestVec4(unittest.TestCase):
         self.assertAlmostEqual(c.y, 8.0)
         self.assertAlmostEqual(c.z, 10.0)
         self.assertAlmostEqual(c.w, 12.0)
+
     def test_plus_equal(self):
         a = Vec4(1, 2, 3, 4)
         b = Vec4(5, 6, 7, 8)
