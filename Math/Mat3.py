@@ -154,3 +154,44 @@ class Mat3:
         temp.y = rhs.x * self.m[0][1] + rhs.y * self.m[1][1] + rhs.z * self.m[2][1]
         temp.z = rhs.x * self.m[0][2] + rhs.y * self.m[1][2] + rhs.z * self.m[2][2]
         return temp
+
+    def __add__(self, rhs):
+        "piecewise addition of elements"
+        temp = Mat3()
+        for i in range(0, len(temp.m)):
+            temp.m[i] = [a + b for a, b in zip(self.m[i], rhs.m[i])]
+        return temp
+
+    def __iadd__(self, rhs):
+        "piecewise addition of elements to this"
+        for i in range(0, len(self.m)):
+            self.m[i] = [a + b for a, b in zip(self.m[i], rhs.m[i])]
+        return self
+
+    def determinant(self):
+        return (
+            +self.m[0][0] * (self.m[1][1] * self.m[2][2] - self.m[2][1] * self.m[1][2])
+            - self.m[0][1] * (self.m[1][0] * self.m[2][2] - self.m[1][2] * self.m[2][0])
+            + self.m[0][2] * (self.m[1][0] * self.m[2][1] - self.m[1][1] * self.m[2][0])
+        )
+
+    def inverse(self) :
+        det = self.determinant()
+        try :
+            invdet = 1/det
+            tmp = Mat3()
+            tmp.m[0][0] =  (self.m[1][1]*self.m[2][2]-self.m[2][1]*self.m[1][2])*invdet
+            tmp.m[0][1] = -(self.m[1][0]*self.m[2][2]-self.m[1][2]*self.m[2][0])*invdet
+            tmp.m[0][2] =  (self.m[1][0]*self.m[2][1]-self.m[2][0]*self.m[1][1])*invdet
+
+            tmp.m[1][0] = -(self.m[0][1]*self.m[2][2]-self.m[0][2]*self.m[2][1])*invdet
+            tmp.m[1][1] =  (self.m[0][0]*self.m[2][2]-self.m[0][2]*self.m[2][0])*invdet
+            tmp.m[1][2] = -(self.m[0][0]*self.m[2][1]-self.m[2][0]*self.m[0][1])*invdet
+
+            tmp.m[2][0] =  (self.m[0][1]*self.m[1][2]-self.m[0][2]*self.m[1][1])*invdet
+            tmp.m[2][1] = -(self.m[0][0]*self.m[1][2]-self.m[1][0]*self.m[0][2])*invdet
+            tmp.m[2][2] =  (self.m[0][0]*self.m[1][1]-self.m[1][0]*self.m[0][1])*invdet
+            
+            return tmp
+        except :
+            raise Mat3Error

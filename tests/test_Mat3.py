@@ -127,3 +127,34 @@ class TestMat3(unittest.TestCase):
         self.assertAlmostEqual(test.x, 2.0, places=6)
         self.assertAlmostEqual(test.y, -0.707107, places=6)
         self.assertAlmostEqual(test.z, 2.12132, places=6)
+
+    def test_add(self):
+        a = Mat3.from_list([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+        b = Mat3.from_list([[2, 2, 2], [3, 3, 3], [4, 4, 4]])
+        c = a + b
+        result = c.get_matrix()
+        value = [3, 4, 5, 7, 8, 9, 11, 12, 13]
+        for r, v in zip(result, value):
+            self.assertAlmostEqual(r, v, places=4)
+
+    def test_plus_equals(self):
+        a = Mat3.from_list([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+        b = Mat3.from_list([[2, 2, 2], [3, 3, 3], [4, 4, 4]])
+        a += b
+        result = a.get_matrix()
+        value = [3, 4, 5, 7, 8, 9, 11, 12, 13]
+        for r, v in zip(result, value):
+            self.assertAlmostEqual(r, v, places=4)
+
+    def test_determinant(self):
+        a = Mat3.from_list([[1, 0, 0], [0, 2, 2], [0, -0.5, 2]])
+        self.assertAlmostEqual(a.determinant(), 5.0)
+
+    def test_inverse(self) :
+        test=Mat3.from_list([[1,0,0],[0,2,2],[0,-0.5,2]])
+        test=test.inverse()
+        value=test.get_matrix()
+        result=[1.0 ,0.0,0.0,0.0,0.4 ,0.1,0.0,-0.4,0.4]
+        for r, v in zip(result, value):
+            self.assertAlmostEqual(r, v, places=6)
+
