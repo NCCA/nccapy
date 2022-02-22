@@ -5,6 +5,7 @@ import math
 
 from nccapy.Math.Util import clamp
 
+
 class Vec3:
 
     __slots__ = ["x", "y", "z"]
@@ -105,11 +106,13 @@ class Vec3:
     def __str__(self):
         return "[{},{},{}]".format(self.x, self.y, self.z)
 
-    def outer(self,rhs) :
+    def outer(self, rhs):
         from nccapy.Math.Mat3 import Mat3
 
-        return Mat3.from_list([
-              [self.x * rhs.x, self.x * rhs.y, self.x * rhs.z],
-              [self.y * rhs.x, self.y * rhs.y, self.y * rhs.z],
-              [self.z * rhs.x, self.z * rhs.y, self.z * rhs.z]
-        ])
+        return Mat3.from_list(
+            [
+                [self.x * rhs.x, self.x * rhs.y, self.x * rhs.z],
+                [self.y * rhs.x, self.y * rhs.y, self.y * rhs.z],
+                [self.z * rhs.x, self.z * rhs.y, self.z * rhs.z],
+            ]
+        )

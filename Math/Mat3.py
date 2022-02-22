@@ -26,10 +26,11 @@ class Mat3:
     __slots__ = ["m"]
 
     def __init__(self):
+        "construct to identity matrix"
         self.m = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
 
     def get_matrix(self):
-        "return matrix as list"
+        "return matrix elements as list ideal for OpenGL etc"
         return functools.reduce(operator.concat, self.m)
 
     @classmethod
@@ -114,12 +115,17 @@ class Mat3:
         self.m[1][1] = cr
 
     def __getitem__(self, idx):
+        "access array elements remember this is a list of lists [[3],[3],[3]]"
         return self.m[idx]
 
     def __setitem__(self, idx, item):
+        "set items remember this is a list of lists [[3],[3],[3]]"
         self.m[idx] = item
 
     def __mul__(self, rhs):
+        "multiply matrix by another matrix"
+        if type(rhs) != Mat3:
+            raise Mat3Error
         mat_t = rhs.get_transpose()
         mulmat = Mat3()
         for x in range(3):
@@ -130,10 +136,13 @@ class Mat3:
         return mulmat
 
     def __matmul__(self, rhs):
+        "multiply matrix using @"
         return self * rhs
 
     def __imul__(self, rhs):
-
+        "Matrix *="
+        if type(rhs) != Mat3:
+            raise Mat3Error
         tmp = copy.deepcopy(self)
         mat_t = rhs.get_transpose()
         for x in range(3):
@@ -145,15 +154,20 @@ class Mat3:
         return self
 
     def __imatmul__(self, rhs):
+        "Matrix @="
         self *= rhs
         return self
 
     def __rmul__(self, rhs):
-        temp = Vec3()
-        temp.x = rhs.x * self.m[0][0] + rhs.y * self.m[1][0] + rhs.z * self.m[2][0]
-        temp.y = rhs.x * self.m[0][1] + rhs.y * self.m[1][1] + rhs.z * self.m[2][1]
-        temp.z = rhs.x * self.m[0][2] + rhs.y * self.m[1][2] + rhs.z * self.m[2][2]
-        return temp
+        "Matrix * Vec3 only supported"
+        try:
+            temp = Vec3()
+            temp.x = rhs.x * self.m[0][0] + rhs.y * self.m[1][0] + rhs.z * self.m[2][0]
+            temp.y = rhs.x * self.m[0][1] + rhs.y * self.m[1][1] + rhs.z * self.m[2][1]
+            temp.z = rhs.x * self.m[0][2] + rhs.y * self.m[1][2] + rhs.z * self.m[2][2]
+            return temp
+        except:
+            raise MatrixError
 
     def __add__(self, rhs):
         "piecewise addition of elements"
@@ -169,29 +183,49 @@ class Mat3:
         return self
 
     def determinant(self):
+        "determinant of matrix"
         return (
             +self.m[0][0] * (self.m[1][1] * self.m[2][2] - self.m[2][1] * self.m[1][2])
             - self.m[0][1] * (self.m[1][0] * self.m[2][2] - self.m[1][2] * self.m[2][0])
             + self.m[0][2] * (self.m[1][0] * self.m[2][1] - self.m[1][1] * self.m[2][0])
         )
 
-    def inverse(self) :
+    def inverse(self):
+        "Inverse of matrix raise MatrixError if not calculable"
         det = self.determinant()
-        try :
-            invdet = 1/det
+        try:
+            invdet = 1 / det
             tmp = Mat3()
-            tmp.m[0][0] =  (self.m[1][1]*self.m[2][2]-self.m[2][1]*self.m[1][2])*invdet
-            tmp.m[0][1] = -(self.m[1][0]*self.m[2][2]-self.m[1][2]*self.m[2][0])*invdet
-            tmp.m[0][2] =  (self.m[1][0]*self.m[2][1]-self.m[2][0]*self.m[1][1])*invdet
+            tmp.m[0][0] = (
+                self.m[1][1] * self.m[2][2] - self.m[2][1] * self.m[1][2]
+            ) * invdet
+            tmp.m[0][1] = (
+                -(self.m[1][0] * self.m[2][2] - self.m[1][2] * self.m[2][0]) * invdet
+            )
+            tmp.m[0][2] = (
+                self.m[1][0] * self.m[2][1] - self.m[2][0] * self.m[1][1]
+            ) * invdet
 
-            tmp.m[1][0] = -(self.m[0][1]*self.m[2][2]-self.m[0][2]*self.m[2][1])*invdet
-            tmp.m[1][1] =  (self.m[0][0]*self.m[2][2]-self.m[0][2]*self.m[2][0])*invdet
-            tmp.m[1][2] = -(self.m[0][0]*self.m[2][1]-self.m[2][0]*self.m[0][1])*invdet
+            tmp.m[1][0] = (
+                -(self.m[0][1] * self.m[2][2] - self.m[0][2] * self.m[2][1]) * invdet
+            )
+            tmp.m[1][1] = (
+                self.m[0][0] * self.m[2][2] - self.m[0][2] * self.m[2][0]
+            ) * invdet
+            tmp.m[1][2] = (
+                -(self.m[0][0] * self.m[2][1] - self.m[2][0] * self.m[0][1]) * invdet
+            )
 
-            tmp.m[2][0] =  (self.m[0][1]*self.m[1][2]-self.m[0][2]*self.m[1][1])*invdet
-            tmp.m[2][1] = -(self.m[0][0]*self.m[1][2]-self.m[1][0]*self.m[0][2])*invdet
-            tmp.m[2][2] =  (self.m[0][0]*self.m[1][1]-self.m[1][0]*self.m[0][1])*invdet
-            
+            tmp.m[2][0] = (
+                self.m[0][1] * self.m[1][2] - self.m[0][2] * self.m[1][1]
+            ) * invdet
+            tmp.m[2][1] = (
+                -(self.m[0][0] * self.m[1][2] - self.m[1][0] * self.m[0][2]) * invdet
+            )
+            tmp.m[2][2] = (
+                self.m[0][0] * self.m[1][1] - self.m[1][0] * self.m[0][1]
+            ) * invdet
+
             return tmp
-        except :
+        except:
             raise Mat3Error

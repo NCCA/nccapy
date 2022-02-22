@@ -103,11 +103,11 @@ class TestVec3(unittest.TestCase):
         self.assertAlmostEqual(a.z, 1.7)
 
     def test_outer(self):
-        a=Vec3(1.0,2.0,3.0)
-        b=Vec3(3.0,4.0,5.0)
-        outer=a.outer(b)
-        result=[3,4,5,6,8,10,9,12,15]
-        value=outer.get_matrix()
+        a = Vec3(1.0, 2.0, 3.0)
+        b = Vec3(3.0, 4.0, 5.0)
+        outer = a.outer(b)
+        result = [3, 4, 5, 6, 8, 10, 9, 12, 15]
+        value = outer.get_matrix()
         for r, v in zip(result, value):
             self.assertAlmostEqual(r, v, places=6)
 

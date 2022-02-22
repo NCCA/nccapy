@@ -150,11 +150,10 @@ class TestMat3(unittest.TestCase):
         a = Mat3.from_list([[1, 0, 0], [0, 2, 2], [0, -0.5, 2]])
         self.assertAlmostEqual(a.determinant(), 5.0)
 
-    def test_inverse(self) :
-        test=Mat3.from_list([[1,0,0],[0,2,2],[0,-0.5,2]])
-        test=test.inverse()
-        value=test.get_matrix()
-        result=[1.0 ,0.0,0.0,0.0,0.4 ,0.1,0.0,-0.4,0.4]
+    def test_inverse(self):
+        test = Mat3.from_list([[1, 0, 0], [0, 2, 2], [0, -0.5, 2]])
+        test = test.inverse()
+        value = test.get_matrix()
+        result = [1.0, 0.0, 0.0, 0.0, 0.4, 0.1, 0.0, -0.4, 0.4]
         for r, v in zip(result, value):
             self.assertAlmostEqual(r, v, places=6)
-
