@@ -41,6 +41,33 @@ class TestVec3(unittest.TestCase):
         self.assertAlmostEqual(c.y, 7)
         self.assertAlmostEqual(c.z, 9)
 
+
+    def test_plus_equals(self):
+        a = Vec3(1, 2, 3)
+        b = Vec3(4, 5, 6)
+        a += b
+        self.assertAlmostEqual(a.x, 5)
+        self.assertAlmostEqual(a.y, 7)
+        self.assertAlmostEqual(a.z, 9)
+
+    def test_sub(self):
+        a = Vec3(1, 2, 3)
+        b = Vec3(4, 5, 6)
+        c = a - b
+        self.assertAlmostEqual(c.x, -3)
+        self.assertAlmostEqual(c.y, -3)
+        self.assertAlmostEqual(c.z, -3)
+
+
+    def test_sub_equals(self):
+        a = Vec3(1, 2, 3)
+        b = Vec3(4, 5, 6)
+        a -= b
+        self.assertAlmostEqual(a.x, -3)
+        self.assertAlmostEqual(a.y, -3)
+        self.assertAlmostEqual(a.z, -3)
+
+
     def test_set(self):
         a = Vec3()
         a.set(2.5, 0.1, 0.5)

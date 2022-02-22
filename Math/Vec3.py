@@ -24,6 +24,28 @@ class Vec3:
         r.y = self.y + rhs.y
         r.z = self.z + rhs.z
         return r
+    def __iadd__(self, rhs):
+        "return a+=b vector addition"
+        self.x += rhs.x
+        self.y += rhs.y
+        self.z += rhs.z
+        return self
+
+
+    def __sub__(self, rhs):
+        "return a+b vector addition"
+        r = Vec3()
+        r.x = self.x - rhs.x
+        r.y = self.y - rhs.y
+        r.z = self.z - rhs.z
+        return r
+    def __isub__(self, rhs):
+        "return a+=b vector addition"
+        self.x -= rhs.x
+        self.y -= rhs.y
+        self.z -= rhs.z
+        return self
+
 
     def __eq__(self, rhs):
         "test a==b using math.isclose"
