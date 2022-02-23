@@ -87,8 +87,7 @@ class Mat4:
         self.m[1][1] = y
         self.m[2][2] = z
 
-
-    def rotateX(self,angle) :
+    def rotateX(self, angle):
         "set this matrix to be a rotation around the X axis by angle degrees"
         self.m = copy.deepcopy(_identity)
         beta = math.radians(angle)
@@ -96,5 +95,5 @@ class Mat4:
         cr = math.cos(beta)
         self.m[1][1] = cr
         self.m[1][2] = sr
-        self.m[2][1] = -sr  
+        self.m[2][1] = -sr
         self.m[2][2] = cr
