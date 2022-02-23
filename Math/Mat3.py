@@ -170,9 +170,9 @@ class Mat3:
         "Matrix * Vec3 only supported"
         try:
             temp = Vec3()
-            temp.x = rhs.x * self.m[0][0] + rhs.y * self.m[1][0] + rhs.z * self.m[2][0]
-            temp.y = rhs.x * self.m[0][1] + rhs.y * self.m[1][1] + rhs.z * self.m[2][1]
-            temp.z = rhs.x * self.m[0][2] + rhs.y * self.m[1][2] + rhs.z * self.m[2][2]
+            temp.x = rhs.x * self.m[0][0] + rhs.y * self.m[0][1] + rhs.z * self.m[0][2]
+            temp.y = rhs.x * self.m[1][0] + rhs.y * self.m[1][1] + rhs.z * self.m[1][2]
+            temp.z = rhs.x * self.m[2][0] + rhs.y * self.m[2][1] + rhs.z * self.m[2][2]
             return temp
         except:
             raise Mat3Error

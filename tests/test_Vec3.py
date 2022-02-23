@@ -86,7 +86,7 @@ class TestVec3(unittest.TestCase):
 
     def test_length_squared(self):
         a = Vec3(22, 1, 32)
-        self.assertAlmostEqual(a.length(), 1508, places=2)
+        self.assertAlmostEqual(a.length_squared(), 1509, places=2)
 
     def test_normalize(self):
         a = Vec3(22.3, 0.5, 10.0)
@@ -109,10 +109,6 @@ class TestVec3(unittest.TestCase):
         a = Vec3(1.0, 2.0, 3.0)
         b = Vec3(3.0, 4.0, 5.0)
         self.assertAlmostEqual(a.inner(b), 26.0)
-
-    def test_length_squared(self):
-        a = Vec3(22, 1, 32)
-        self.assertAlmostEqual(a.length_squared(), 1509.0)
 
     def test_negate(self):
         a = Vec3(0.1, 0.5, -12)
@@ -158,6 +154,22 @@ class TestVec3(unittest.TestCase):
         b = Vec3(-1.0, 0.0, 0.0)
         c = a.cross(b)
         self.assertEqual(c, Vec3(0.0, 0.0, 1.0))
+
+    def test_mul_scalar(self):
+        a = Vec3(1.0, 1.5, 2.0)
+        a = a * 2
+        self.assertAlmostEqual(a.x, 2.0)
+        self.assertAlmostEqual(a.y, 3.0)
+        self.assertAlmostEqual(a.z, 4.0)
+
+        a = Vec3(1.5, 4.2, 2.8)
+        a = 2 * a
+        self.assertAlmostEqual(a.x, 3.0)
+        self.assertAlmostEqual(a.y, 8.4)
+        self.assertAlmostEqual(a.z, 5.6)
+
+        with self.assertRaises(ValueError):
+            a = a * "hello"
 
     def test_getAttr(self):
         a = Vec3(1, 2, 3)

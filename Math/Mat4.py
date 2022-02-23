@@ -163,3 +163,38 @@ class Mat4:
         "Matrix @="
         self *= rhs
         return self
+
+    def __rmul__(self, rhs):
+        from nccapy.Math import Vec4
+
+        "Matrix * Vec4 only supported"
+        try:
+            temp = Vec4()
+
+            temp.x = (
+                rhs.x * self.m[0][0]
+                + rhs.y * self.m[0][1]
+                + rhs.z * self.m[0][2]
+                + rhs.w * self.m[0][3]
+            )
+            temp.y = (
+                rhs.x * self.m[1][0]
+                + rhs.y * self.m[1][1]
+                + rhs.z * self.m[1][2]
+                + rhs.w * self.m[1][3]
+            )
+            temp.z = (
+                rhs.x * self.m[2][0]
+                + rhs.y * self.m[2][1]
+                + rhs.z * self.m[2][2]
+                + rhs.w * self.m[2][3]
+            )
+            temp.w = (
+                rhs.x * self.m[3][0]
+                + rhs.y * self.m[3][1]
+                + rhs.z * self.m[3][2]
+                + rhs.w * self.m[3][3]
+            )
+            return temp
+        except:
+            raise Mat4Error

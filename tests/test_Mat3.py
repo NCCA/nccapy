@@ -131,9 +131,9 @@ class TestMat3(unittest.TestCase):
         test = Vec3(2.0, 1.0, 2.0)
         t1.rotateX(45.0)
         test = test * t1
-        self.assertAlmostEqual(test.x, 2.0, places=6)
-        self.assertAlmostEqual(test.y, -0.707107, places=6)
-        self.assertAlmostEqual(test.z, 2.12132, places=6)
+        self.assertAlmostEqual(test.x, 2.0, places=4)
+        self.assertAlmostEqual(test.y, 2.1213, places=4)
+        self.assertAlmostEqual(test.z, 0.7071, places=4)
 
     def test_add(self):
         a = Mat3.from_list([[1, 2, 3], [4, 5, 6], [7, 8, 9]])

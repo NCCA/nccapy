@@ -176,5 +176,13 @@ class TestMat4(unittest.TestCase):
         for r, v in zip(result, value):
             self.assertAlmostEqual(r, v, places=4)
 
-    def test_mat3_mult_vec3(self):
-        self.assertTrue(False)
+    def test_mat4_mult_vec4(self):
+        t1 = Mat4()
+        test = Vec4(2.0, 1.0, 2.0, 1.0)
+        t1.rotateX(45.0)
+        test = test * t1
+        print(test)
+        self.assertAlmostEqual(test.x, 2.0, places=6)
+        self.assertAlmostEqual(test.y, 2.121320, places=6)
+        self.assertAlmostEqual(test.z, 0.707107, places=6)
+        self.assertAlmostEqual(test.w, 1.0, places=6)
