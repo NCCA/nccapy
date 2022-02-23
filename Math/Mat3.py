@@ -7,8 +7,6 @@ import functools
 import math
 import operator
 
-from Math.Vec3 import Vec3
-
 
 class Mat3Error(Exception):
     """An exception class for Mat3"""
@@ -52,7 +50,11 @@ class Mat3:
         v = Mat3()
         v.m = l
         if v._is_square() is not True:
-            raise Mat3NotSquare
+            if len(l) == 9:  # can convert
+                v.m = [l[0:3], l[3:6], l[6:]]
+                return v
+            else:
+                raise Mat3NotSquare
         else:
             return v
 
@@ -159,6 +161,8 @@ class Mat3:
         return self
 
     def __rmul__(self, rhs):
+        from nccapy.Math import Vec3
+
         "Matrix * Vec3 only supported"
         try:
             temp = Vec3()
@@ -167,7 +171,7 @@ class Mat3:
             temp.z = rhs.x * self.m[0][2] + rhs.y * self.m[1][2] + rhs.z * self.m[2][2]
             return temp
         except:
-            raise MatrixError
+            raise Mat3Error
 
     def __add__(self, rhs):
         "piecewise addition of elements"
@@ -229,3 +233,6 @@ class Mat3:
             return tmp
         except:
             raise Mat3Error
+
+    def __str__(self):
+        return f"[{self.m[0]}\n{self.m[1]}\n{self.m[2]}]"

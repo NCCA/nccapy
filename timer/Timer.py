@@ -20,7 +20,7 @@ class TimerNotFoundException(Exception):
 class Timer:
     """Simple elapsed timer class can be used in a with clause or as stand alone named timers."""
 
-    timers: Dict[str, Optional[int]] = {}
+    timers = dict()
     """this is a class attribute used by the class methods"""
 
     def __init__(self):

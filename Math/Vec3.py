@@ -2,12 +2,10 @@
 Simple Float only Vec3 class for 3D graphics, very similar to the pyngl ones
 """
 import math
-
 from nccapy.Math.Util import clamp
 
 
 class Vec3:
-
     __slots__ = ["x", "y", "z"]
     "by using slots we fix our class attributes to x,y,z"
 
@@ -123,9 +121,11 @@ class Vec3:
         self.z = clamp(self.z, low, high)
 
     def __repr__(self):
+        "may update to f-strings soon"
         return "Vec3 [{},{},{}]".format(self.x, self.y, self.z)
 
     def __str__(self):
+        "may update to f-strings soon"
         return "[{},{},{}]".format(self.x, self.y, self.z)
 
     def outer(self, rhs):
