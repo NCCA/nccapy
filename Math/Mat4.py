@@ -97,3 +97,69 @@ class Mat4:
         self.m[1][2] = sr
         self.m[2][1] = -sr
         self.m[2][2] = cr
+
+    def rotateY(self, angle):
+        "set this matrix to be a rotation around the Y axis by angle degrees"
+        self.m = copy.deepcopy(_identity)
+        beta = math.radians(angle)
+        sr = math.sin(beta)
+        cr = math.cos(beta)
+        self.m[0][0] = cr
+        self.m[0][2] = -sr
+        self.m[2][0] = sr
+        self.m[2][2] = cr
+
+    def rotateZ(self, angle):
+        "set this matrix to be a rotation around the Z axis by angle degrees"
+        self.m = copy.deepcopy(_identity)
+        beta = math.radians(angle)
+        sr = math.sin(beta)
+        cr = math.cos(beta)
+        self.m[0][0] = cr
+        self.m[0][1] = sr
+        self.m[1][0] = -sr
+        self.m[1][1] = cr
+
+    def __getitem__(self, idx):
+        "access array elements remember this is a list of lists [[4],[4],[4],[4]]"
+        return self.m[idx]
+
+    def __setitem__(self, idx, item):
+        "set items remember this is a list of lists [[4],[4],[4],[4]]"
+        self.m[idx] = item
+
+    def __mul__(self, rhs):
+        "multiply matrix by another matrix"
+        if type(rhs) != Mat4:
+            raise Mat4Error
+        mat_t = rhs.get_transpose()
+        mulmat = Mat4()
+        for x in range(4):
+            for y in range(4):
+                mulmat[x][y] = sum(
+                    [item[0] * item[1] for item in zip(self.m[x], mat_t[y])]
+                )
+        return mulmat
+
+    def __matmul__(self, rhs):
+        "multiply matrix using @"
+        return self * rhs
+
+    def __imul__(self, rhs):
+        "Matrix *="
+        if type(rhs) != Mat4:
+            raise Mat4Error
+        tmp = copy.deepcopy(self)
+        mat_t = rhs.get_transpose()
+        for x in range(4):
+            for y in range(4):
+                tmp[x][y] = sum(
+                    [item[0] * item[1] for item in zip(self.m[x], mat_t[y])]
+                )
+        self.m = tmp.m.copy()
+        return self
+
+    def __imatmul__(self, rhs):
+        "Matrix @="
+        self *= rhs
+        return self
