@@ -68,12 +68,48 @@ class Vec4:
         return (self.x * rhs.x) + (self.y * rhs.y) + (self.z * rhs.z) + (self.w * rhs.w)
 
     def length(self):
-        "length of vector Note : this ignores the w component to match glsl etc"
-        return math.sqrt(self.x**2 + self.y**2 + self.z**2)
+        "length of vector"
+        return math.sqrt(self.x**2 + self.y**2 + self.z**2 + self.w**2)
 
     def length_squared(self):
-        "square length of vector Note : this ignores the w component"
-        return self.x**2 + self.y**2 + self.z**2
+        "square length of vector"
+        return self.x**2 + self.y**2 + self.z**2 + self.w**2
+
+    def normalize(self):
+        "normalize this vector"
+        len = self.length()
+        try:
+            self.x /= len
+            self.y /= len
+            self.z /= len
+            self.w /= len
+        except ZeroDivisionError:
+            raise
+
+    def __eq__(self, rhs):
+        "test a==b using math.isclose"
+        return (
+            math.isclose(self.x, rhs.x)
+            and math.isclose(self.y, rhs.y)
+            and math.isclose(self.z, rhs.z)
+            and math.isclose(self.w, rhs.w)
+        )
+
+    def __neq__(self, rhs):
+        "test a==b using math.isclose"
+        return (
+            math.isclose(self.x, rhs.x)
+            or math.isclose(self.y, rhs.y)
+            or math.isclose(self.z, rhs.z)
+            or math.isclose(self.w, rhs.w)
+        )
+
+    def __neg__(self):
+        self.x = -self.x
+        self.y = -self.y
+        self.z = -self.z
+        self.w = -self.w
+        return self
 
     def __repr__(self):
         "may update to f-strings soon"

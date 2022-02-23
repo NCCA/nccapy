@@ -99,9 +99,46 @@ class TestVec4(unittest.TestCase):
         self.assertAlmostEqual(a.dot(b), 70.0)
 
     def test_length(self):
-        a = Vec4(22, 1, 32)
-        self.assertAlmostEqual(a.length(), 38.845, places=2)
+        a = Vec4(22, 1, 32, 12)
+        self.assertAlmostEqual(a.length(), 40.657, places=3)
 
     def test_length_squared(self):
-        a = Vec4(22, 1, 32)
-        self.assertAlmostEqual(a.length_squared(), 1509.0, places=2)
+        a = Vec4(22, 1, 32, 12)
+        self.assertAlmostEqual(a.length_squared(), 1653, places=2)
+
+    def test_normalize(self):
+        a = Vec4(25.0, 12.2, 0.5, -2.0)
+        a.normalize()
+        self.assertAlmostEqual(a.x, 0.8962, places=3)
+        self.assertAlmostEqual(a.y, 0.4373, places=3)
+        self.assertAlmostEqual(a.z, 0.0179, places=3)
+        self.assertAlmostEqual(a.w, -0.0716, places=3)
+
+    def test_equal(self):
+        a = Vec4(0.1, 0.2, 0.3, 0.4)
+        b = Vec4(0.1, 0.2, 0.3, 0.4)
+        self.assertTrue(a == b)
+
+    def test_not_equal(self):
+        a = Vec4(0.3, 0.4, 0.3)
+        b = Vec4(0.1, 0.2, 0.3)
+        self.assertTrue(a != b)
+
+    def test_negate(self):
+        a = Vec4(0.1, 0.5, -12, 5)
+        a = -a
+        self.assertAlmostEqual(a.x, -0.1)
+        self.assertAlmostEqual(a.y, -0.5)
+        self.assertAlmostEqual(a.z, 12.0)
+        self.assertAlmostEqual(a.w, -5.0)
+
+    def test_getAttr(self):
+        a = Vec4(1, 2, 3, 5)
+        self.assertAlmostEqual(getattr(a, "x"), 1.0)
+        self.assertAlmostEqual(getattr(a, "y"), 2.0)
+        self.assertAlmostEqual(getattr(a, "z"), 3.0)
+        self.assertAlmostEqual(getattr(a, "w"), 5.0)
+        # check to see if we can get non attr
+        self.assertRaises(AttributeError, getattr, a, "b")
+        # check to see that adding an attrib fails
+        self.assertRaises(AttributeError, setattr, a, "b", 20.0)

@@ -84,6 +84,10 @@ class TestVec3(unittest.TestCase):
         a = Vec3(22, 1, 32)
         self.assertAlmostEqual(a.length(), 38.845, places=2)
 
+    def test_length_squared(self):
+        a = Vec3(22, 1, 32)
+        self.assertAlmostEqual(a.length(), 1508, places=2)
+
     def test_normalize(self):
         a = Vec3(22.3, 0.5, 10.0)
         a.normalize()
@@ -109,6 +113,13 @@ class TestVec3(unittest.TestCase):
     def test_length_squared(self):
         a = Vec3(22, 1, 32)
         self.assertAlmostEqual(a.length_squared(), 1509.0)
+
+    def test_negate(self):
+        a = Vec3(0.1, 0.5, -12)
+        a = -a
+        self.assertAlmostEqual(a.x, -0.1)
+        self.assertAlmostEqual(a.y, -0.5)
+        self.assertAlmostEqual(a.z, 12.0)
 
     def test_reflect(self):
         N = Vec3(0, 1, 0)

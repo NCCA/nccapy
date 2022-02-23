@@ -61,6 +61,12 @@ class Vec3:
             or math.isclose(self.z, rhs.z)
         )
 
+    def __neg__(self):
+        self.x = -self.x
+        self.y = -self.y
+        self.z = -self.z
+        return self
+
     def set(self, x, y, z):
         "set from x,y,z will convert to float an raise value error if problem"
         try:
