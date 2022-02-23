@@ -142,3 +142,21 @@ class TestVec4(unittest.TestCase):
         self.assertRaises(AttributeError, getattr, a, "b")
         # check to see that adding an attrib fails
         self.assertRaises(AttributeError, setattr, a, "b", 20.0)
+
+    def test_mul_scalar(self):
+        a = Vec4(1.0, 1.5, 2.0, 1.0)
+        a = a * 2
+        self.assertAlmostEqual(a.x, 2.0)
+        self.assertAlmostEqual(a.y, 3.0)
+        self.assertAlmostEqual(a.z, 4.0)
+        self.assertAlmostEqual(a.w, 4.0)
+
+        a = Vec3(1.5, 4.2, 2.8, 4.5)
+        a = 2 * a
+        self.assertAlmostEqual(a.x, 3.0)
+        self.assertAlmostEqual(a.y, 8.4)
+        self.assertAlmostEqual(a.z, 5.6)
+        self.assertAlmostEqual(a.z, 9.0)
+
+        with self.assertRaises(ValueError):
+            a = a * "hello"

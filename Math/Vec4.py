@@ -1,9 +1,10 @@
 """
 Simple Float only Vec3 class for 3D graphics, very similar to the pyngl ones
 """
+from __future__ import annotations
 import math
-
 from nccapy.Math.Util import clamp
+from typing import Optional, Union
 
 
 class Vec4:
@@ -18,7 +19,7 @@ class Vec4:
         self.z = z
         self.w = w
 
-    def __add__(self, rhs):
+    def __add__(self, rhs: Vec4) -> Vec4:
         "return a+b vector addition"
         r = Vec4()
         r.x = self.x + rhs.x
@@ -27,7 +28,7 @@ class Vec4:
         r.w = self.w + rhs.w
         return r
 
-    def __iadd__(self, rhs):
+    def __iadd__(self, rhs: Vec4) -> Vec4:
         "return a+=b vector addition"
         self.x += rhs.x
         self.y += rhs.y
@@ -36,7 +37,7 @@ class Vec4:
 
         return self
 
-    def __sub__(self, rhs):
+    def __sub__(self, rhs: Vec4) -> Vec4:
         "return a+b vector addition"
         r = Vec4()
         r.x = self.x - rhs.x
@@ -45,7 +46,7 @@ class Vec4:
         r.w = self.w - rhs.w
         return r
 
-    def __isub__(self, rhs):
+    def __isub__(self, rhs: Vec4) -> Vec4:
         "return a+=b vector addition"
         self.x -= rhs.x
         self.y -= rhs.y
@@ -53,7 +54,7 @@ class Vec4:
         self.w -= rhs.w
         return self
 
-    def set(self, x, y, z, w=1.0):
+    def set(self, x: float, y: float, z: float, w: float = 1.0):
         "set from x,y,z,w will convert to float an raise value error if problem"
         try:
             self.x = float(x)
@@ -64,14 +65,14 @@ class Vec4:
             print("need float values")
             raise
 
-    def dot(self, rhs):
+    def dot(self, rhs: Vec4) -> float:
         return (self.x * rhs.x) + (self.y * rhs.y) + (self.z * rhs.z) + (self.w * rhs.w)
 
-    def length(self):
+    def length(self) -> float:
         "length of vector"
         return math.sqrt(self.x**2 + self.y**2 + self.z**2 + self.w**2)
 
-    def length_squared(self):
+    def length_squared(self) -> float:
         "square length of vector"
         return self.x**2 + self.y**2 + self.z**2 + self.w**2
 
@@ -86,8 +87,10 @@ class Vec4:
         except ZeroDivisionError:
             raise
 
-    def __eq__(self, rhs):
+    def __eq__(self, rhs: object) -> bool:
         "test a==b using math.isclose"
+        if not isinstance(rhs, Vec4):
+            return NotImplemented
         return (
             math.isclose(self.x, rhs.x)
             and math.isclose(self.y, rhs.y)
@@ -95,8 +98,10 @@ class Vec4:
             and math.isclose(self.w, rhs.w)
         )
 
-    def __neq__(self, rhs):
+    def __neq__(self, rhs: object) -> bool:
         "test a==b using math.isclose"
+        if not isinstance(rhs, Vec4):
+            return NotImplemented
         return (
             math.isclose(self.x, rhs.x)
             or math.isclose(self.y, rhs.y)
@@ -104,17 +109,30 @@ class Vec4:
             or math.isclose(self.w, rhs.w)
         )
 
-    def __neg__(self):
+    def __neg__(self) -> Vec4:
         self.x = -self.x
         self.y = -self.y
         self.z = -self.z
         self.w = -self.w
         return self
 
-    def __repr__(self):
+    def __mul__(self, rhs: Union[float, int]) -> Vec4:
+        if isinstance(rhs, (float, int)):
+            self.x *= rhs
+            self.y *= rhs
+            self.z *= rhs
+            self.w *= rhs
+            return self
+        else:
+            raise ValueError
+
+    def __rmul__(self, rhs: Union[float, int]) -> Vec4:
+        return self * rhs
+
+    def __repr__(self) -> str:
         "may update to f-strings soon"
         return "Vec4 [{},{},{},{}]".format(self.x, self.y, self.z, self.z)
 
-    def __str__(self):
+    def __str__(self) -> str:
         "may update to f-strings soon"
         return "[{},{},{},{}]".format(self.x, self.y, self.z, self.w)

@@ -67,7 +67,7 @@ class Vec3:
             or math.isclose(self.z, rhs.z)
         )
 
-    def __neg__(self):
+    def __neg__(self) -> Vec3:
         self.x = -self.x
         self.y = -self.y
         self.z = -self.z
