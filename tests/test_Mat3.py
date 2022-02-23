@@ -21,7 +21,7 @@ class TestMat3(unittest.TestCase):
         m = Mat3.zero()
         values = m.get_matrix()
         print(values)
-        ident = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        ident = [0.0] * 9
         self.assertTrue(values == ident)
 
     def test_from_list(self):
@@ -29,7 +29,6 @@ class TestMat3(unittest.TestCase):
         result = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
         self.assertTrue(m.get_matrix() == result)
         m = Mat3.from_list([1, 2, 3, 4, 5, 6, 7, 8, 9])
-        print(m.get_matrix())
         self.assertTrue(m.get_matrix() == result)
 
     def test_not_square(self):

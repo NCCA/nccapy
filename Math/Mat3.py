@@ -20,12 +20,15 @@ class Mat3NotSquare(Exception):
     pass
 
 
+_identity = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
+
+
 class Mat3:
     __slots__ = ["m"]
 
     def __init__(self):
         "construct to identity matrix"
-        self.m = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
+        self.m = copy.deepcopy(_identity)
 
     def get_matrix(self):
         "return matrix elements as list ideal for OpenGL etc"
@@ -41,7 +44,9 @@ class Mat3:
     def zero(cls):
         "class method to return a zero matrix"
         v = Mat3()
-        v.m = [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
+        v.m = [
+            [0.0] * 3
+        ] * 3  # should we do this just because we can? ;-) 3x3 list of zeros
         return v
 
     @classmethod
@@ -72,20 +77,17 @@ class Mat3:
         m.m = [list(item) for item in zip(*self.m)]
         return m
 
-    def _identity(self):
-        "set this matrix to identity"
-        self.m = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
-
     def scale(self, x: float, y: float, z: float):
         "set this matrix to be a scale matrix resetting to identity first"
-        self._identity()
+        self.m = copy.deepcopy(_identity)
+
         self.m[0][0] = x
         self.m[1][1] = y
         self.m[2][2] = z
 
     def rotateX(self, angle: float):
         "set this matrix to be a rotation around the X axis by angle degrees"
-        self._identity()
+        self.m = copy.deepcopy(_identity)
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
@@ -96,7 +98,8 @@ class Mat3:
 
     def rotateY(self, angle: float):
         "set this matrix to be a rotation around the y axis by angle degrees"
-        self._identity()
+        self.m = copy.deepcopy(_identity)
+
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
@@ -107,7 +110,8 @@ class Mat3:
 
     def rotateZ(self, angle: float):
         "set this matrix to be a rotation around the Z axis by angle degrees"
-        self._identity()
+        self.m = copy.deepcopy(_identity)
+
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
