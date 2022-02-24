@@ -137,7 +137,6 @@ class Mat3:
             return self
         raise Mat3Error
 
-    # Todo add scalar mult
     def __matmul__(self, rhs):
         "multiply matrix by another matrix"
         if isinstance(rhs, Mat3):

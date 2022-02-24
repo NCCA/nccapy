@@ -2,6 +2,7 @@ import math
 import unittest
 
 from Math.Vec4 import Vec4
+from Math.Mat4 import Mat4
 
 
 class TestVec4(unittest.TestCase):
@@ -149,14 +150,25 @@ class TestVec4(unittest.TestCase):
         self.assertAlmostEqual(a.x, 2.0)
         self.assertAlmostEqual(a.y, 3.0)
         self.assertAlmostEqual(a.z, 4.0)
-        self.assertAlmostEqual(a.w, 4.0)
+        self.assertAlmostEqual(a.w, 2.0)
 
-        a = Vec3(1.5, 4.2, 2.8, 4.5)
+        a = Vec4(1.5, 4.2, 2.8, 4.5)
         a = 2 * a
         self.assertAlmostEqual(a.x, 3.0)
         self.assertAlmostEqual(a.y, 8.4)
         self.assertAlmostEqual(a.z, 5.6)
-        self.assertAlmostEqual(a.z, 9.0)
+        self.assertAlmostEqual(a.w, 9.0)
 
         with self.assertRaises(ValueError):
             a = a * "hello"
+
+    
+    def test_matmul(self):
+        a = Vec4(1, 2, 3,1)
+        b = Mat4()
+        b.rotateX(45.0)
+        c = a @ b
+        self.assertAlmostEqual(c.x, 1.0)
+        self.assertAlmostEqual(c.y, -0.707107, places=4)
+        self.assertAlmostEqual(c.z, 3.535534, places=4)
+        self.assertAlmostEqual(c.w, 1.0)
