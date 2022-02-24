@@ -1,23 +1,21 @@
 """
 Simple Float only Vec3 class for 3D graphics, very similar to the pyngl ones
 """
-from __future__ import annotations
 import math
 from nccapy.Math.Util import clamp
-from typing import Optional, Union
 
 
 class Vec3:
     __slots__ = ["x", "y", "z"]
     "by using slots we fix our class attributes to x,y,z"
 
-    def __init__(self, x: float = 0.0, y: float = 0.0, z: float = 0.0):
-        """will force float only construction raise ValueError if not capable"""
+    def __init__(self, x=0.0, y=0.0, z=0.0):
+        """We prefer float here"""
         self.x = x
         self.y = y
         self.z = z
 
-    def __add__(self, rhs: Vec3) -> Vec3:
+    def __add__(self, rhs):
         "return a+b vector addition"
         r = Vec3()
         r.x = self.x + rhs.x
@@ -25,14 +23,14 @@ class Vec3:
         r.z = self.z + rhs.z
         return r
 
-    def __iadd__(self, rhs: Vec3) -> Vec3:
+    def __iadd__(self, rhs):
         "return a+=b vector addition"
         self.x += rhs.x
         self.y += rhs.y
         self.z += rhs.z
         return self
 
-    def __sub__(self, rhs: Vec3) -> Vec3:
+    def __sub__(self, rhs):
         "return a+b vector addition"
         r = Vec3()
         r.x = self.x - rhs.x
@@ -40,14 +38,14 @@ class Vec3:
         r.z = self.z - rhs.z
         return r
 
-    def __isub__(self, rhs: Vec3) -> Vec3:
+    def __isub__(self, rhs):
         "return a+=b vector addition"
         self.x -= rhs.x
         self.y -= rhs.y
         self.z -= rhs.z
         return self
 
-    def __eq__(self, rhs: object) -> bool:
+    def __eq__(self, rhs):
         "test a==b using math.isclose"
         if not isinstance(rhs, Vec3):
             return NotImplemented
@@ -57,7 +55,7 @@ class Vec3:
             and math.isclose(self.z, rhs.z)
         )
 
-    def __neq__(self, rhs: object) -> bool:
+    def __neq__(self, rhs):
         "test a==b using math.isclose"
         if not isinstance(rhs, Vec3):
             return NotImplemented
@@ -67,13 +65,13 @@ class Vec3:
             or math.isclose(self.z, rhs.z)
         )
 
-    def __neg__(self) -> Vec3:
+    def __neg__(self):
         self.x = -self.x
         self.y = -self.y
         self.z = -self.z
         return self
 
-    def set(self, x: float, y: float, z: float):
+    def set(self, x, y, z):
         "set from x,y,z"
         try:
             self.x = float(x)
@@ -83,19 +81,19 @@ class Vec3:
             print("need float values")
             raise
 
-    def dot(self, rhs: Vec3) -> float:
+    def dot(self, rhs):
         "return the dot product this vector with rhs"
         return self.x * rhs.x + self.y * rhs.y + self.z * rhs.z
 
-    def length(self) -> float:
+    def length(self):
         "length of vector"
         return math.sqrt(self.x**2 + self.y**2 + self.z**2)
 
-    def length_squared(self) -> float:
+    def length_squared(self):
         "square length of vector"
         return self.x**2 + self.y**2 + self.z**2
 
-    def inner(self, rhs: Vec3) -> float:
+    def inner(self, rhs):
         return (self.x * rhs.x) + (self.y * rhs.y) + (self.z * rhs.z)
 
     def null(self):
@@ -103,7 +101,7 @@ class Vec3:
         self.y = 0.0
         self.z = 0.0
 
-    def cross(self, rhs: Vec3) -> Vec3:
+    def cross(self, rhs):
         return Vec3(
             self.y * rhs.z - self.z * rhs.y,
             self.z * rhs.x - self.x * rhs.z,
@@ -120,27 +118,27 @@ class Vec3:
         except ZeroDivisionError:
             raise
 
-    def reflect(self, n: Vec3) -> Vec3:
+    def reflect(self, n):
         d = self.dot(n)
         #  I - 2.0 * dot(N, I) * N
         return Vec3(
             self.x - 2.0 * d * n.x, self.y - 2.0 * d * n.y, self.z - 2.0 * d * n.z
         )
 
-    def clamp(self, low: float, high: float):
+    def clamp(self, low, high):
         self.x = clamp(self.x, low, high)
         self.y = clamp(self.y, low, high)
         self.z = clamp(self.z, low, high)
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         "may update to f-strings soon"
         return "Vec3 [{},{},{}]".format(self.x, self.y, self.z)
 
-    def __str__(self) -> str:
+    def __str__(self):
         "may update to f-strings soon"
         return "[{},{},{}]".format(self.x, self.y, self.z)
 
-    def outer(self, rhs: Vec3) -> Mat3:
+    def outer(self, rhs):
         from nccapy.Math.Mat3 import Mat3
 
         return Mat3.from_list(
@@ -151,7 +149,7 @@ class Vec3:
             ]
         )
 
-    def __mul__(self, rhs: Union[float, int]) -> Vec3:
+    def __mul__(self, rhs):
         if isinstance(rhs, (float, int)):
             self.x *= rhs
             self.y *= rhs
@@ -160,5 +158,5 @@ class Vec3:
         else:
             raise ValueError
 
-    def __rmul__(self, rhs: Union[float, int]) -> Vec3:
+    def __rmul__(self, rhs):
         return self * rhs

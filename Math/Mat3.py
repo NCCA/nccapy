@@ -128,6 +128,7 @@ class Mat3:
         "set items remember this is a list of lists [[3],[3],[3]]"
         self.m[idx] = item
 
+    # Todo add scalar mult
     def __mul__(self, rhs):
         "multiply matrix by another matrix"
         if type(rhs) != Mat3:
@@ -164,18 +165,18 @@ class Mat3:
         self *= rhs
         return self
 
-    def __rmul__(self, rhs):
-        from nccapy.Math import Vec3
+    # def __rmul__(self, rhs):
+    #     from nccapy.Math import Vec3
 
-        "Matrix * Vec3 only supported"
-        try:
-            temp = Vec3()
-            temp.x = rhs.x * self.m[0][0] + rhs.y * self.m[0][1] + rhs.z * self.m[0][2]
-            temp.y = rhs.x * self.m[1][0] + rhs.y * self.m[1][1] + rhs.z * self.m[1][2]
-            temp.z = rhs.x * self.m[2][0] + rhs.y * self.m[2][1] + rhs.z * self.m[2][2]
-            return temp
-        except:
-            raise Mat3Error
+    #     "Matrix * Vec3 only supported"
+    #     try:
+    #         temp = Vec3()
+    #         temp.x = rhs.x * self.m[0][0] + rhs.y * self.m[0][1] + rhs.z * self.m[0][2]
+    #         temp.y = rhs.x * self.m[1][0] + rhs.y * self.m[1][1] + rhs.z * self.m[1][2]
+    #         temp.z = rhs.x * self.m[2][0] + rhs.y * self.m[2][1] + rhs.z * self.m[2][2]
+    #         return temp
+    #     except:
+    #         raise Mat3Error
 
     def __add__(self, rhs):
         "piecewise addition of elements"
