@@ -106,21 +106,20 @@ class TestTransform(unittest.TestCase):
         tx = Transform()
         for o in orders:
             tx.set_order(o)
-            self.assertTrue(tx.order==o)
+            self.assertTrue(tx.order == o)
         with self.assertRaises(TransformRotationOrder):
             tx.set_order("bogus")
 
-
-    def test_rotation_orders(self) :
+    def test_rotation_orders(self):
         tx = Transform()
-        tx.set_rotation(45,25,35)
+        tx.set_rotation(45, 25, 35)
         tx.set_order("xyz")
         # fmt: off
         result=[0.742404,0.519837,-0.422618,0.0,-0.160787,0.750633,0.640856,0.0,0.650372,-0.407823,0.640856,0.0,0.0,0.0,0.0,1.0]
         # fmt: on
 
-        value=tx.get_matrix().get_matrix()
-        print(result,value)
+        value = tx.get_matrix().get_matrix()
+        print(result, value)
 
         for r, v in zip(result, value):
             self.assertAlmostEqual(r, v, places=3)

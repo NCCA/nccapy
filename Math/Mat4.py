@@ -1,7 +1,6 @@
 """
 Simple Mat4 class which can be used with the Vec3 class
 """
-
 import copy
 import functools
 import math
@@ -142,8 +141,7 @@ class Mat4:
                 )
         return mulmat
 
-
-    def _mat_mul(self,rhs) :
+    def _mat_mul(self, rhs):
         "matrix mult internal function"
         # fmt: off
         a00 = self.m[0][0] # cache values for speed? (works in C++ not sure about python)
@@ -202,7 +200,6 @@ class Mat4:
         "multiply matrix by another matrix"
         if isinstance(rhs, Mat4):
             return self._mat_mul(rhs)
-
 
         elif isinstance(rhs, Vec4):
             # fmt: off

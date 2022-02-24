@@ -1,11 +1,9 @@
 """
 Class to represent a transform using translate, rotate and scale, 
 """
-
-import math
-from nccapy.Math.Mat4 import Mat4
-from nccapy.Math.Vec3 import Vec3
-from nccapy.Math.Vec4 import Vec4
+from Math.Vec3 import Vec3
+from Math.Vec4 import Vec4
+from Math.Mat4 import Mat4
 
 
 class TransformRotationOrder(Exception):
@@ -17,6 +15,7 @@ class Transform:
     rotation = Vec3(0.0, 0.0, 0.0)
     scale = Vec3(1.0, 1.0, 1.0)
     matrix = Mat4()
+    need_recalc = True
     order = "xyz"
     rot_order = {
         "xyz": "rz@ry@rx",
@@ -32,7 +31,7 @@ class Transform:
 
     def _set_value(self, args):
         v = Vec3()
-
+        self.need_recalc = True
         if len(args) == 1:  # one argument
             if isinstance(args[0], (list, tuple)):
                 v.x = args[0][0]
@@ -52,36 +51,43 @@ class Transform:
             raise ValueError
 
     def set_position(self, *args):
+        "set position attrib using either x,y,z or vec types"
         self.position = self._set_value(args)
 
     def set_rotation(self, *args):
+        "set rotation attrib using either x,y,z or vec types"
         self.rotation = self._set_value(args)
 
     def set_scale(self, *args):
+        "set scale attrib using either x,y,z or vec types"
         self.scale = self._set_value(args)
 
     def set_order(self, order):
+        "set rotation order from string e.g xyz or zyx"
         if order not in self.rot_order:
             raise TransformRotationOrder
         self.order = order
 
     def get_matrix(self):
-        scale = Mat4()
-        rx = Mat4()
-        ry = Mat4()
-        rz = Mat4()
-        trans = Mat4()
-        scale.scale(self.scale.x, self.scale.y, self.scale.z)
-        rx.rotateX(self.rotation.x)
-        ry.rotateY(self.rotation.y)
-        rz.rotateZ(self.rotation.z)
-        rotationScale = eval(self.rot_order.get(self.order)) @ scale
-        print("eval\n {}\n".format(eval(self.rot_order.get(self.order))))
-        self.matrix = rotationScale
-        self.matrix.m[3][0] = self.position.x
-        self.matrix.m[3][1] = self.position.y
-        self.matrix.m[3][2] = self.position.z
-        self.matrix.m[3][3] = 1.0
+        "return a transform matrix based on rotation order"
+        if self.need_recalc is True:
+            scale = Mat4()
+            rx = Mat4()
+            ry = Mat4()
+            rz = Mat4()
+            trans = Mat4()
+            scale.scale(self.scale.x, self.scale.y, self.scale.z)
+            rx.rotateX(self.rotation.x)
+            ry.rotateY(self.rotation.y)
+            rz.rotateZ(self.rotation.z)
+            rotationScale = eval(self.rot_order.get(self.order)) @ scale
+            print("eval\n {}\n".format(eval(self.rot_order.get(self.order))))
+            self.matrix = rotationScale
+            self.matrix.m[3][0] = self.position.x
+            self.matrix.m[3][1] = self.position.y
+            self.matrix.m[3][2] = self.position.z
+            self.matrix.m[3][3] = 1.0
+            self.need_recalc = False
         return self.matrix
 
     def __str__(self):
