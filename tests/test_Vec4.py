@@ -162,9 +162,8 @@ class TestVec4(unittest.TestCase):
         with self.assertRaises(ValueError):
             a = a * "hello"
 
-    
     def test_matmul(self):
-        a = Vec4(1, 2, 3,1)
+        a = Vec4(1, 2, 3, 1)
         b = Mat4()
         b.rotateX(45.0)
         c = a @ b

@@ -121,7 +121,7 @@ class TestMat4(unittest.TestCase):
         t2 = Mat4()
         t1.rotateX(45.0)
         t2.rotateY(35.0)
-        test = t1 * t2
+        test = t1 @ t2
         # fmt: off
         result = [0.819152,0.0,-0.573577,0.0, 
                   0.40558,0.707107,0.579228, 0.0,
@@ -140,14 +140,14 @@ class TestMat4(unittest.TestCase):
     def test_mult_error(self):
         with self.assertRaises(Mat4Error):
             a = Mat4()
-            c = a * 2
+            c = a @ 2
 
     def test_mult_mat3_equal(self):
         t1 = Mat4()
         t2 = Mat4()
         t1.rotateX(45.0)
         t2.rotateY(35.0)
-        t1 *= t2
+        t1 @= t2
         # fmt: off
         result = [0.819152,0.0,-0.573577,0.0, 
                   0.40558,0.707107,0.579228, 0.0,
@@ -168,7 +168,7 @@ class TestMat4(unittest.TestCase):
         t1 = Mat4()
         test = Vec4(1.0, 2.0, 3.0, 1.0)
         t1.rotateX(45.0)
-        test =  t1 @ test
+        test = t1 @ test
         self.assertAlmostEqual(test.x, 1.0, places=5)
         self.assertAlmostEqual(test.y, 3.535534, places=5)
         self.assertAlmostEqual(test.z, 0.707107, places=5)
