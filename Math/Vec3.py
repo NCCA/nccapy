@@ -150,6 +150,7 @@ class Vec3:
         )
 
     def __mul__(self, rhs):
+        "piecewise scalar multiplication"
         if isinstance(rhs, (float, int)):
             self.x *= rhs
             self.y *= rhs
@@ -159,4 +160,13 @@ class Vec3:
             raise ValueError
 
     def __rmul__(self, rhs):
+        "piecewise scalar multiplication"
         return self * rhs
+
+    def __matmul__(self, rhs):
+        "Vec3 @ Mat3 matrix multiplication"
+        return Vec3(
+            self.x * rhs.m[0][0] + self.y * rhs.m[1][0] + self.z * rhs.m[2][0],
+            self.x * rhs.m[0][1] + self.y * rhs.m[1][1] + self.z * rhs.m[2][1],
+            self.x * rhs.m[0][2] + self.y * rhs.m[1][2] + self.z * rhs.m[2][2],
+        )

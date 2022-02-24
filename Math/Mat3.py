@@ -6,6 +6,7 @@ import copy
 import functools
 import math
 import operator
+from Math.Vec3 import Vec3
 
 
 class Mat3Error(Exception):
@@ -128,42 +129,53 @@ class Mat3:
         "set items remember this is a list of lists [[3],[3],[3]]"
         self.m[idx] = item
 
-    # Todo add scalar mult
     def __mul__(self, rhs):
-        "multiply matrix by another matrix"
-        if type(rhs) != Mat3:
-            raise Mat3Error
-        mat_t = rhs.get_transpose()
-        mulmat = Mat3()
-        for x in range(3):
-            for y in range(3):
-                mulmat[x][y] = sum(
-                    [item[0] * item[1] for item in zip(self.m[x], mat_t[y])]
-                )
-        return mulmat
+        if isinstance(rhs, (int, float)):
+            for i in len(self.m):
+                for j in len(self.m[i]):
+                    self.m[i][j] *= rhs
+            return self
+        raise Mat3Error
 
+    # Todo add scalar mult
     def __matmul__(self, rhs):
-        "multiply matrix using @"
-        return self * rhs
-
-    def __imul__(self, rhs):
-        "Matrix *="
-        if type(rhs) != Mat3:
+        "multiply matrix by another matrix"
+        if isinstance(rhs, Mat3):
+            mat_t = rhs.get_transpose()
+            mulmat = Mat3()
+            for x in range(3):
+                for y in range(3):
+                    mulmat[x][y] = sum(
+                        [item[0] * item[1] for item in zip(self.m[x], mat_t[y])]
+                    )
+            return mulmat
+        elif isinstance(rhs, Vec3):
+            return Vec3(
+                rhs.x * self.m[0][0] + rhs.y * self.m[0][1] + rhs.z * self.m[0][2],
+                rhs.x * self.m[1][0] + rhs.y * self.m[1][1] + rhs.z * self.m[1][2],
+                rhs.x * self.m[2][0] + rhs.y * self.m[2][1] + rhs.z * self.m[2][2],
+            )
+        else:
             raise Mat3Error
-        tmp = copy.deepcopy(self)
-        mat_t = rhs.get_transpose()
-        for x in range(3):
-            for y in range(3):
-                tmp[x][y] = sum(
-                    [item[0] * item[1] for item in zip(self.m[x], mat_t[y])]
-                )
-        self.m = tmp.m.copy()
-        return self
 
-    def __imatmul__(self, rhs):
-        "Matrix @="
-        self *= rhs
-        return self
+    # def __imul__(self, rhs):
+    # "Matrix *="
+    # if type(rhs) != Mat3:
+    #     raise Mat3Error
+    # tmp = copy.deepcopy(self)
+    # mat_t = rhs.get_transpose()
+    # for x in range(3):
+    #     for y in range(3):
+    #         tmp[x][y] = sum(
+    #             [item[0] * item[1] for item in zip(self.m[x], mat_t[y])]
+    #         )
+    # self.m = tmp.m.copy()
+    # return self
+
+    # def __imatmul__(self, rhs):
+    #     "Matrix @="
+    #     self *= rhs
+    #     return self
 
     # def __rmul__(self, rhs):
     #     from nccapy.Math import Vec3

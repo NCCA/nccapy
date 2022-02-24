@@ -2,6 +2,7 @@ import math
 import unittest
 
 from Math.Vec3 import Vec3
+from Math.Mat3 import Mat3
 
 
 class TestVec3(unittest.TestCase):
@@ -180,3 +181,12 @@ class TestVec3(unittest.TestCase):
         self.assertRaises(AttributeError, getattr, a, "b")
         # check to see that adding an attrib fails
         self.assertRaises(AttributeError, setattr, a, "b", 20.0)
+
+    def test_matmul(self):
+        a = Vec3(1, 2, 3)
+        b = Mat3()
+        b.rotateX(45.0)
+        c = a @ b
+        self.assertAlmostEqual(c.x, 1.0)
+        self.assertAlmostEqual(c.y, -0.707107, places=4)
+        self.assertAlmostEqual(c.z, 3.535534, places=4)

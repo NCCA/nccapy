@@ -89,7 +89,7 @@ class TestMat3(unittest.TestCase):
         t2 = Mat3()
         t1.rotateX(45.0)
         t2.rotateY(35.0)
-        test = t1 * t2
+        test = t1 @ t2
         # fmt: off
         result = [0.819152,0.0,-0.573577,0.40558,0.707107,0.579228,0.40558,-0.707107,0.579228]
         # fmt: on
@@ -105,14 +105,14 @@ class TestMat3(unittest.TestCase):
     def test_mult_error(self):
         with self.assertRaises(Mat3Error):
             a = Mat3()
-            c = a * 2
+            c = a @ 2
 
     def test_mult_mat3_equal(self):
         t1 = Mat3()
         t2 = Mat3()
         t1.rotateX(45.0)
         t2.rotateY(35.0)
-        t1 *= t2
+        t1 @= t2
         # fmt: off
         result = [0.819152,0.0,-0.573577,0.40558,0.707107,0.579228,0.40558,-0.707107,0.579228]
         # fmt: on
@@ -128,12 +128,12 @@ class TestMat3(unittest.TestCase):
 
     def test_mat3_mult_vec3(self):
         t1 = Mat3()
-        test = Vec3(2.0, 1.0, 2.0)
+        v1 = Vec3(1.0, 2.0, 3.0)
         t1.rotateX(45.0)
-        test = test * t1
-        self.assertAlmostEqual(test.x, 2.0, places=4)
-        self.assertAlmostEqual(test.y, 2.1213, places=4)
-        self.assertAlmostEqual(test.z, 0.7071, places=4)
+        result = t1 @ v1
+        self.assertAlmostEqual(result.x, 1.0, places=4)
+        self.assertAlmostEqual(result.y, 3.535534, places=5)
+        self.assertAlmostEqual(result.z, 0.707107, places=5)
 
     def test_add(self):
         a = Mat3.from_list([[1, 2, 3], [4, 5, 6], [7, 8, 9]])

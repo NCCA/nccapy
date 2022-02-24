@@ -107,24 +107,12 @@ class TestMat4(unittest.TestCase):
         a = Mat4()
         a.rotateZ(-36.0)
         value = a.get_matrix()
-        result = [
-            0.809,
-            -0.5877,
-            0.0,
-            0.0,
-            0.5877,
-            0.809,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            1.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            1.0,
-        ]
+        # fmt: off
+        result = [0.809,-0.5877,0.0,0.0,
+                  0.5877, 0.809, 0.0, 0.0,
+                  0.0,0.0,1.0, 0.0,  
+                  0.0, 0.0,0.0,1.0,]
+        # fmt: on
         for r, v in zip(result, value):
             self.assertAlmostEqual(r, v, places=3)
 
