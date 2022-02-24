@@ -6,7 +6,6 @@ import copy
 import functools
 import math
 import operator
-from Math.Vec3 import Vec3
 
 
 class Mat3Error(Exception):
@@ -138,6 +137,8 @@ class Mat3:
         raise Mat3Error
 
     def __matmul__(self, rhs):
+        from Math.Vec3 import Vec3
+
         "multiply matrix by another matrix"
         if isinstance(rhs, Mat3):
             mat_t = rhs.get_transpose()
@@ -156,38 +157,6 @@ class Mat3:
             )
         else:
             raise Mat3Error
-
-    # def __imul__(self, rhs):
-    # "Matrix *="
-    # if type(rhs) != Mat3:
-    #     raise Mat3Error
-    # tmp = copy.deepcopy(self)
-    # mat_t = rhs.get_transpose()
-    # for x in range(3):
-    #     for y in range(3):
-    #         tmp[x][y] = sum(
-    #             [item[0] * item[1] for item in zip(self.m[x], mat_t[y])]
-    #         )
-    # self.m = tmp.m.copy()
-    # return self
-
-    # def __imatmul__(self, rhs):
-    #     "Matrix @="
-    #     self *= rhs
-    #     return self
-
-    # def __rmul__(self, rhs):
-    #     from nccapy.Math import Vec3
-
-    #     "Matrix * Vec3 only supported"
-    #     try:
-    #         temp = Vec3()
-    #         temp.x = rhs.x * self.m[0][0] + rhs.y * self.m[0][1] + rhs.z * self.m[0][2]
-    #         temp.y = rhs.x * self.m[1][0] + rhs.y * self.m[1][1] + rhs.z * self.m[1][2]
-    #         temp.z = rhs.x * self.m[2][0] + rhs.y * self.m[2][1] + rhs.z * self.m[2][2]
-    #         return temp
-    #     except:
-    #         raise Mat3Error
 
     def __add__(self, rhs):
         "piecewise addition of elements"
