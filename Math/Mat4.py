@@ -174,3 +174,5 @@ class Mat4:
             )
         else:
             raise Mat4Error
+    def __str__(self):
+        return f"[{self.m[0]}\n{self.m[1]}\n{self.m[2]}\n{self.m[3]}]"
