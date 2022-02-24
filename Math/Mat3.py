@@ -99,7 +99,6 @@ class Mat3:
     def rotateY(self, angle: float):
         "set this matrix to be a rotation around the y axis by angle degrees"
         self.m = copy.deepcopy(_identity)
-
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
@@ -111,7 +110,6 @@ class Mat3:
     def rotateZ(self, angle: float):
         "set this matrix to be a rotation around the Z axis by angle degrees"
         self.m = copy.deepcopy(_identity)
-
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
@@ -136,19 +134,48 @@ class Mat3:
             return self
         raise Mat3Error
 
+    def _mat_mul(self, rhs):
+        "matrix mult internal function"
+        # fmt: off
+        a00 = self.m[0][0] # cache values for speed? (works in C++ not sure about python)
+        a01 = self.m[0][1]
+        a02 = self.m[0][2] 
+        a10 = self.m[1][0]
+        a11 = self.m[1][1] 
+        a12 = self.m[1][2] 
+        a20 = self.m[2][0]
+        a21 = self.m[2][1]
+        a22 = self.m[2][2] 
+        
+        b00 = rhs.m[0][0]
+        b01 = rhs.m[0][1]
+        b02 = rhs.m[0][2] 
+        b10 = rhs.m[1][0]
+        b11 = rhs.m[1][1] 
+        b12 = rhs.m[1][2] 
+        b20 = rhs.m[2][0]
+        b21 = rhs.m[2][1]
+        b22 = rhs.m[2][2] 
+
+        ret=Mat3() # result mat4 
+        ret.m[0][0] = b00 * a00 + b01 * a10 + b02 * a20 
+        ret.m[0][1] = b00 * a01 + b01 * a11 + b02 * a21 
+        ret.m[0][2] = b00 * a02 + b01 * a12 + b02 * a22 
+        ret.m[1][0] = b10 * a00 + b11 * a10 + b12 * a20 
+        ret.m[1][1] = b10 * a01 + b11 * a11 + b12 * a21 
+        ret.m[1][2] = b10 * a02 + b11 * a12 + b12 * a22 
+        ret.m[2][0] = b20 * a00 + b21 * a10 + b22 * a20 
+        ret.m[2][1] = b20 * a01 + b21 * a11 + b22 * a21 
+        ret.m[2][2] = b20 * a02 + b21 * a12 + b22 * a22 
+        return ret
+        # fmt: on
+
     def __matmul__(self, rhs):
-        from Math.Vec3 import Vec3
+        from nccapy.Math.Vec3 import Vec3
 
         "multiply matrix by another matrix"
         if isinstance(rhs, Mat3):
-            mat_t = rhs.get_transpose()
-            mulmat = Mat3()
-            for x in range(3):
-                for y in range(3):
-                    mulmat[x][y] = sum(
-                        [item[0] * item[1] for item in zip(self.m[x], mat_t[y])]
-                    )
-            return mulmat
+            return self._mat_mul(rhs)
         elif isinstance(rhs, Vec3):
             return Vec3(
                 rhs.x * self.m[0][0] + rhs.y * self.m[0][1] + rhs.z * self.m[0][2],

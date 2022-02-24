@@ -67,6 +67,7 @@ class Transform:
         if order not in self.rot_order:
             raise TransformRotationOrder
         self.order = order
+        self.need_recalc = True
 
     def get_matrix(self):
         "return a transform matrix based on rotation order"
