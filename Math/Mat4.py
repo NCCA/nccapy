@@ -142,37 +142,78 @@ class Mat4:
                 )
         return mulmat
 
+
+    def _mat_mul(self,rhs) :
+        "matrix mult internal function"
+        # fmt: off
+        a00 = self.m[0][0] # cache values for speed? (works in C++ not sure about python)
+        a01 = self.m[0][1]
+        a02 = self.m[0][2] 
+        a03 = self.m[0][3]
+        a10 = self.m[1][0]
+        a11 = self.m[1][1] 
+        a12 = self.m[1][2] 
+        a13 = self.m[1][3]
+        a20 = self.m[2][0]
+        a21 = self.m[2][1]
+        a22 = self.m[2][2] 
+        a23 = self.m[2][3]
+        a30 = self.m[3][0] 
+        a31 = self.m[3][1] 
+        a32 = self.m[3][2] 
+        a33 = self.m[3][3]
+        b00 = rhs.m[0][0]
+        b01 = rhs.m[0][1]
+        b02 = rhs.m[0][2] 
+        b03 = rhs.m[0][3]
+        b10 = rhs.m[1][0]
+        b11 = rhs.m[1][1] 
+        b12 = rhs.m[1][2] 
+        b13 = rhs.m[1][3]
+        b20 = rhs.m[2][0]
+        b21 = rhs.m[2][1]
+        b22 = rhs.m[2][2] 
+        b23 = rhs.m[2][3]
+        b30 = rhs.m[3][0] 
+        b31 = rhs.m[3][1] 
+        b32 = rhs.m[3][2] 
+        b33 = rhs.m[3][3]
+        ret=Mat4() # result mat4 
+        ret.m[0][0] = b00 * a00 + b01 * a10 + b02 * a20 + b03 * a30
+        ret.m[0][1] = b00 * a01 + b01 * a11 + b02 * a21 + b03 * a31
+        ret.m[0][2] = b00 * a02 + b01 * a12 + b02 * a22 + b03 * a32
+        ret.m[0][3] = b00 * a03 + b01 * a13 + b02 * a23 + b03 * a33
+        ret.m[1][0] = b10 * a00 + b11 * a10 + b12 * a20 + b13 * a30
+        ret.m[1][1] = b10 * a01 + b11 * a11 + b12 * a21 + b13 * a31
+        ret.m[1][2] = b10 * a02 + b11 * a12 + b12 * a22 + b13 * a32
+        ret.m[1][3] = b10 * a03 + b11 * a13 + b12 * a23 + b13 * a33
+        ret.m[2][0] = b20 * a00 + b21 * a10 + b22 * a20 + b23 * a30
+        ret.m[2][1] = b20 * a01 + b21 * a11 + b22 * a21 + b23 * a31
+        ret.m[2][2] = b20 * a02 + b21 * a12 + b22 * a22 + b23 * a32
+        ret.m[2][3] = b20 * a03 + b21 * a13 + b22 * a23 + b23 * a33
+        ret.m[3][0] = b30 * a00 + b31 * a10 + b32 * a20 + b33 * a30
+        ret.m[3][1] = b30 * a01 + b31 * a11 + b32 * a21 + b33 * a31
+        ret.m[3][2] = b30 * a02 + b31 * a12 + b32 * a22 + b33 * a32
+        ret.m[3][3] = b30 * a03 + b31 * a13 + b32 * a23 + b33 * a33
+        return ret
+        # fmt: on
+
     def __matmul__(self, rhs):
         "multiply matrix by another matrix"
         if isinstance(rhs, Mat4):
-            mat_t = rhs.get_transpose()
-            mulmat = Mat4()
-            for x in range(4):
-                for y in range(4):
-                    mulmat[x][y] = sum(
-                        [item[0] * item[1] for item in zip(self.m[x], mat_t[y])]
-                    )
-            return mulmat
+            return self._mat_mul(rhs)
+
+
         elif isinstance(rhs, Vec4):
+            # fmt: off
             return Vec4(
-                rhs.x * self.m[0][0]
-                + rhs.y * self.m[0][1]
-                + rhs.z * self.m[0][2]
-                + rhs.w * self.m[0][3],
-                rhs.x * self.m[1][0]
-                + rhs.y * self.m[1][1]
-                + rhs.z * self.m[1][2]
-                + rhs.w * self.m[1][3],
-                rhs.x * self.m[2][0]
-                + rhs.y * self.m[2][1]
-                + rhs.z * self.m[2][2]
-                + rhs.w * self.m[2][3],
-                rhs.x * self.m[3][0]
-                + rhs.y * self.m[3][1]
-                + rhs.z * self.m[3][2]
-                + rhs.w * self.m[3][3],
-            )
+                rhs.x * self.m[0][0] + rhs.y * self.m[0][1]+ rhs.z * self.m[0][2]+ rhs.w * self.m[0][3],
+                rhs.x * self.m[1][0]+ rhs.y * self.m[1][1]+ rhs.z * self.m[1][2]+ rhs.w * self.m[1][3],
+                rhs.x * self.m[2][0]+ rhs.y * self.m[2][1]+ rhs.z * self.m[2][2]+ rhs.w * self.m[2][3],
+                rhs.x * self.m[3][0]+ rhs.y * self.m[3][1]+ rhs.z * self.m[3][2]+ rhs.w * self.m[3][3])
+            # fmt: on
         else:
             raise Mat4Error
+
     def __str__(self):
         return f"[{self.m[0]}\n{self.m[1]}\n{self.m[2]}\n{self.m[3]}]"

@@ -123,10 +123,10 @@ class TestMat4(unittest.TestCase):
         t2.rotateY(35.0)
         test = t1 @ t2
         # fmt: off
-        result = [0.819152,0.0,-0.573577,0.0, 
-                  0.40558,0.707107,0.579228, 0.0,
-                  0.40558,-0.707107,0.579228, 0.0,
-                  0.0,0.0,0.0,1.0]
+        result=[0.819152,0.405580,-0.405580,0.0,
+                0.0,0.707107,0.707107,0.0,
+                0.573577,-0.579228,0.579228,0.0,
+                0.0,0.0,0.0,1.0]
         # fmt: on
         value = test.get_matrix()
         for r, v in zip(result, value):
@@ -142,17 +142,17 @@ class TestMat4(unittest.TestCase):
             a = Mat4()
             c = a @ 2
 
-    def test_mult_mat3_equal(self):
+    def test_mult_mat4_equal(self):
         t1 = Mat4()
         t2 = Mat4()
         t1.rotateX(45.0)
         t2.rotateY(35.0)
         t1 @= t2
         # fmt: off
-        result = [0.819152,0.0,-0.573577,0.0, 
-                  0.40558,0.707107,0.579228, 0.0,
-                  0.40558,-0.707107,0.579228, 0.0,
-                  0.0,0.0,0.0,1.0]        
+        result=[0.819152,0.405580,-0.405580,0.0,
+                0.0,0.707107,0.707107,0.0,
+                0.573577,-0.579228,0.579228,0.0,
+                0.0,0.0,0.0,1.0]
         # fmt: on
         value = t1.get_matrix()
         for r, v in zip(result, value):

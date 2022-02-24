@@ -1,5 +1,5 @@
 """
-Class to represent a transform using translate, rotate and scale
+Class to represent a transform using translate, rotate and scale, 
 """
 
 import math
@@ -8,11 +8,24 @@ from nccapy.Math.Vec3 import Vec3
 from nccapy.Math.Vec4 import Vec4
 
 
+class TransformRotationOrder(Exception):
+    pass
+
+
 class Transform:
     position = Vec3(0.0, 0.0, 0.0)
     rotation = Vec3(0.0, 0.0, 0.0)
     scale = Vec3(1.0, 1.0, 1.0)
     matrix = Mat4()
+    order = "xyz"
+    rot_order = {
+        "xyz": "rz@ry@rx",
+        "yzx": "rx@rz@ry",
+        "zxy": "ry@rx@rz",
+        "xzy": "ry@rz@rx",
+        "yxz": "rz@rx@ry",
+        "zyx": "rx@ry@rz",
+    }
 
     def __init__(self):
         pass
@@ -47,22 +60,27 @@ class Transform:
     def set_scale(self, *args):
         self.scale = self._set_value(args)
 
-    def get_matrix(self) :
+    def set_order(self, order):
+        if order not in self.rot_order:
+            raise TransformRotationOrder
+        self.order = order
+
+    def get_matrix(self):
         scale = Mat4()
         rx = Mat4()
         ry = Mat4()
         rz = Mat4()
         trans = Mat4()
-
-        scale.scale(self.scale.x,self.scale.y,self.scale.z)
+        scale.scale(self.scale.x, self.scale.y, self.scale.z)
         rx.rotateX(self.rotation.x)
         ry.rotateY(self.rotation.y)
         rz.rotateZ(self.rotation.z)
-        rotationScale = rz * ry * rz * scale        
-        self.matrix=rotationScale
-        self.matrix.m[3][0] =self.position.x
-        self.matrix.m[3][1] =self.position.y
-        self.matrix.m[3][2] =self.position.z
+        rotationScale = eval(self.rot_order.get(self.order)) @ scale
+        print("eval\n {}\n".format(eval(self.rot_order.get(self.order))))
+        self.matrix = rotationScale
+        self.matrix.m[3][0] = self.position.x
+        self.matrix.m[3][1] = self.position.y
+        self.matrix.m[3][2] = self.position.z
         self.matrix.m[3][3] = 1.0
         return self.matrix
 
