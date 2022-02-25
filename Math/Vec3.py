@@ -3,7 +3,7 @@ Simple Float only Vec3 class for 3D graphics, very similar to the pyngl ones
 """
 import math
 from nccapy.Math.Util import clamp
-
+import json
 
 class Vec3:
     __slots__ = ["x", "y", "z"]
@@ -170,3 +170,7 @@ class Vec3:
             self.x * rhs.m[0][1] + self.y * rhs.m[1][1] + self.z * rhs.m[2][1],
             self.x * rhs.m[0][2] + self.y * rhs.m[1][2] + self.z * rhs.m[2][2],
         )
+
+    def to_json(self) :
+        return json.dumps(self, default=lambda o: {key : getattr(self, key, None) for key in self.__slots__}, 
+            sort_keys=True, indent=4)

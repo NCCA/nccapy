@@ -1,11 +1,11 @@
 """
-Simple Mat4 class which can be used with the Vec3 class
+Simple Mat4 class which can be used with the Vec4 class
 """
 import copy
 import functools
 import math
 import operator
-from Math.Vec4 import Vec4
+import json
 
 
 class Mat4Error(Exception):
@@ -197,6 +197,7 @@ class Mat4:
         # fmt: on
 
     def __matmul__(self, rhs):
+        from Math.Vec4 import Vec4
         "multiply matrix by another matrix"
         if isinstance(rhs, Mat4):
             return self._mat_mul(rhs)
@@ -214,3 +215,7 @@ class Mat4:
 
     def __str__(self):
         return f"[{self.m[0]}\n{self.m[1]}\n{self.m[2]}\n{self.m[3]}]"
+
+    def to_json(self) :
+        return json.dumps(self, default=lambda o: {key : getattr(self, key, None) for key in self.__slots__}, 
+            sort_keys=True, indent=4)

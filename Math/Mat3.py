@@ -6,7 +6,7 @@ import copy
 import functools
 import math
 import operator
-
+import json
 
 class Mat3Error(Exception):
     """An exception class for Mat3"""
@@ -248,3 +248,7 @@ class Mat3:
 
     def __str__(self):
         return f"[{self.m[0]}\n{self.m[1]}\n{self.m[2]}]"
+
+    def to_json(self) :
+        return json.dumps(self, default=lambda o: {key : getattr(self, key, None) for key in self.__slots__}, 
+            sort_keys=True, indent=4)
