@@ -172,5 +172,5 @@ class Vec3:
         )
 
     def to_json(self) :
-        return json.dumps(self, default=lambda o: {key : getattr(self, key, None) for key in self.__slots__}, 
-            sort_keys=True, indent=4)
+        a={"Vec3" : [self.x,self.y,self.z]}
+        return json.dumps(a,sort_keys=True, indent=4)
