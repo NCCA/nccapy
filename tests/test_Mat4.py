@@ -100,7 +100,6 @@ class TestMat4(unittest.TestCase):
                   0.422618,0.0,0.906308,0.0,
                   0.0,0.0,0.0,1.0]
     
-        print(result)
         # fmt: on
         self.compare_matrix(value, result)
 
@@ -119,8 +118,6 @@ class TestMat4(unittest.TestCase):
         for a,b,result in zip(mat4Data.a,mat4Data.b,mat4Data.a_times_b) :
             m1=Mat4.from_list(a)
             m2=Mat4.from_list(b)
-            print(type(m1.m),len(m1.m))
-            print(m1)
             value=m1@m2
             self.compare_matrix(value.get_matrix(), result)
 
@@ -199,11 +196,8 @@ class TestMat4(unittest.TestCase):
             self.assertAlmostEqual(value,result[0])
 
     def test_inverse(self) :
-        i=0
         for a,result in zip(mat4Data.a,mat4Data.a_inv) :
             m1=Mat4.from_list(a)
             value=m1.inverse()
-            print(i)
-            print(value)
             self.compare_matrix(value.get_matrix(), result)
-            i+=1
+            

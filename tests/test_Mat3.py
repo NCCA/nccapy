@@ -2,34 +2,37 @@ import math
 import unittest
 from Math.Mat3 import Mat3, Mat3NotSquare, Mat3Error
 from Math.Vec3 import Vec3
+import tests.mat3Data  as mat3Data # this is generated from the julia file gen_mat4_tests.jl
 
 
 class TestMat3(unittest.TestCase):
+    def compare_matrix(self,a,b,places=6) :
+        for r, v in zip(a, b):
+            self.assertAlmostEqual(r, v, places=places)
+
     def test_ctor(self):
         m = Mat3()
         ident = [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
-        self.assertTrue(m.get_matrix() == ident)
+        self.compare_matrix(m.get_matrix(),ident)
 
     def test_identity(self):
         m = Mat3.identity()
         values = m.get_matrix()
-        print(values)
         ident = [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
-        self.assertTrue(values == ident)
-
+        self.compare_matrix(values,ident)
+        
     def test_zero(self):
         m = Mat3.zero()
         values = m.get_matrix()
-        print(values)
         ident = [0.0] * 9
-        self.assertTrue(values == ident)
+        self.compare_matrix(values,ident)
 
     def test_from_list(self):
         m = Mat3.from_list([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]])
         result = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
-        self.assertTrue(m.get_matrix() == result)
+        self.compare_matrix(m.get_matrix(),result)
         m = Mat3.from_list([1, 2, 3, 4, 5, 6, 7, 8, 9])
-        self.assertTrue(m.get_matrix() == result)
+        self.compare_matrix(m.get_matrix(),result)
 
     def test_not_square(self):
         self.assertRaises(
@@ -44,67 +47,59 @@ class TestMat3(unittest.TestCase):
         a.transpose()
         values = a.get_matrix()
         result = [1, 4, 7, 2, 5, 8, 3, 6, 9]
-        self.assertTrue(values == result)
+        self.compare_matrix(values,result)
 
     def test_get_transpose(self):
         a = Mat3.from_list([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
         b = a.get_transpose()
         values = b.get_matrix()
         result = [1, 4, 7, 2, 5, 8, 3, 6, 9]
-        self.assertTrue(values == result)
+        self.compare_matrix(values,result)
 
     def test_scale(self):
-        a = Mat3()
-        a.scale(2.0, 3.0, 4.0)
-        value = a.get_matrix()
+        
+        a=Mat3.scale(2.0, 3.0, 4.0)
+        values = a.get_matrix()
         result = [2.0, 0.0, 0.0, 0.0, 3.0, 0.0, 0.0, 0.0, 4.0]
-        self.assertTrue(value == result)
+        self.compare_matrix(values,result)
 
     def test_rotateX(self):
-        a = Mat3()
-        a.rotateX(45.0)
-        value = a.get_matrix()
+        a=Mat3.rotateX(45.0)
+        values = a.get_matrix()
         result = [1.0, 0.0, 0.0, 0.0, 0.707107, 0.707107, 0.0, -0.707107, 0.707107]
-        for r, v in zip(result, value):
-            self.assertAlmostEqual(r, v, places=6)
+        self.compare_matrix(values,result)
 
     def test_rotateY(self):
-        a = Mat3()
-        a.rotateY(25.0)
-        value = a.get_matrix()
+        
+        a=Mat3.rotateY(25.0)
+        values = a.get_matrix()
         result = [0.906308, 0.0, -0.422618, 0.0, 1.0, 0.0, 0.422618, 0.0, 0.906308]
-        for r, v in zip(result, value):
-            self.assertAlmostEqual(r, v, places=6)
+        self.compare_matrix(values,result)
 
     def test_rotateZ(self):
-        a = Mat3()
-        a.rotateZ(-36.0)
-        value = a.get_matrix()
+        a=Mat3.rotateZ(-36.0)
+        values = a.get_matrix()
         result = [0.809017, -0.587785, 0.0, 0.587785, 0.809017, 0.0, 0.0, 0.0, 1.0]
-        for r, v in zip(result, value):
-            self.assertAlmostEqual(r, v, places=6)
+        self.compare_matrix(values,result)
+
+
+
 
     def test_mult_mat3_mat3(self):
-        t1 = Mat3()
-        t2 = Mat3()
-        t1.rotateX(45.0)
-        t2.rotateY(35.0)
+        t1=Mat3.rotateX(45.0)
+        t2=Mat3.rotateY(35.0)
         test = t1 @ t2
         # fmt: off
-        # result = [0.81915, 0.0, -0.5735, 0.40557, 0.707, 0.57922, 0.40557, -0.7071, 0.5792]
         result = [0.8191, 0.4055, -0.405,0.0, 0.707, 0.707,0.5735, -0.5792, 0.5792]
         # fmt: on
-        value = test.get_matrix()
-        print(f"{result}\n{value}")
-        for r, v in zip(result, value):
-            self.assertAlmostEqual(r, v, places=2)
+        values = test.get_matrix()
+        self.compare_matrix(values,result,places=2)
 
         t1=Mat3.from_list([1,2,3,2,3,4,4,5,6])
         test=t1@t1
-        value = test.get_matrix()
-        res=[17, 23, 29,24, 33, 42,38, 53, 68]
-        for r, v in zip(res, value):
-            self.assertAlmostEqual(r, v, places=4)
+        values = test.get_matrix()
+        result=[17, 23, 29,24, 33, 42,38, 53, 68]
+        self.compare_matrix(values,result,places=2)
 
         
 
@@ -113,18 +108,30 @@ class TestMat3(unittest.TestCase):
             a = Mat3()
             c = a @ 2
 
+    def test_mat3_times_mat3(self) :
+        for a,b,result in zip(mat3Data.a,mat3Data.b,mat3Data.a_times_b) :
+            m1=Mat3.from_list(a)
+            m2=Mat3.from_list(b)
+            value=m1@m2
+            self.compare_matrix(value.get_matrix(), result)
+
+
     def test_mult_mat3_equal(self):
-        t1 = Mat3()
-        t2 = Mat3()
-        t1.rotateX(45.0)
-        t2.rotateY(35.0)
-        t1 @= t2
-        # fmt: off
-        result = [0.81915, 0.0, -0.5735, 0.40557, 0.707, 0.57922, 0.40557, -0.7071, 0.5792]
-        # fmt: on
-        value = t1.get_matrix()
-        for r, v in zip(result, value):
-            self.assertAlmostEqual(r, v, places=4)
+        for a,b,result in zip(mat3Data.a,mat3Data.b,mat3Data.a_times_b) :
+            m1=Mat3.from_list(a)
+            m2=Mat3.from_list(b)
+            m1@=m2
+            self.compare_matrix(m1.get_matrix(), result)
+
+    # def test_mult_mat3_equal(self):
+    #     t1=Mat3.rotateX(45.0)
+    #     t2=Mat3.rotateY(35.0)
+    #     t1 @=t2
+    #     # fmt: off
+    #     result = [0.81915, 0.0, -0.5735, 0.40557, 0.707, 0.57922, 0.40557, -0.7071, 0.5792]
+    #     # fmt: on
+    #     values = t1.get_matrix()
+    #     self.compare_matrix(values,result,places=2)
 
     def test_mat3_mult_vec3(self):
         t1 = Mat3()

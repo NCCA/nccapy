@@ -76,48 +76,52 @@ class Mat3:
         m = Mat3()
         m.m = [list(item) for item in zip(*self.m)]
         return m
-
-    def scale(self, x: float, y: float, z: float):
-        "set this matrix to be a scale matrix resetting to identity first"
-        self.m = copy.deepcopy(_identity)
-
-        self.m[0][0] = x
-        self.m[1][1] = y
-        self.m[2][2] = z
-
-    def rotateX(self, angle: float):
-        "set this matrix to be a rotation around the X axis by angle degrees"
-        self.m = copy.deepcopy(_identity)
+    @classmethod
+    def scale(cls, x: float, y: float, z: float):
+        "return a scale matrix resetting to identity first"
+        s=Mat3()
+        s.m[0][0] = x
+        s.m[1][1] = y
+        s.m[2][2] = z
+        return s
+    @classmethod
+    def rotateX(cls, angle: float):
+        "return a rotation around the X axis by angle degrees"
+        x=Mat3()
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
-        self.m[1][1] = cr
-        self.m[1][2] = sr
-        self.m[2][1] = -sr
-        self.m[2][2] = cr
-
+        x.m[1][1] = cr
+        x.m[1][2] = sr
+        x.m[2][1] = -sr
+        x.m[2][2] = cr
+        return x
+    @classmethod
     def rotateY(self, angle: float):
-        "set this matrix to be a rotation around the y axis by angle degrees"
-        self.m = copy.deepcopy(_identity)
+        "return a rotation around the y axis by angle degrees"
+        y=Mat3()
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
-        self.m[0][0] = cr
-        self.m[0][2] = -sr
-        self.m[2][0] = sr
-        self.m[2][2] = cr
+        y.m[0][0] = cr
+        y.m[0][2] = -sr
+        y.m[2][0] = sr
+        y.m[2][2] = cr
+        return y
 
+    @classmethod
     def rotateZ(self, angle: float):
-        "set this matrix to be a rotation around the Z axis by angle degrees"
-        self.m = copy.deepcopy(_identity)
+        "return a rotation around the Z axis by angle degrees"
+        z=Mat3()
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
-        self.m[0][0] = cr
-        self.m[0][1] = sr
-        self.m[1][0] = -sr
-        self.m[1][1] = cr
-
+        z.m[0][0] = cr
+        z.m[0][1] = sr
+        z.m[1][0] = -sr
+        z.m[1][1] = cr
+        return z
+    
     def __getitem__(self, idx):
         "access array elements remember this is a list of lists [[3],[3],[3]]"
         return self.m[idx]
@@ -172,7 +176,6 @@ class Mat3:
 
     def __matmul__(self, rhs):
         from nccapy.Math.Vec3 import Vec3
-
         "multiply matrix by another matrix"
         if isinstance(rhs, Mat3):
             return self._mat_mul(rhs)
