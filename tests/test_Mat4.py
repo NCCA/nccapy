@@ -191,3 +191,15 @@ class TestMat4(unittest.TestCase):
             m2=Mat4.from_list(b)
             m1-=m2
             self.compare_matrix(m1.get_matrix(), result)
+
+    def test_det(self) :
+        for a,result in zip(mat4Data.a,mat4Data.a_det) :
+            m1=Mat4.from_list(a)
+            value=m1.determinant()
+            self.assertAlmostEqual(value,result[0])
+
+    def test_inverse(self) :
+        for a,result in zip(mat4Data.a,mat4Data.a_inv) :
+            m1=Mat4.from_list(a)
+            value=m1.inverse()
+            self.compare_matrix(value.get_matrix(), result)

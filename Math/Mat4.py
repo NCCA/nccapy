@@ -253,6 +253,44 @@ class Mat4:
         return self
 
 
+    def determinant(self):
+        "determinant of matrix"
+        # Our matrices are 4.4 only, so we can just write the full formula instead of a complex algorithm.
+        return (
+      self.m[0][0]*self.m[1][1]*self.m[2][2]*self.m[3][3] - self.m[0][0]*self.m[1][1]*self.m[2][3]*self.m[3][2] + self.m[0][0]*self.m[1][2]*self.m[2][3]*self.m[3][1] - self.m[0][0]*self.m[1][2]*self.m[2][1]*self.m[3][3] + self.m[0][0]*self.m[1][3]*self.m[2][1]*self.m[3][2] - self.m[0][0]*self.m[1][3]*self.m[2][2]*self.m[3][1]
+    - self.m[1][0]*self.m[2][1]*self.m[3][2]*self.m[0][3] + self.m[1][0]*self.m[2][1]*self.m[0][2]*self.m[3][3] - self.m[1][0]*self.m[3][1]*self.m[0][2]*self.m[2][3] + self.m[1][0]*self.m[3][1]*self.m[2][2]*self.m[0][3] - self.m[1][0]*self.m[0][1]*self.m[2][2]*self.m[3][3] + self.m[1][0]*self.m[0][1]*self.m[3][2]*self.m[2][3]
+    + self.m[2][0]*self.m[3][1]*self.m[0][2]*self.m[1][3] - self.m[2][0]*self.m[3][1]*self.m[1][2]*self.m[0][3] + self.m[2][0]*self.m[0][1]*self.m[1][2]*self.m[3][3] - self.m[2][0]*self.m[0][1]*self.m[3][2]*self.m[1][3] + self.m[2][0]*self.m[1][1]*self.m[3][2]*self.m[0][3] - self.m[2][0]*self.m[1][1]*self.m[0][2]*self.m[3][3]
+    - self.m[3][0]*self.m[0][1]*self.m[1][2]*self.m[2][3] + self.m[3][0]*self.m[0][1]*self.m[2][2]*self.m[1][3] - self.m[3][0]*self.m[1][1]*self.m[2][2]*self.m[0][3] + self.m[3][0]*self.m[1][1]*self.m[0][2]*self.m[2][3] - self.m[3][0]*self.m[2][1]*self.m[0][2]*self.m[1][3] + self.m[3][0]*self.m[2][1]*self.m[1][2]*self.m[0][3]
+    )
+
+
+
+    def inverse(self):
+        "Inverse of matrix raise MatrixError if not calculable"
+        det = self.determinant()
+        try:
+            tmp=Mat4()
+            invdet = 1.0 / det
+            tmp.m[0][0] = self.m[1][1]*self.m[2][2]*self.m[3][3] + self.m[1][2]*self.m[2][3]*self.m[3][1] + self.m[1][3]*self.m[2][1]*self.m[3][2] - self.m[1][1]*self.m[3][2]*self.m[2][3] - self.m[1][2]*self.m[2][1]*self.m[3][3] - self.m[1][3]*self.m[2][2]*self.m[3][1] * invdet
+            tmp.m[0][1] = self.m[0][1]*self.m[2][3]*self.m[3][2] + self.m[0][2]*self.m[2][1]*self.m[3][3] + self.m[0][3]*self.m[2][2]*self.m[3][1] - self.m[0][1]*self.m[2][2]*self.m[3][3] - self.m[0][2]*self.m[2][3]*self.m[3][1] - self.m[0][3]*self.m[2][1]*self.m[3][2]  * invdet
+            tmp.m[0][2] = self.m[0][1]*self.m[1][2]*self.m[3][3] + self.m[0][2]*self.m[1][3]*self.m[3][1] + self.m[0][3]*self.m[1][1]*self.m[3][2] - self.m[0][1]*self.m[1][3]*self.m[3][2] - self.m[0][2]*self.m[1][1]*self.m[3][3] - self.m[0][3]*self.m[1][2]*self.m[3][1]  * invdet
+            tmp.m[0][3] = self.m[0][1]*self.m[1][3]*self.m[2][2] + self.m[0][2]*self.m[1][1]*self.m[2][3] + self.m[0][3]*self.m[1][2]*self.m[2][1] - self.m[0][1]*self.m[1][2]*self.m[2][3] - self.m[0][2]*self.m[1][3]*self.m[2][1] - self.m[0][3]*self.m[1][1]*self.m[2][2]  * invdet
+            tmp.m[1][0] = self.m[1][0]*self.m[2][3]*self.m[3][2] + self.m[1][2]*self.m[2][0]*self.m[3][3] + self.m[1][3]*self.m[2][2]*self.m[3][0] - self.m[1][0]*self.m[2][2]*self.m[3][3] - self.m[1][2]*self.m[2][3]*self.m[3][0] - self.m[1][3]*self.m[2][0]*self.m[3][2]  * invdet
+            tmp.m[1][1] = self.m[0][0]*self.m[2][2]*self.m[3][3] + self.m[0][2]*self.m[2][3]*self.m[3][0] + self.m[0][3]*self.m[2][0]*self.m[3][2] - self.m[0][0]*self.m[2][3]*self.m[3][2] - self.m[0][2]*self.m[2][0]*self.m[3][3] - self.m[0][3]*self.m[2][2]*self.m[3][0]  * invdet
+            tmp.m[1][2] = self.m[0][0]*self.m[1][3]*self.m[3][2] + self.m[0][2]*self.m[1][0]*self.m[3][3] + self.m[0][3]*self.m[1][2]*self.m[3][0] - self.m[0][0]*self.m[1][2]*self.m[3][3] - self.m[0][2]*self.m[1][3]*self.m[3][0] - self.m[0][3]*self.m[1][0]*self.m[3][2]  * invdet
+            tmp.m[1][3] = self.m[0][0]*self.m[1][2]*self.m[2][3] + self.m[0][2]*self.m[1][3]*self.m[2][0] + self.m[0][3]*self.m[1][0]*self.m[2][2] - self.m[0][0]*self.m[1][3]*self.m[2][2] - self.m[0][2]*self.m[1][0]*self.m[2][3] - self.m[0][3]*self.m[1][2]*self.m[2][0]  * invdet
+            tmp.m[2][0] = self.m[1][0]*self.m[2][1]*self.m[3][3] + self.m[1][1]*self.m[2][3]*self.m[3][0] + self.m[1][3]*self.m[2][0]*self.m[3][1] - self.m[1][0]*self.m[2][3]*self.m[3][1] - self.m[1][1]*self.m[2][0]*self.m[3][3] - self.m[1][3]*self.m[2][1]*self.m[3][0]  * invdet
+            tmp.m[2][1] = self.m[0][0]*self.m[2][3]*self.m[3][1] + self.m[0][1]*self.m[2][0]*self.m[3][3] + self.m[0][3]*self.m[2][1]*self.m[3][0] - self.m[0][0]*self.m[2][1]*self.m[3][3] - self.m[0][1]*self.m[2][3]*self.m[3][0] - self.m[0][3]*self.m[2][0]*self.m[3][1]  * invdet
+            tmp.m[2][2] = self.m[0][0]*self.m[1][1]*self.m[3][3] + self.m[0][1]*self.m[1][3]*self.m[3][0] + self.m[0][3]*self.m[1][0]*self.m[3][1] - self.m[0][0]*self.m[1][3]*self.m[3][1] - self.m[0][1]*self.m[1][0]*self.m[3][3] - self.m[0][3]*self.m[1][1]*self.m[3][0]  * invdet
+            tmp.m[2][3] = self.m[0][0]*self.m[1][3]*self.m[2][1] + self.m[0][1]*self.m[1][0]*self.m[2][3] + self.m[0][3]*self.m[1][1]*self.m[2][0] - self.m[0][0]*self.m[1][1]*self.m[2][3] - self.m[0][1]*self.m[1][3]*self.m[2][0] - self.m[0][3]*self.m[1][0]*self.m[2][1]  * invdet
+            tmp.m[3][0] = self.m[1][0]*self.m[2][2]*self.m[3][1] + self.m[1][1]*self.m[2][0]*self.m[3][2] + self.m[1][2]*self.m[2][1]*self.m[3][0] - self.m[1][0]*self.m[2][1]*self.m[3][2] - self.m[1][1]*self.m[2][2]*self.m[3][0] - self.m[1][2]*self.m[2][0]*self.m[3][1]  * invdet
+            tmp.m[3][1] = self.m[0][0]*self.m[2][1]*self.m[3][2] + self.m[0][1]*self.m[2][2]*self.m[3][0] + self.m[0][2]*self.m[2][0]*self.m[3][1] - self.m[0][0]*self.m[2][2]*self.m[3][1] - self.m[0][1]*self.m[2][0]*self.m[3][2] - self.m[0][2]*self.m[2][1]*self.m[3][0]  * invdet
+            tmp.m[3][2] = self.m[0][0]*self.m[1][2]*self.m[3][1] + self.m[0][1]*self.m[1][0]*self.m[3][2] + self.m[0][2]*self.m[1][1]*self.m[3][0] - self.m[0][0]*self.m[1][1]*self.m[3][2] - self.m[0][1]*self.m[1][2]*self.m[3][0] - self.m[0][2]*self.m[1][0]*self.m[3][1]  * invdet
+            tmp.m[3][3] = self.m[0][0]*self.m[1][1]*self.m[2][2] + self.m[0][1]*self.m[1][2]*self.m[2][0] + self.m[0][2]*self.m[1][0]*self.m[2][1] - self.m[0][0]*self.m[1][2]*self.m[2][1] - self.m[0][1]*self.m[1][0]*self.m[2][2] - self.m[0][2]*self.m[1][1]*self.m[2][0]  * invdet
+            return tmp
+        except:
+            raise Mat4Error
+
 
     def to_json(self) :
         return json.dumps(self, default=lambda o: {key : getattr(self, key, None) for key in self.__slots__}, 
