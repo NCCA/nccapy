@@ -199,7 +199,11 @@ class TestMat4(unittest.TestCase):
             self.assertAlmostEqual(value,result[0])
 
     def test_inverse(self) :
+        i=0
         for a,result in zip(mat4Data.a,mat4Data.a_inv) :
             m1=Mat4.from_list(a)
             value=m1.inverse()
+            print(i)
+            print(value)
             self.compare_matrix(value.get_matrix(), result)
+            i+=1
