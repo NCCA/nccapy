@@ -72,15 +72,11 @@ class Transform:
     def get_matrix(self):
         "return a transform matrix based on rotation order"
         if self.need_recalc is True:
-            scale = Mat4()
-            rx = Mat4()
-            ry = Mat4()
-            rz = Mat4()
             trans = Mat4()
-            scale.scale(self.scale.x, self.scale.y, self.scale.z)
-            rx.rotateX(self.rotation.x)
-            ry.rotateY(self.rotation.y)
-            rz.rotateZ(self.rotation.z)
+            scale=Mat4.scale(self.scale.x, self.scale.y, self.scale.z)
+            rx=Mat4.rotateX(self.rotation.x)
+            ry=Mat4.rotateY(self.rotation.y)
+            rz=Mat4.rotateZ(self.rotation.z)
             rotationScale = eval(self.rot_order.get(self.order)) @ scale
             print("eval\n {}\n".format(eval(self.rot_order.get(self.order))))
             self.matrix = rotationScale

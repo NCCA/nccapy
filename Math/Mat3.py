@@ -175,7 +175,7 @@ class Mat3:
         # fmt: on
 
     def __matmul__(self, rhs):
-        from nccapy.Math.Vec3 import Vec3
+        from .Vec3 import Vec3 # note relative import
         "multiply matrix by another matrix"
         if isinstance(rhs, Mat3):
             return self._mat_mul(rhs)

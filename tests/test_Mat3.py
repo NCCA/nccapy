@@ -136,7 +136,7 @@ class TestMat3(unittest.TestCase):
     def test_mat3_mult_vec3(self):
         t1 = Mat3()
         v1 = Vec3(1.0, 2.0, 3.0)
-        t1.rotateX(45.0)
+        t1=Mat3.rotateX(45.0)
         result = t1 @ v1
         self.assertAlmostEqual(result.x, 1.0, places=4)
         self.assertAlmostEqual(result.y, 3.535534, places=5)

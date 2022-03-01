@@ -205,12 +205,11 @@ class Mat4:
         # fmt: on
 
     def __matmul__(self, rhs):
-        from Math.Vec4 import Vec4
+        from .Vec4 import Vec4 # note relative import here
         "multiply matrix by another matrix"
         if isinstance(rhs, Mat4):
             return self._mat_mul(rhs)
-
-        elif isinstance(rhs, Vec4):
+        elif isinstance(rhs, (Vec4,Vec4)):
             # fmt: off
             return Vec4(
                 rhs.x * self.m[0][0] + rhs.y * self.m[0][1]+ rhs.z * self.m[0][2]+ rhs.w * self.m[0][3],
