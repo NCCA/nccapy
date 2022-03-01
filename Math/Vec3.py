@@ -5,6 +5,7 @@ import math
 from nccapy.Math.Util import clamp
 import json
 
+
 class Vec3:
     __slots__ = ["x", "y", "z"]
     "by using slots we fix our class attributes to x,y,z"
@@ -49,21 +50,13 @@ class Vec3:
         "test a==b using math.isclose"
         if not isinstance(rhs, Vec3):
             return NotImplemented
-        return (
-            math.isclose(self.x, rhs.x)
-            and math.isclose(self.y, rhs.y)
-            and math.isclose(self.z, rhs.z)
-        )
+        return math.isclose(self.x, rhs.x) and math.isclose(self.y, rhs.y) and math.isclose(self.z, rhs.z)
 
     def __neq__(self, rhs):
         "test a==b using math.isclose"
         if not isinstance(rhs, Vec3):
             return NotImplemented
-        return (
-            math.isclose(self.x, rhs.x)
-            or math.isclose(self.y, rhs.y)
-            or math.isclose(self.z, rhs.z)
-        )
+        return math.isclose(self.x, rhs.x) or math.isclose(self.y, rhs.y) or math.isclose(self.z, rhs.z)
 
     def __neg__(self):
         self.x = -self.x
@@ -121,9 +114,7 @@ class Vec3:
     def reflect(self, n):
         d = self.dot(n)
         #  I - 2.0 * dot(N, I) * N
-        return Vec3(
-            self.x - 2.0 * d * n.x, self.y - 2.0 * d * n.y, self.z - 2.0 * d * n.z
-        )
+        return Vec3(self.x - 2.0 * d * n.x, self.y - 2.0 * d * n.y, self.z - 2.0 * d * n.z)
 
     def clamp(self, low, high):
         self.x = clamp(self.x, low, high)
@@ -171,6 +162,6 @@ class Vec3:
             self.x * rhs.m[0][2] + self.y * rhs.m[1][2] + self.z * rhs.m[2][2],
         )
 
-    def to_json(self) :
-        a={"Vec3" : [self.x,self.y,self.z]}
-        return json.dumps(a,sort_keys=True, indent=4)
+    def to_json(self):
+        a = {"Vec3": [self.x, self.y, self.z]}
+        return json.dumps(a, sort_keys=True, indent=4)

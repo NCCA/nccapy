@@ -164,7 +164,7 @@ class TestVec4(unittest.TestCase):
 
     def test_matmul(self):
         a = Vec4(1, 2, 3, 1)
-        b=Mat4.rotateX(45.0)
+        b = Mat4.rotateX(45.0)
         c = a @ b
         self.assertAlmostEqual(c.x, 1.0)
         self.assertAlmostEqual(c.y, -0.707107, places=4)

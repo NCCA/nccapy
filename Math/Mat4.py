@@ -83,7 +83,7 @@ class Mat4:
     @classmethod
     def scale(cls, x: float, y: float, z: float):
         "return a new matrix as scale"
-        a=Mat4() # identity by default
+        a = Mat4()  # identity by default
         a.m[0][0] = x
         a.m[1][1] = y
         a.m[2][2] = z
@@ -92,7 +92,7 @@ class Mat4:
     @classmethod
     def rotateX(cls, angle):
         "return a rotation around the X axis by angle degrees"
-        a=Mat4()
+        a = Mat4()
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
@@ -105,7 +105,7 @@ class Mat4:
     @classmethod
     def rotateY(self, angle):
         "return a rotation around the Y axis by angle degrees"
-        a=Mat4()
+        a = Mat4()
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
@@ -118,7 +118,7 @@ class Mat4:
     @classmethod
     def rotateZ(self, angle):
         "return a rotation around the Z axis by angle degrees"
-        a=Mat4()
+        a = Mat4()
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
@@ -144,9 +144,7 @@ class Mat4:
         mulmat = Mat4()
         for x in range(4):
             for y in range(4):
-                mulmat[x][y] = sum(
-                    [item[0] * item[1] for item in zip(self.m[x], mat_t[y])]
-                )
+                mulmat[x][y] = sum([item[0] * item[1] for item in zip(self.m[x], mat_t[y])])
         return mulmat
 
     def _mat_mul(self, rhs):
@@ -205,11 +203,12 @@ class Mat4:
         # fmt: on
 
     def __matmul__(self, rhs):
-        from .Vec4 import Vec4 # note relative import here
+        from .Vec4 import Vec4  # note relative import here
+
         "multiply matrix by another matrix"
         if isinstance(rhs, Mat4):
             return self._mat_mul(rhs)
-        elif isinstance(rhs, (Vec4,Vec4)):
+        elif isinstance(rhs, (Vec4, Vec4)):
             # fmt: off
             return Vec4(
                 rhs.x * self.m[0][0] + rhs.y * self.m[0][1]+ rhs.z * self.m[0][2]+ rhs.w * self.m[0][3],
@@ -223,7 +222,6 @@ class Mat4:
     def __str__(self):
         return f"[{self.m[0]}\n{self.m[1]}\n{self.m[2]}\n{self.m[3]}]"
 
-
     def __add__(self, rhs):
         "piecewise addition of elements"
         temp = Mat4()
@@ -236,64 +234,189 @@ class Mat4:
         for i in range(0, len(self.m)):
             self.m[i] = [a + b for a, b in zip(self.m[i], rhs.m[i])]
         return self
-        
 
     def __sub__(self, rhs):
-        "piecewise addition of elements"
+        "piecewise subtraction of elements"
         temp = Mat4()
         for i in range(0, len(temp.m)):
             temp.m[i] = [a - b for a, b in zip(self.m[i], rhs.m[i])]
         return temp
 
     def __isub__(self, rhs):
-        "piecewise addition of elements to this"
+        "piecewise subtraction of elements to this"
         for i in range(0, len(self.m)):
             self.m[i] = [a - b for a, b in zip(self.m[i], rhs.m[i])]
         return self
-
 
     def determinant(self):
         "determinant of matrix"
         # Our matrices are 4.4 only, so we can just write the full formula instead of a complex algorithm.
         return (
-      self.m[0][0]*self.m[1][1]*self.m[2][2]*self.m[3][3] - self.m[0][0]*self.m[1][1]*self.m[2][3]*self.m[3][2] + self.m[0][0]*self.m[1][2]*self.m[2][3]*self.m[3][1] - self.m[0][0]*self.m[1][2]*self.m[2][1]*self.m[3][3] + self.m[0][0]*self.m[1][3]*self.m[2][1]*self.m[3][2] - self.m[0][0]*self.m[1][3]*self.m[2][2]*self.m[3][1]
-    - self.m[1][0]*self.m[2][1]*self.m[3][2]*self.m[0][3] + self.m[1][0]*self.m[2][1]*self.m[0][2]*self.m[3][3] - self.m[1][0]*self.m[3][1]*self.m[0][2]*self.m[2][3] + self.m[1][0]*self.m[3][1]*self.m[2][2]*self.m[0][3] - self.m[1][0]*self.m[0][1]*self.m[2][2]*self.m[3][3] + self.m[1][0]*self.m[0][1]*self.m[3][2]*self.m[2][3]
-    + self.m[2][0]*self.m[3][1]*self.m[0][2]*self.m[1][3] - self.m[2][0]*self.m[3][1]*self.m[1][2]*self.m[0][3] + self.m[2][0]*self.m[0][1]*self.m[1][2]*self.m[3][3] - self.m[2][0]*self.m[0][1]*self.m[3][2]*self.m[1][3] + self.m[2][0]*self.m[1][1]*self.m[3][2]*self.m[0][3] - self.m[2][0]*self.m[1][1]*self.m[0][2]*self.m[3][3]
-    - self.m[3][0]*self.m[0][1]*self.m[1][2]*self.m[2][3] + self.m[3][0]*self.m[0][1]*self.m[2][2]*self.m[1][3] - self.m[3][0]*self.m[1][1]*self.m[2][2]*self.m[0][3] + self.m[3][0]*self.m[1][1]*self.m[0][2]*self.m[2][3] - self.m[3][0]*self.m[2][1]*self.m[0][2]*self.m[1][3] + self.m[3][0]*self.m[2][1]*self.m[1][2]*self.m[0][3]
-    )
-
-
+            self.m[0][0] * self.m[1][1] * self.m[2][2] * self.m[3][3]
+            - self.m[0][0] * self.m[1][1] * self.m[2][3] * self.m[3][2]
+            + self.m[0][0] * self.m[1][2] * self.m[2][3] * self.m[3][1]
+            - self.m[0][0] * self.m[1][2] * self.m[2][1] * self.m[3][3]
+            + self.m[0][0] * self.m[1][3] * self.m[2][1] * self.m[3][2]
+            - self.m[0][0] * self.m[1][3] * self.m[2][2] * self.m[3][1]
+            - self.m[1][0] * self.m[2][1] * self.m[3][2] * self.m[0][3]
+            + self.m[1][0] * self.m[2][1] * self.m[0][2] * self.m[3][3]
+            - self.m[1][0] * self.m[3][1] * self.m[0][2] * self.m[2][3]
+            + self.m[1][0] * self.m[3][1] * self.m[2][2] * self.m[0][3]
+            - self.m[1][0] * self.m[0][1] * self.m[2][2] * self.m[3][3]
+            + self.m[1][0] * self.m[0][1] * self.m[3][2] * self.m[2][3]
+            + self.m[2][0] * self.m[3][1] * self.m[0][2] * self.m[1][3]
+            - self.m[2][0] * self.m[3][1] * self.m[1][2] * self.m[0][3]
+            + self.m[2][0] * self.m[0][1] * self.m[1][2] * self.m[3][3]
+            - self.m[2][0] * self.m[0][1] * self.m[3][2] * self.m[1][3]
+            + self.m[2][0] * self.m[1][1] * self.m[3][2] * self.m[0][3]
+            - self.m[2][0] * self.m[1][1] * self.m[0][2] * self.m[3][3]
+            - self.m[3][0] * self.m[0][1] * self.m[1][2] * self.m[2][3]
+            + self.m[3][0] * self.m[0][1] * self.m[2][2] * self.m[1][3]
+            - self.m[3][0] * self.m[1][1] * self.m[2][2] * self.m[0][3]
+            + self.m[3][0] * self.m[1][1] * self.m[0][2] * self.m[2][3]
+            - self.m[3][0] * self.m[2][1] * self.m[0][2] * self.m[1][3]
+            + self.m[3][0] * self.m[2][1] * self.m[1][2] * self.m[0][3]
+        )
 
     def inverse(self):
         "Inverse of matrix raise MatrixError if not calculable"
         try:
             det = self.determinant()
-            tmp=Mat4()
+            tmp = Mat4()
             invdet = 1.0 / det
-            tmp.m[0][0] = (self.m[1][1]*self.m[2][2]*self.m[3][3] + self.m[1][2]*self.m[2][3]*self.m[3][1] + self.m[1][3]*self.m[2][1]*self.m[3][2] - self.m[1][1]*self.m[3][2]*self.m[2][3] - self.m[1][2]*self.m[2][1]*self.m[3][3] - self.m[1][3]*self.m[2][2]*self.m[3][1]) * invdet
-            tmp.m[0][1] = (self.m[0][1]*self.m[2][3]*self.m[3][2] + self.m[0][2]*self.m[2][1]*self.m[3][3] + self.m[0][3]*self.m[2][2]*self.m[3][1] - self.m[0][1]*self.m[2][2]*self.m[3][3] - self.m[0][2]*self.m[2][3]*self.m[3][1] - self.m[0][3]*self.m[2][1]*self.m[3][2])  * invdet
-            tmp.m[0][2] = (self.m[0][1]*self.m[1][2]*self.m[3][3] + self.m[0][2]*self.m[1][3]*self.m[3][1] + self.m[0][3]*self.m[1][1]*self.m[3][2] - self.m[0][1]*self.m[1][3]*self.m[3][2] - self.m[0][2]*self.m[1][1]*self.m[3][3] - self.m[0][3]*self.m[1][2]*self.m[3][1])  * invdet
-            tmp.m[0][3] = (self.m[0][1]*self.m[1][3]*self.m[2][2] + self.m[0][2]*self.m[1][1]*self.m[2][3] + self.m[0][3]*self.m[1][2]*self.m[2][1] - self.m[0][1]*self.m[1][2]*self.m[2][3] - self.m[0][2]*self.m[1][3]*self.m[2][1] - self.m[0][3]*self.m[1][1]*self.m[2][2])  * invdet
-    
-            tmp.m[1][0] = (self.m[1][0]*self.m[2][3]*self.m[3][2] + self.m[1][2]*self.m[2][0]*self.m[3][3] + self.m[1][3]*self.m[2][2]*self.m[3][0] - self.m[1][0]*self.m[2][2]*self.m[3][3] - self.m[1][2]*self.m[2][3]*self.m[3][0] - self.m[1][3]*self.m[2][0]*self.m[3][2])  * invdet
-            tmp.m[1][1] = (self.m[0][0]*self.m[2][2]*self.m[3][3] + self.m[0][2]*self.m[2][3]*self.m[3][0] + self.m[0][3]*self.m[2][0]*self.m[3][2] - self.m[0][0]*self.m[2][3]*self.m[3][2] - self.m[0][2]*self.m[2][0]*self.m[3][3] - self.m[0][3]*self.m[2][2]*self.m[3][0])  * invdet
-            tmp.m[1][2] = (self.m[0][0]*self.m[1][3]*self.m[3][2] + self.m[0][2]*self.m[1][0]*self.m[3][3] + self.m[0][3]*self.m[1][2]*self.m[3][0] - self.m[0][0]*self.m[1][2]*self.m[3][3] - self.m[0][2]*self.m[1][3]*self.m[3][0] - self.m[0][3]*self.m[1][0]*self.m[3][2])  * invdet
-            tmp.m[1][3] = (self.m[0][0]*self.m[1][2]*self.m[2][3] + self.m[0][2]*self.m[1][3]*self.m[2][0] + self.m[0][3]*self.m[1][0]*self.m[2][2] - self.m[0][0]*self.m[1][3]*self.m[2][2] - self.m[0][2]*self.m[1][0]*self.m[2][3] - self.m[0][3]*self.m[1][2]*self.m[2][0])  * invdet
-    
-            tmp.m[2][0] = (self.m[1][0]*self.m[2][1]*self.m[3][3] + self.m[1][1]*self.m[2][3]*self.m[3][0] + self.m[1][3]*self.m[2][0]*self.m[3][1] - self.m[1][0]*self.m[2][3]*self.m[3][1] - self.m[1][1]*self.m[2][0]*self.m[3][3] - self.m[1][3]*self.m[2][1]*self.m[3][0])  * invdet
-            tmp.m[2][1] = (self.m[0][0]*self.m[2][3]*self.m[3][1] + self.m[0][1]*self.m[2][0]*self.m[3][3] + self.m[0][3]*self.m[2][1]*self.m[3][0] - self.m[0][0]*self.m[2][1]*self.m[3][3] - self.m[0][1]*self.m[2][3]*self.m[3][0] - self.m[0][3]*self.m[2][0]*self.m[3][1])  * invdet
-            tmp.m[2][2] = (self.m[0][0]*self.m[1][1]*self.m[3][3] + self.m[0][1]*self.m[1][3]*self.m[3][0] + self.m[0][3]*self.m[1][0]*self.m[3][1] - self.m[0][0]*self.m[1][3]*self.m[3][1] - self.m[0][1]*self.m[1][0]*self.m[3][3] - self.m[0][3]*self.m[1][1]*self.m[3][0])  * invdet
-            tmp.m[2][3] = (self.m[0][0]*self.m[1][3]*self.m[2][1] + self.m[0][1]*self.m[1][0]*self.m[2][3] + self.m[0][3]*self.m[1][1]*self.m[2][0] - self.m[0][0]*self.m[1][1]*self.m[2][3] - self.m[0][1]*self.m[1][3]*self.m[2][0] - self.m[0][3]*self.m[1][0]*self.m[2][1])  * invdet
-    
-            tmp.m[3][0] = (self.m[1][0]*self.m[2][2]*self.m[3][1] + self.m[1][1]*self.m[2][0]*self.m[3][2] + self.m[1][2]*self.m[2][1]*self.m[3][0] - self.m[1][0]*self.m[2][1]*self.m[3][2] - self.m[1][1]*self.m[2][2]*self.m[3][0] - self.m[1][2]*self.m[2][0]*self.m[3][1])  * invdet
-            tmp.m[3][1] = (self.m[0][0]*self.m[2][1]*self.m[3][2] + self.m[0][1]*self.m[2][2]*self.m[3][0] + self.m[0][2]*self.m[2][0]*self.m[3][1] - self.m[0][0]*self.m[2][2]*self.m[3][1] - self.m[0][1]*self.m[2][0]*self.m[3][2] - self.m[0][2]*self.m[2][1]*self.m[3][0])  * invdet
-            tmp.m[3][2] = (self.m[0][0]*self.m[1][2]*self.m[3][1] + self.m[0][1]*self.m[1][0]*self.m[3][2] + self.m[0][2]*self.m[1][1]*self.m[3][0] - self.m[0][0]*self.m[1][1]*self.m[3][2] - self.m[0][1]*self.m[1][2]*self.m[3][0] - self.m[0][2]*self.m[1][0]*self.m[3][1])  * invdet
-            tmp.m[3][3] = (self.m[0][0]*self.m[1][1]*self.m[2][2] + self.m[0][1]*self.m[1][2]*self.m[2][0] + self.m[0][2]*self.m[1][0]*self.m[2][1] - self.m[0][0]*self.m[1][2]*self.m[2][1] - self.m[0][1]*self.m[1][0]*self.m[2][2] - self.m[0][2]*self.m[1][1]*self.m[2][0])  * invdet
+            tmp.m[0][0] = (
+                self.m[1][1] * self.m[2][2] * self.m[3][3]
+                + self.m[1][2] * self.m[2][3] * self.m[3][1]
+                + self.m[1][3] * self.m[2][1] * self.m[3][2]
+                - self.m[1][1] * self.m[3][2] * self.m[2][3]
+                - self.m[1][2] * self.m[2][1] * self.m[3][3]
+                - self.m[1][3] * self.m[2][2] * self.m[3][1]
+            ) * invdet
+            tmp.m[0][1] = (
+                self.m[0][1] * self.m[2][3] * self.m[3][2]
+                + self.m[0][2] * self.m[2][1] * self.m[3][3]
+                + self.m[0][3] * self.m[2][2] * self.m[3][1]
+                - self.m[0][1] * self.m[2][2] * self.m[3][3]
+                - self.m[0][2] * self.m[2][3] * self.m[3][1]
+                - self.m[0][3] * self.m[2][1] * self.m[3][2]
+            ) * invdet
+            tmp.m[0][2] = (
+                self.m[0][1] * self.m[1][2] * self.m[3][3]
+                + self.m[0][2] * self.m[1][3] * self.m[3][1]
+                + self.m[0][3] * self.m[1][1] * self.m[3][2]
+                - self.m[0][1] * self.m[1][3] * self.m[3][2]
+                - self.m[0][2] * self.m[1][1] * self.m[3][3]
+                - self.m[0][3] * self.m[1][2] * self.m[3][1]
+            ) * invdet
+            tmp.m[0][3] = (
+                self.m[0][1] * self.m[1][3] * self.m[2][2]
+                + self.m[0][2] * self.m[1][1] * self.m[2][3]
+                + self.m[0][3] * self.m[1][2] * self.m[2][1]
+                - self.m[0][1] * self.m[1][2] * self.m[2][3]
+                - self.m[0][2] * self.m[1][3] * self.m[2][1]
+                - self.m[0][3] * self.m[1][1] * self.m[2][2]
+            ) * invdet
+            tmp.m[1][0] = (
+                self.m[1][0] * self.m[2][3] * self.m[3][2]
+                + self.m[1][2] * self.m[2][0] * self.m[3][3]
+                + self.m[1][3] * self.m[2][2] * self.m[3][0]
+                - self.m[1][0] * self.m[2][2] * self.m[3][3]
+                - self.m[1][2] * self.m[2][3] * self.m[3][0]
+                - self.m[1][3] * self.m[2][0] * self.m[3][2]
+            ) * invdet
+            tmp.m[1][1] = (
+                self.m[0][0] * self.m[2][2] * self.m[3][3]
+                + self.m[0][2] * self.m[2][3] * self.m[3][0]
+                + self.m[0][3] * self.m[2][0] * self.m[3][2]
+                - self.m[0][0] * self.m[2][3] * self.m[3][2]
+                - self.m[0][2] * self.m[2][0] * self.m[3][3]
+                - self.m[0][3] * self.m[2][2] * self.m[3][0]
+            ) * invdet
+            tmp.m[1][2] = (
+                self.m[0][0] * self.m[1][3] * self.m[3][2]
+                + self.m[0][2] * self.m[1][0] * self.m[3][3]
+                + self.m[0][3] * self.m[1][2] * self.m[3][0]
+                - self.m[0][0] * self.m[1][2] * self.m[3][3]
+                - self.m[0][2] * self.m[1][3] * self.m[3][0]
+                - self.m[0][3] * self.m[1][0] * self.m[3][2]
+            ) * invdet
+            tmp.m[1][3] = (
+                self.m[0][0] * self.m[1][2] * self.m[2][3]
+                + self.m[0][2] * self.m[1][3] * self.m[2][0]
+                + self.m[0][3] * self.m[1][0] * self.m[2][2]
+                - self.m[0][0] * self.m[1][3] * self.m[2][2]
+                - self.m[0][2] * self.m[1][0] * self.m[2][3]
+                - self.m[0][3] * self.m[1][2] * self.m[2][0]
+            ) * invdet
+            tmp.m[2][0] = (
+                self.m[1][0] * self.m[2][1] * self.m[3][3]
+                + self.m[1][1] * self.m[2][3] * self.m[3][0]
+                + self.m[1][3] * self.m[2][0] * self.m[3][1]
+                - self.m[1][0] * self.m[2][3] * self.m[3][1]
+                - self.m[1][1] * self.m[2][0] * self.m[3][3]
+                - self.m[1][3] * self.m[2][1] * self.m[3][0]
+            ) * invdet
+            tmp.m[2][1] = (
+                self.m[0][0] * self.m[2][3] * self.m[3][1]
+                + self.m[0][1] * self.m[2][0] * self.m[3][3]
+                + self.m[0][3] * self.m[2][1] * self.m[3][0]
+                - self.m[0][0] * self.m[2][1] * self.m[3][3]
+                - self.m[0][1] * self.m[2][3] * self.m[3][0]
+                - self.m[0][3] * self.m[2][0] * self.m[3][1]
+            ) * invdet
+            tmp.m[2][2] = (
+                self.m[0][0] * self.m[1][1] * self.m[3][3]
+                + self.m[0][1] * self.m[1][3] * self.m[3][0]
+                + self.m[0][3] * self.m[1][0] * self.m[3][1]
+                - self.m[0][0] * self.m[1][3] * self.m[3][1]
+                - self.m[0][1] * self.m[1][0] * self.m[3][3]
+                - self.m[0][3] * self.m[1][1] * self.m[3][0]
+            ) * invdet
+            tmp.m[2][3] = (
+                self.m[0][0] * self.m[1][3] * self.m[2][1]
+                + self.m[0][1] * self.m[1][0] * self.m[2][3]
+                + self.m[0][3] * self.m[1][1] * self.m[2][0]
+                - self.m[0][0] * self.m[1][1] * self.m[2][3]
+                - self.m[0][1] * self.m[1][3] * self.m[2][0]
+                - self.m[0][3] * self.m[1][0] * self.m[2][1]
+            ) * invdet
+            tmp.m[3][0] = (
+                self.m[1][0] * self.m[2][2] * self.m[3][1]
+                + self.m[1][1] * self.m[2][0] * self.m[3][2]
+                + self.m[1][2] * self.m[2][1] * self.m[3][0]
+                - self.m[1][0] * self.m[2][1] * self.m[3][2]
+                - self.m[1][1] * self.m[2][2] * self.m[3][0]
+                - self.m[1][2] * self.m[2][0] * self.m[3][1]
+            ) * invdet
+            tmp.m[3][1] = (
+                self.m[0][0] * self.m[2][1] * self.m[3][2]
+                + self.m[0][1] * self.m[2][2] * self.m[3][0]
+                + self.m[0][2] * self.m[2][0] * self.m[3][1]
+                - self.m[0][0] * self.m[2][2] * self.m[3][1]
+                - self.m[0][1] * self.m[2][0] * self.m[3][2]
+                - self.m[0][2] * self.m[2][1] * self.m[3][0]
+            ) * invdet
+            tmp.m[3][2] = (
+                self.m[0][0] * self.m[1][2] * self.m[3][1]
+                + self.m[0][1] * self.m[1][0] * self.m[3][2]
+                + self.m[0][2] * self.m[1][1] * self.m[3][0]
+                - self.m[0][0] * self.m[1][1] * self.m[3][2]
+                - self.m[0][1] * self.m[1][2] * self.m[3][0]
+                - self.m[0][2] * self.m[1][0] * self.m[3][1]
+            ) * invdet
+            tmp.m[3][3] = (
+                self.m[0][0] * self.m[1][1] * self.m[2][2]
+                + self.m[0][1] * self.m[1][2] * self.m[2][0]
+                + self.m[0][2] * self.m[1][0] * self.m[2][1]
+                - self.m[0][0] * self.m[1][2] * self.m[2][1]
+                - self.m[0][1] * self.m[1][0] * self.m[2][2]
+                - self.m[0][2] * self.m[1][1] * self.m[2][0]
+            ) * invdet
             return tmp
         except:
             raise Mat4Error
 
-
-    def to_json(self) :
-        return json.dumps(self, default=lambda o: {key : getattr(self, key, None) for key in self.__slots__}, 
-            sort_keys=True, indent=4)
+    def to_json(self):
+        return json.dumps(
+            self, default=lambda o: {key: getattr(self, key, None) for key in self.__slots__}, sort_keys=True, indent=4
+        )

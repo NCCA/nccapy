@@ -6,6 +6,7 @@ from Math.Vec4 import Vec4
 from Math.Mat4 import Mat4
 import json
 
+
 class TransformRotationOrder(Exception):
     pass
 
@@ -73,10 +74,10 @@ class Transform:
         "return a transform matrix based on rotation order"
         if self.need_recalc is True:
             trans = Mat4()
-            scale=Mat4.scale(self.scale.x, self.scale.y, self.scale.z)
-            rx=Mat4.rotateX(self.rotation.x)
-            ry=Mat4.rotateY(self.rotation.y)
-            rz=Mat4.rotateZ(self.rotation.z)
+            scale = Mat4.scale(self.scale.x, self.scale.y, self.scale.z)
+            rx = Mat4.rotateX(self.rotation.x)
+            ry = Mat4.rotateY(self.rotation.y)
+            rz = Mat4.rotateZ(self.rotation.z)
             rotationScale = eval(self.rot_order.get(self.order)) @ scale
             print("eval\n {}\n".format(eval(self.rot_order.get(self.order))))
             self.matrix = rotationScale
@@ -90,8 +91,5 @@ class Transform:
     def __str__(self):
         return f"pos {self.position}\nrot {self.rotation}\nscale {self.scale}"
 
-
-    def to_json(self) :
-        return json.dumps(self, default=lambda o: o.__dict__, 
-            sort_keys=True, indent=4)
-
+    def to_json(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)

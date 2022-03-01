@@ -8,6 +8,7 @@ import math
 import operator
 import json
 
+
 class Mat3Error(Exception):
     """An exception class for Mat3"""
 
@@ -44,9 +45,7 @@ class Mat3:
     def zero(cls):
         "class method to return a zero matrix"
         v = Mat3()
-        v.m = [
-            [0.0] * 3
-        ] * 3  # should we do this just because we can? ;-) 3x3 list of zeros
+        v.m = [[0.0] * 3] * 3  # should we do this just because we can? ;-) 3x3 list of zeros
         return v
 
     @classmethod
@@ -76,18 +75,20 @@ class Mat3:
         m = Mat3()
         m.m = [list(item) for item in zip(*self.m)]
         return m
+
     @classmethod
     def scale(cls, x: float, y: float, z: float):
         "return a scale matrix resetting to identity first"
-        s=Mat3()
+        s = Mat3()
         s.m[0][0] = x
         s.m[1][1] = y
         s.m[2][2] = z
         return s
+
     @classmethod
     def rotateX(cls, angle: float):
         "return a rotation around the X axis by angle degrees"
-        x=Mat3()
+        x = Mat3()
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
@@ -96,10 +97,11 @@ class Mat3:
         x.m[2][1] = -sr
         x.m[2][2] = cr
         return x
+
     @classmethod
     def rotateY(self, angle: float):
         "return a rotation around the y axis by angle degrees"
-        y=Mat3()
+        y = Mat3()
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
@@ -112,7 +114,7 @@ class Mat3:
     @classmethod
     def rotateZ(self, angle: float):
         "return a rotation around the Z axis by angle degrees"
-        z=Mat3()
+        z = Mat3()
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
@@ -121,7 +123,7 @@ class Mat3:
         z.m[1][0] = -sr
         z.m[1][1] = cr
         return z
-    
+
     def __getitem__(self, idx):
         "access array elements remember this is a list of lists [[3],[3],[3]]"
         return self.m[idx]
@@ -175,7 +177,8 @@ class Mat3:
         # fmt: on
 
     def __matmul__(self, rhs):
-        from .Vec3 import Vec3 # note relative import
+        from .Vec3 import Vec3  # note relative import
+
         "multiply matrix by another matrix"
         if isinstance(rhs, Mat3):
             return self._mat_mul(rhs)
@@ -201,6 +204,19 @@ class Mat3:
             self.m[i] = [a + b for a, b in zip(self.m[i], rhs.m[i])]
         return self
 
+    def __sub__(self, rhs):
+        "piecewise subtraction of elements"
+        temp = Mat3()
+        for i in range(0, len(temp.m)):
+            temp.m[i] = [a - b for a, b in zip(self.m[i], rhs.m[i])]
+        return temp
+
+    def __isub__(self, rhs):
+        "piecewise subtraction of elements to this"
+        for i in range(0, len(self.m)):
+            self.m[i] = [a - b for a, b in zip(self.m[i], rhs.m[i])]
+        return self
+
     def determinant(self):
         "determinant of matrix"
         return (
@@ -215,35 +231,18 @@ class Mat3:
         try:
             invdet = 1 / det
             tmp = Mat3()
-            tmp.m[0][0] = (
-                self.m[1][1] * self.m[2][2] - self.m[2][1] * self.m[1][2]
-            ) * invdet
-            tmp.m[0][1] = (
-                -(self.m[1][0] * self.m[2][2] - self.m[1][2] * self.m[2][0]) * invdet
-            )
-            tmp.m[0][2] = (
-                self.m[1][0] * self.m[2][1] - self.m[2][0] * self.m[1][1]
-            ) * invdet
+            # minor matrix + cofactor
+            tmp.m[0][0] = +(self.m[1][1] * self.m[2][2] - self.m[1][2] * self.m[2][1]) * invdet
+            tmp.m[1][0] = -(self.m[1][0] * self.m[2][2] - self.m[1][2] * self.m[2][0]) * invdet
+            tmp.m[2][0] = +(self.m[1][0] * self.m[2][1] - self.m[1][1] * self.m[2][0]) * invdet
 
-            tmp.m[1][0] = (
-                -(self.m[0][1] * self.m[2][2] - self.m[0][2] * self.m[2][1]) * invdet
-            )
-            tmp.m[1][1] = (
-                self.m[0][0] * self.m[2][2] - self.m[0][2] * self.m[2][0]
-            ) * invdet
-            tmp.m[1][2] = (
-                -(self.m[0][0] * self.m[2][1] - self.m[2][0] * self.m[0][1]) * invdet
-            )
+            tmp.m[0][1] = -(self.m[0][1] * self.m[2][2] - self.m[0][2] * self.m[2][1]) * invdet
+            tmp.m[1][1] = +(self.m[0][0] * self.m[2][2] - self.m[0][2] * self.m[2][0]) * invdet
+            tmp.m[2][1] = -(self.m[0][0] * self.m[2][1] - self.m[0][1] * self.m[2][0]) * invdet
 
-            tmp.m[2][0] = (
-                self.m[0][1] * self.m[1][2] - self.m[0][2] * self.m[1][1]
-            ) * invdet
-            tmp.m[2][1] = (
-                -(self.m[0][0] * self.m[1][2] - self.m[1][0] * self.m[0][2]) * invdet
-            )
-            tmp.m[2][2] = (
-                self.m[0][0] * self.m[1][1] - self.m[1][0] * self.m[0][1]
-            ) * invdet
+            tmp.m[0][2] = +(self.m[0][1] * self.m[1][2] - self.m[0][2] * self.m[1][1]) * invdet
+            tmp.m[1][2] = -(self.m[0][0] * self.m[1][2] - self.m[0][2] * self.m[1][0]) * invdet
+            tmp.m[2][2] = +(self.m[0][0] * self.m[1][1] - self.m[0][1] * self.m[1][0]) * invdet
 
             return tmp
         except:
@@ -252,6 +251,7 @@ class Mat3:
     def __str__(self):
         return f"[{self.m[0]}\n{self.m[1]}\n{self.m[2]}]"
 
-    def to_json(self) :
-        return json.dumps(self, default=lambda o: {key : getattr(self, key, None) for key in self.__slots__}, 
-            sort_keys=True, indent=4)
+    def to_json(self):
+        return json.dumps(
+            self, default=lambda o: {key: getattr(self, key, None) for key in self.__slots__}, sort_keys=True, indent=4
+        )
