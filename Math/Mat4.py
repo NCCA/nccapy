@@ -59,7 +59,7 @@ class Mat4:
         v.m = l
         if v._is_square() is not True:
             if len(l) == 16:  # can convert
-                v.m = [l[0:5], l[5:8], l[8:12], l[12:16]]
+                v.m = [l[0:4], l[4:8], l[8:12], l[12:16]]
                 return v
             else:
                 raise Mat4NotSquare
@@ -80,45 +80,53 @@ class Mat4:
         m.m = [list(item) for item in zip(*self.m)]
         return m
 
-    def scale(self, x: float, y: float, z: float):
-        "set this matrix to be a scale matrix resetting to identity first"
-        self.m = copy.deepcopy(_identity)
-        self.m[0][0] = x
-        self.m[1][1] = y
-        self.m[2][2] = z
+    @classmethod
+    def scale(cls, x: float, y: float, z: float):
+        "return a new matrix as scale"
+        a=Mat4() # identity by default
+        a.m[0][0] = x
+        a.m[1][1] = y
+        a.m[2][2] = z
+        return a
 
-    def rotateX(self, angle):
-        "set this matrix to be a rotation around the X axis by angle degrees"
-        self.m = copy.deepcopy(_identity)
+    @classmethod
+    def rotateX(cls, angle):
+        "return a rotation around the X axis by angle degrees"
+        a=Mat4()
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
-        self.m[1][1] = cr
-        self.m[1][2] = sr
-        self.m[2][1] = -sr
-        self.m[2][2] = cr
+        a.m[1][1] = cr
+        a.m[1][2] = sr
+        a.m[2][1] = -sr
+        a.m[2][2] = cr
+        return a
 
+    @classmethod
     def rotateY(self, angle):
-        "set this matrix to be a rotation around the Y axis by angle degrees"
-        self.m = copy.deepcopy(_identity)
+        "return a rotation around the Y axis by angle degrees"
+        a=Mat4()
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
-        self.m[0][0] = cr
-        self.m[0][2] = -sr
-        self.m[2][0] = sr
-        self.m[2][2] = cr
+        a.m[0][0] = cr
+        a.m[0][2] = -sr
+        a.m[2][0] = sr
+        a.m[2][2] = cr
+        return a
 
+    @classmethod
     def rotateZ(self, angle):
-        "set this matrix to be a rotation around the Z axis by angle degrees"
-        self.m = copy.deepcopy(_identity)
+        "return a rotation around the Z axis by angle degrees"
+        a=Mat4()
         beta = math.radians(angle)
         sr = math.sin(beta)
         cr = math.cos(beta)
-        self.m[0][0] = cr
-        self.m[0][1] = sr
-        self.m[1][0] = -sr
-        self.m[1][1] = cr
+        a.m[0][0] = cr
+        a.m[0][1] = sr
+        a.m[1][0] = -sr
+        a.m[1][1] = cr
+        return a
 
     def __getitem__(self, idx):
         "access array elements remember this is a list of lists [[4],[4],[4],[4]]"
@@ -215,6 +223,36 @@ class Mat4:
 
     def __str__(self):
         return f"[{self.m[0]}\n{self.m[1]}\n{self.m[2]}\n{self.m[3]}]"
+
+
+    def __add__(self, rhs):
+        "piecewise addition of elements"
+        temp = Mat4()
+        for i in range(0, len(temp.m)):
+            temp.m[i] = [a + b for a, b in zip(self.m[i], rhs.m[i])]
+        return temp
+
+    def __iadd__(self, rhs):
+        "piecewise addition of elements to this"
+        for i in range(0, len(self.m)):
+            self.m[i] = [a + b for a, b in zip(self.m[i], rhs.m[i])]
+        return self
+        
+
+    def __sub__(self, rhs):
+        "piecewise addition of elements"
+        temp = Mat4()
+        for i in range(0, len(temp.m)):
+            temp.m[i] = [a - b for a, b in zip(self.m[i], rhs.m[i])]
+        return temp
+
+    def __isub__(self, rhs):
+        "piecewise addition of elements to this"
+        for i in range(0, len(self.m)):
+            self.m[i] = [a - b for a, b in zip(self.m[i], rhs.m[i])]
+        return self
+
+
 
     def to_json(self) :
         return json.dumps(self, default=lambda o: {key : getattr(self, key, None) for key in self.__slots__}, 
