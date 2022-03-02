@@ -3,9 +3,9 @@ Simple Mat4 class which can be used with the Vec4 class
 """
 import copy
 import functools
+import json
 import math
 import operator
-import json
 
 
 class Mat4Error(Exception):
@@ -49,7 +49,12 @@ class Mat4:
     def zero(cls):
         "class method to return a zero matrix"
         v = Mat4()
-        v.m = [[0.0] * 4] * 4  # should we do this because we can 4x4 zeros ;-)
+        v.m = [
+            [0.0, 0.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0, 0.0],
+        ]
         return v
 
     @classmethod
@@ -144,7 +149,9 @@ class Mat4:
         mulmat = Mat4()
         for x in range(4):
             for y in range(4):
-                mulmat[x][y] = sum([item[0] * item[1] for item in zip(self.m[x], mat_t[y])])
+                mulmat[x][y] = sum(
+                    [item[0] * item[1] for item in zip(self.m[x], mat_t[y])]
+                )
         return mulmat
 
     def _mat_mul(self, rhs):
@@ -418,5 +425,8 @@ class Mat4:
 
     def to_json(self):
         return json.dumps(
-            self, default=lambda o: {key: getattr(self, key, None) for key in self.__slots__}, sort_keys=True, indent=4
+            self,
+            default=lambda o: {key: getattr(self, key, None) for key in self.__slots__},
+            sort_keys=True,
+            indent=4,
         )

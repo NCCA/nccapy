@@ -1,7 +1,9 @@
 import math
 import unittest
-from Math.Mat4 import Mat4, Mat4NotSquare, Mat4Error
+
+from Math.Mat4 import Mat4, Mat4Error, Mat4NotSquare
 from Math.Vec4 import Vec4
+
 import tests.mat4Data as mat4Data  # this is generated from the julia file gen_mat4_tests.jl
 
 
@@ -37,7 +39,9 @@ class TestMat4(unittest.TestCase):
         self.compare_matrix(ident, values)
 
     def test_from_list(self):
-        m = Mat4.from_list([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
+        m = Mat4.from_list(
+            [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]
+        )
         result = [i for i in range(1, 17)]
         self.compare_matrix(m.get_matrix(), result)
         m = Mat4.from_list([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
@@ -50,14 +54,18 @@ class TestMat4(unittest.TestCase):
             _ = Mat4.from_list([[], [], [], []])
 
     def test_transpose(self):
-        m = Mat4.from_list([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
+        m = Mat4.from_list(
+            [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]
+        )
         m.transpose()
         values = m.get_matrix()
         result = [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16]
         self.compare_matrix(values, result)
 
     def test_get_transpose(self):
-        m = Mat4.from_list([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
+        m = Mat4.from_list(
+            [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]
+        )
         b = m.get_transpose()
         values = b.get_matrix()
         result = [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16]

@@ -4,9 +4,9 @@ Simple Mat3 class which can be used with the Vec3 class
 
 import copy
 import functools
+import json
 import math
 import operator
-import json
 
 
 class Mat3Error(Exception):
@@ -45,7 +45,7 @@ class Mat3:
     def zero(cls):
         "class method to return a zero matrix"
         v = Mat3()
-        v.m = [[0.0] * 3] * 3  # should we do this just because we can? ;-) 3x3 list of zeros
+        v.m = [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
         return v
 
     @classmethod
@@ -232,17 +232,35 @@ class Mat3:
             invdet = 1 / det
             tmp = Mat3()
             # minor matrix + cofactor
-            tmp.m[0][0] = +(self.m[1][1] * self.m[2][2] - self.m[1][2] * self.m[2][1]) * invdet
-            tmp.m[1][0] = -(self.m[1][0] * self.m[2][2] - self.m[1][2] * self.m[2][0]) * invdet
-            tmp.m[2][0] = +(self.m[1][0] * self.m[2][1] - self.m[1][1] * self.m[2][0]) * invdet
+            tmp.m[0][0] = (
+                +(self.m[1][1] * self.m[2][2] - self.m[1][2] * self.m[2][1]) * invdet
+            )
+            tmp.m[1][0] = (
+                -(self.m[1][0] * self.m[2][2] - self.m[1][2] * self.m[2][0]) * invdet
+            )
+            tmp.m[2][0] = (
+                +(self.m[1][0] * self.m[2][1] - self.m[1][1] * self.m[2][0]) * invdet
+            )
 
-            tmp.m[0][1] = -(self.m[0][1] * self.m[2][2] - self.m[0][2] * self.m[2][1]) * invdet
-            tmp.m[1][1] = +(self.m[0][0] * self.m[2][2] - self.m[0][2] * self.m[2][0]) * invdet
-            tmp.m[2][1] = -(self.m[0][0] * self.m[2][1] - self.m[0][1] * self.m[2][0]) * invdet
+            tmp.m[0][1] = (
+                -(self.m[0][1] * self.m[2][2] - self.m[0][2] * self.m[2][1]) * invdet
+            )
+            tmp.m[1][1] = (
+                +(self.m[0][0] * self.m[2][2] - self.m[0][2] * self.m[2][0]) * invdet
+            )
+            tmp.m[2][1] = (
+                -(self.m[0][0] * self.m[2][1] - self.m[0][1] * self.m[2][0]) * invdet
+            )
 
-            tmp.m[0][2] = +(self.m[0][1] * self.m[1][2] - self.m[0][2] * self.m[1][1]) * invdet
-            tmp.m[1][2] = -(self.m[0][0] * self.m[1][2] - self.m[0][2] * self.m[1][0]) * invdet
-            tmp.m[2][2] = +(self.m[0][0] * self.m[1][1] - self.m[0][1] * self.m[1][0]) * invdet
+            tmp.m[0][2] = (
+                +(self.m[0][1] * self.m[1][2] - self.m[0][2] * self.m[1][1]) * invdet
+            )
+            tmp.m[1][2] = (
+                -(self.m[0][0] * self.m[1][2] - self.m[0][2] * self.m[1][0]) * invdet
+            )
+            tmp.m[2][2] = (
+                +(self.m[0][0] * self.m[1][1] - self.m[0][1] * self.m[1][0]) * invdet
+            )
 
             return tmp
         except:
@@ -253,5 +271,8 @@ class Mat3:
 
     def to_json(self):
         return json.dumps(
-            self, default=lambda o: {key: getattr(self, key, None) for key in self.__slots__}, sort_keys=True, indent=4
+            self,
+            default=lambda o: {key: getattr(self, key, None) for key in self.__slots__},
+            sort_keys=True,
+            indent=4,
         )
