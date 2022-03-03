@@ -39,22 +39,101 @@ class Obj(BaseMesh):
             z = 0.0
             if len(tokens) == 4:
                 z = float(tokens[3])
-            self.uv.append((float(tokens[1]), float(tokens[2]), z))
+            self.uv.append(Vec3(float(tokens[1]), float(tokens[2]), z))
             self._current_uv_offset += 1
         except:
             raise ObjParseError
 
     def _parse_face_vertex_normal_uv(self, tokens):
-        pass
+        """f v/vt/vn v/vt/vn v/vt/vn v/vt/vn"""
+        f = Face()
+        for token in tokens[1:]:  # skip f
+            # each one of these should be v/vt/vn
+            vn = token.split("/")
+            try:
+                # note we need to subtract one from the list as obj index from 1
+                idx = int(vn[0]) - 1
+                if idx < 0:  # negative index so grab the index
+                    # note we index from 0 not 1 like obj so adjust
+                    idx = self._current_vertex_offset + (idx + 1)
+                f.vert.append(idx)
+                # same for UV
+                idx = int(vn[1]) - 1
+                if idx < 0:  # negative index so grab the index
+                    # note we index from 0 not 1 like obj so adjust
+                    idx = self._current_uv_offset + (idx + 1)
+                f.uv.append(idx)
+                # same for normals
+                idx = int(vn[2]) - 1
+                if idx < 0:  # negative index so grab the index
+                    # note we index from 0 not 1 like obj so adjust
+                    idx = self._current_normal_offset + (idx + 1)
+                f.normal.append(idx)
+            except ValueError:
+                raise ObjParseError
+        self.faces.append(f)
 
     def _parse_face_vertex(self, tokens):
-        pass
+        """f v v v v"""
+        f = Face()
+        for token in tokens[1:]:  # skip f
+            # each one of these should be v v
+            try:
+                # note we need to subtract one from the list as obj index from 1
+                idx = int(token) - 1
+                if idx < 0:  # negative index so grab the index
+                    # note we index from 0 not 1 like obj so adjust
+                    idx = self._current_vertex_offset + (idx + 1)
+                f.vert.append(idx)
+            except ValueError:
+                raise ObjParseError
+        self.faces.append(f)
 
     def _parse_face_vertex_normal(self, tokens):
-        pass
+        """f v//vn v//vn v//vn v//vn"""
+        f = Face()
+        for token in tokens[1:]:  # skip f
+            # each one of these should be v/vt/vn
+            vn = token.split("//")
+            try:
+                # note we need to subtract one from the list as obj index from 1
+                idx = int(vn[0]) - 1
+                if idx < 0:  # negative index so grab the index
+                    # note we index from 0 not 1 like obj so adjust
+                    idx = self._current_vertex_offset + (idx + 1)
+                f.vert.append(idx)
+                # same for normals
+                idx = int(vn[1]) - 1
+                if idx < 0:  # negative index so grab the index
+                    # note we index from 0 not 1 like obj so adjust
+                    idx = self._current_normal_offset + (idx + 1)
+                f.normal.append(idx)
+            except ValueError:
+                raise ObjParseError
+        self.faces.append(f)
 
     def _parse_face_vertex_uv(self, tokens):
-        pass
+        """f v/vt v/vt v/vt v/vt"""
+        f = Face()
+        for token in tokens[1:]:  # skip f
+            # each one of these should be v/vt/vn
+            vn = token.split("/")
+            try:
+                # note we need to subtract one from the list as obj index from 1
+                idx = int(vn[0]) - 1
+                if idx < 0:  # negative index so grab the index
+                    # note we index from 0 not 1 like obj so adjust
+                    idx = self._current_vertex_offset + (idx + 1)
+                f.vert.append(idx)
+                # same for uv
+                idx = int(vn[1]) - 1
+                if idx < 0:  # negative index so grab the index
+                    # note we index from 0 not 1 like obj so adjust
+                    idx = self._current_uv_offset + (idx + 1)
+                f.uv.append(idx)
+            except ValueError:
+                raise ObjParseError
+        self.faces.append(f)
 
     def _parse_face(self, tokens):
         """face parsing is complex we have different layouts.
@@ -91,3 +170,46 @@ class Obj(BaseMesh):
                 elif tokens[0] == "f":
                     self._parse_face(tokens)
         return True
+
+    @classmethod
+    def from_file(cls, fname):
+        obj = Obj()
+        obj.load(fname)
+        return obj
+
+    def add_vertex(self, vert):
+        self.verts.append(vert)
+
+    def add_normal(self, normal):
+        self.normals.append(normal)
+
+    def add_uv(self, uv):
+        self.uv.append(uv)
+
+    def add_face(self, face):
+        self.faces.append(face)
+
+    def save(self, filename):
+        with open(filename, "w") as obj_file:
+            obj_file.write("# This file was created by nccapy/Geo/Obj.py exporter\n")
+            for v in self.verts:
+                obj_file.write(f"v {v.x} {v.y} {v.z} \n")
+            for v in self.uv:
+                obj_file.write(f"vt {v.x} {v.y} \n")
+            for v in self.normals:
+                obj_file.write(f"vn {v.x} {v.y} {v.z} \n")
+            # faces
+            for face in self.faces:
+                obj_file.write("f ")
+                for i in range(0, len(face.vert)):
+                    obj_file.write(f"{face.vert[i]+1}")  # vert first
+                    if len(face.uv) != 0:
+                        obj_file.write(f"/{face.uv[i]+1}")
+                    if len(face.normal) != 0:
+                        obj_file.write("/")
+                        # weird case where we do f 1//1
+                        if len(face.uv) == 0:
+                            obj_file.write("/")
+                        obj_file.write(f"{face.normal[i]+1} ")
+                    obj_file.write(" ")
+                obj_file.write("\n")
