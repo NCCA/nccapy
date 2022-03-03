@@ -1,5 +1,10 @@
 from typing import Any
 
+class Face:
+    vert: list
+    uv: list
+    normal: list
+
 class BaseMesh:
     verts: list
     normals: list
