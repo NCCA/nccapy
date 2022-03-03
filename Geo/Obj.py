@@ -21,6 +21,12 @@ class Obj(BaseMesh):
                 Vec3(float(tokens[1]), float(tokens[2]), float(tokens[3]))
             )
             self._current_vertex_offset += 1
+            if len(tokens) == 7:  # we have the non standard colour
+                if not hasattr(self, "colour"):
+                    self.colour = []
+                self.colour.append(
+                    Vec3(float(tokens[4]), float(tokens[5]), float(tokens[6]))
+                )
         except:
             raise ObjParseError
 
@@ -180,6 +186,12 @@ class Obj(BaseMesh):
     def add_vertex(self, vert):
         self.verts.append(vert)
 
+    def add_vertex_colour(self, vert, colour):
+        self.verts.append(vert)
+        if hasattr(self, "colour") == False:
+            self.colour = []
+        self.colour.append(colour)
+
     def add_normal(self, normal):
         self.normals.append(normal)
 
@@ -192,8 +204,13 @@ class Obj(BaseMesh):
     def save(self, filename):
         with open(filename, "w") as obj_file:
             obj_file.write("# This file was created by nccapy/Geo/Obj.py exporter\n")
-            for v in self.verts:
-                obj_file.write(f"v {v.x} {v.y} {v.z} \n")
+            for i, v in enumerate(self.verts):
+                obj_file.write(f"v {v.x} {v.y} {v.z} ")
+                if hasattr(self, "colour") == True:  # write colour if present
+                    obj_file.write(
+                        f"{self.colour[i].x} {self.colour[i].y} {self.colour[i].z} "
+                    )
+                obj_file.write("\n")
             for v in self.uv:
                 obj_file.write(f"vt {v.x} {v.y} \n")
             for v in self.normals:
