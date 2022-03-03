@@ -1,3 +1,8 @@
+"""Utility math module, contains various useful functions for 3D.
+
+Most of these functions are based on functions found in other libraries such as GLM, NGL or GLU 
+"""
+
 import math
 
 
@@ -9,6 +14,9 @@ def clamp(num, low, high):
 
 
 def look_at(eye, look, up):
+    """
+    Calculate 4x4 matrix for camera lookAt
+    """
     from .Mat4 import Mat4
     from .Vec3 import Vec3
 

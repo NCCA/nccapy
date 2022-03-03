@@ -1,5 +1,15 @@
 """
-Simple Mat3 class which can be used with the Vec3 class
+Simple Mat3 class which can be used with the Vec3 class. By default it will be set to the identity matrix
+
+all matrix values are stored in a 3x3 list in the format
+
+.. highlight:: python
+.. code-block:: python
+
+  m=[[1.0,0.0,0.0],
+     [0.0,1.0,0.0],
+     [0.0,1.0,0.0]]
+
 """
 
 import copy
@@ -10,13 +20,13 @@ import operator
 
 
 class Mat3Error(Exception):
-    """An exception class for Mat3"""
+    """This exception will be raised if we have issues with matrix multiplication or other mathematical operations"""
 
     pass
 
 
 class Mat3NotSquare(Exception):
-    """Make sure we have 3x3"""
+    """If we try to construct from a non square (3x3) value or 9 elements this exception will be thrown"""
 
     pass
 
@@ -25,32 +35,81 @@ _identity = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
 
 
 class Mat3:
+    """Simple Mat3 class for basic affine transforms"""
+
     __slots__ = ["m"]
+    """m : list 
+        the matrix values
+    """
 
     def __init__(self):
-        "construct to identity matrix"
+        """construct to identity matrix"""
         self.m = copy.deepcopy(_identity)
 
     def get_matrix(self):
-        "return matrix elements as list ideal for OpenGL etc"
+        """return matrix elements as list ideal for OpenGL
+
+        Returns
+        -------
+        list
+           the 9 float elements of the matrix, ideal
+           for OpenGL or Renderman consumption
+        """
+
         return functools.reduce(operator.concat, self.m)
 
     @classmethod
     def identity(cls):
-        "class method to return a new identity matrix"
+        """class method to return a new identity matrix
+
+        Returns
+        -------
+        Mat3
+            new Mat3 matrix as Identity
+
+        """
         v = Mat3()
         return v
 
     @classmethod
     def zero(cls):
-        "class method to return a zero matrix"
+        """class method to return a new zero matrix
+
+        Returns
+        -------
+        Mat3
+            new Mat3 matrix as all zeros
+
+        """
         v = Mat3()
         v.m = [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
         return v
 
     @classmethod
     def from_list(cls, l):
-        "class method to create mat3 from list"
+        """class method to create Mat3 from list
+
+        Parameters
+        ----------
+        l : list
+
+            list of 9 numbers to construct a new Mat3 from, we will accept either 9 floats or 3 lists of size 3
+
+            .. highlight:: python
+            .. code-block:: python
+
+                a=Mat3.from_list([1,2,3,4,5,6,7,8,9])
+                b=Mat3.from_list([1,2,3],[4,5,6],[7,8,9])
+
+        Returns
+        -------
+            Mat3
+                new Mat3 from list elements
+
+        :raises:
+            Mat3NotSquare : if we don't get a 3x3 we raise this
+
+        """
         v = Mat3()
         v.m = l
         if v._is_square() is not True:
@@ -63,22 +122,49 @@ class Mat3:
             return v
 
     def _is_square(self) -> bool:
-        "ensure matrix is square"
+        """ensure matrix is square"""
         return len(self.m) == 3 and all(len(i) == 3 for i in self.m)
 
     def transpose(self):
-        "traspose this matrix"
+        """transpose this matrix"""
         self.m = [list(item) for item in zip(*self.m)]
 
     def get_transpose(self):
-        "return a new matrix as the transpose of ourself"
+        """return a new matrix as the transpose of ourself
+
+        Returns
+        -------
+            Mat3
+                The transpose of the current matrix
+        """
         m = Mat3()
         m.m = [list(item) for item in zip(*self.m)]
         return m
 
     @classmethod
     def scale(cls, x: float, y: float, z: float):
-        "return a scale matrix resetting to identity first"
+        """return a scale matrix resetting to identity first
+
+        Parameters
+        ----------
+            x : float
+                uniform scale in the x axis
+            y : float
+                uniform scale in the y axis
+            z : float
+                uniform scale in the z axis
+
+        .. highlight:: python
+        .. code-block:: python
+
+            scale=Mat3.scale(2.0,1.0,3.0)
+
+        Returns
+        -------
+            Mat3
+                matrix with diagonals set to the scale
+
+        """
         s = Mat3()
         s.m[0][0] = x
         s.m[1][1] = y
@@ -87,7 +173,24 @@ class Mat3:
 
     @classmethod
     def rotateX(cls, angle: float):
-        "return a rotation around the X axis by angle degrees"
+        """return a matrix as the rotation around the Cartesian X axis by angle degrees
+
+        Parameters
+        ----------
+
+            angle : float
+                the angle in degrees to rotate
+
+        .. highlight:: python
+        .. code-block:: python
+
+            rotx=Mat3.rotateX(45.0)
+
+        Returns
+        -------
+            Mat3
+                rotation matrix
+        """
         x = Mat3()
         beta = math.radians(angle)
         sr = math.sin(beta)
@@ -100,7 +203,24 @@ class Mat3:
 
     @classmethod
     def rotateY(self, angle: float):
-        "return a rotation around the y axis by angle degrees"
+        """return a matrix as the rotation around the Cartesian Y axis by angle degrees
+
+        Parameters
+        ----------
+
+            angle : float
+                the angle in degrees to rotate
+
+        .. highlight:: python
+        .. code-block:: python
+
+            roty=Mat3.rotateY(45.0)
+
+        Returns
+        -------
+            Mat3
+                rotation matrix
+        """
         y = Mat3()
         beta = math.radians(angle)
         sr = math.sin(beta)
@@ -113,7 +233,24 @@ class Mat3:
 
     @classmethod
     def rotateZ(self, angle: float):
-        "return a rotation around the Z axis by angle degrees"
+        """return a matrix as the rotation around the Cartesian Z axis by angle degrees
+
+        Parameters
+        ----------
+
+            angle : float
+                the angle in degrees to rotate
+
+        .. highlight:: python
+        .. code-block:: python
+
+            rotz=Mat3.rotateZ(45.0)
+
+        Returns
+        -------
+            Mat3
+                rotation matrix
+        """
         z = Mat3()
         beta = math.radians(angle)
         sr = math.sin(beta)
@@ -125,14 +262,37 @@ class Mat3:
         return z
 
     def __getitem__(self, idx):
-        "access array elements remember this is a list of lists [[3],[3],[3]]"
+        """access array elements remember this is a list of lists [[3],[3],[3]]
+        Parameters
+        ----------
+            idx : int
+                the index into the list to get the sub list
+
+
+        """
         return self.m[idx]
 
     def __setitem__(self, idx, item):
-        "set items remember this is a list of lists [[3],[3],[3]]"
+        """set array elements remember this is a list of lists [[3],[3],[3]]
+
+        Parameters
+        ----------
+            idx : int
+                the index into the list to set the sub list
+        """
         self.m[idx] = item
 
     def __mul__(self, rhs):
+        """Multiply matrix by scalar
+
+        Parameters
+        __________
+            rhs : float int
+                multiply each matrix element by rhs
+
+        raises : Mat3Error
+            if rhs is not a number
+        """
         if isinstance(rhs, (int, float)):
             for i in len(self.m):
                 for j in len(self.m[i]):
@@ -177,9 +337,9 @@ class Mat3:
         # fmt: on
 
     def __matmul__(self, rhs):
+        "multiply matrix by another matrix"
         from .Vec3 import Vec3  # note relative import
 
-        "multiply matrix by another matrix"
         if isinstance(rhs, Mat3):
             return self._mat_mul(rhs)
         elif isinstance(rhs, Vec3):
@@ -267,9 +427,11 @@ class Mat3:
             raise Mat3Error
 
     def __str__(self):
+        """return string representation"""
         return f"[{self.m[0]}\n{self.m[1]}\n{self.m[2]}]"
 
     def to_json(self):
+        """dump as json  string"""
         return json.dumps(
             self,
             default=lambda o: {key: getattr(self, key, None) for key in self.__slots__},
