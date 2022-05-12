@@ -112,7 +112,7 @@ class Mat3:
         """
         v = Mat3()
         v.m = l
-        if v._is_square() is not True:
+        if not v._is_square():
             if len(l) == 9:  # can convert
                 v.m = [l[0:3], l[3:6], l[6:]]
                 return v

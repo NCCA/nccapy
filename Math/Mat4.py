@@ -59,10 +59,10 @@ class Mat4:
 
     @classmethod
     def from_list(cls, l):
-        "class method to create mat3 from list"
+        "class method to create mat4 from list"
         v = Mat4()
         v.m = l
-        if v._is_square() is not True:
+        if not v._is_square():
             if len(l) == 16:  # can convert
                 v.m = [l[0:4], l[4:8], l[8:12], l[12:16]]
                 return v
