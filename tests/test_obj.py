@@ -3,7 +3,8 @@ import os
 import pytest
 from os.path import exists
 
-from nccapy.Geo.Obj import Face, Obj
+from nccapy.Geo.BaseMesh import Face
+from nccapy.Geo.Obj import Obj
 from nccapy.Math.Mat4 import Mat4
 from nccapy.Math.Vec3 import Vec3
 

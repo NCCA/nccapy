@@ -1,4 +1,5 @@
 from typing import Any, Union
+
 from Math.Mat4 import Mat4
 
 class Vec4:

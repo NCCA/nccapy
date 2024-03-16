@@ -1,7 +1,6 @@
 from Math.Vec3 import Vec3
 
-from .BaseMesh import BaseMesh as BaseMesh
-from .BaseMesh import Face as Face
+from .BaseMesh import BaseMesh as BaseMesh, Face as Face
 
 class Obj(BaseMesh):
     def __init__(self) -> None: ...

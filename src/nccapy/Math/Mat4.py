@@ -1,6 +1,7 @@
 """
 Simple Mat4 class which can be used with the Vec4 class
 """
+
 import copy
 import functools
 import json
@@ -149,9 +150,7 @@ class Mat4:
         mulmat = Mat4()
         for x in range(4):
             for y in range(4):
-                mulmat[x][y] = sum(
-                    [item[0] * item[1] for item in zip(self.m[x], mat_t[y])]
-                )
+                mulmat[x][y] = sum([item[0] * item[1] for item in zip(self.m[x], mat_t[y])])
         return mulmat
 
     def _mat_mul(self, rhs):

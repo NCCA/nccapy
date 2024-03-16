@@ -1,9 +1,11 @@
 """
 Simple Float only Vec3 class for 3D graphics, very similar to the pyngl ones
 """
-import math
-from .Util import clamp
+
 import json
+import math
+
+from .Util import clamp
 
 
 class Vec3:
@@ -50,13 +52,21 @@ class Vec3:
         "test a==b using math.isclose"
         if not isinstance(rhs, Vec3):
             return NotImplemented
-        return math.isclose(self.x, rhs.x) and math.isclose(self.y, rhs.y) and math.isclose(self.z, rhs.z)
+        return (
+            math.isclose(self.x, rhs.x)
+            and math.isclose(self.y, rhs.y)
+            and math.isclose(self.z, rhs.z)
+        )
 
     def __neq__(self, rhs):
         "test a==b using math.isclose"
         if not isinstance(rhs, Vec3):
             return NotImplemented
-        return math.isclose(self.x, rhs.x) or math.isclose(self.y, rhs.y) or math.isclose(self.z, rhs.z)
+        return (
+            math.isclose(self.x, rhs.x)
+            or math.isclose(self.y, rhs.y)
+            or math.isclose(self.z, rhs.z)
+        )
 
     def __neg__(self):
         self.x = -self.x

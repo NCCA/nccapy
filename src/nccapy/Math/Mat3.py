@@ -392,35 +392,17 @@ class Mat3:
             invdet = 1 / det
             tmp = Mat3()
             # minor matrix + cofactor
-            tmp.m[0][0] = (
-                +(self.m[1][1] * self.m[2][2] - self.m[1][2] * self.m[2][1]) * invdet
-            )
-            tmp.m[1][0] = (
-                -(self.m[1][0] * self.m[2][2] - self.m[1][2] * self.m[2][0]) * invdet
-            )
-            tmp.m[2][0] = (
-                +(self.m[1][0] * self.m[2][1] - self.m[1][1] * self.m[2][0]) * invdet
-            )
+            tmp.m[0][0] = +(self.m[1][1] * self.m[2][2] - self.m[1][2] * self.m[2][1]) * invdet
+            tmp.m[1][0] = -(self.m[1][0] * self.m[2][2] - self.m[1][2] * self.m[2][0]) * invdet
+            tmp.m[2][0] = +(self.m[1][0] * self.m[2][1] - self.m[1][1] * self.m[2][0]) * invdet
 
-            tmp.m[0][1] = (
-                -(self.m[0][1] * self.m[2][2] - self.m[0][2] * self.m[2][1]) * invdet
-            )
-            tmp.m[1][1] = (
-                +(self.m[0][0] * self.m[2][2] - self.m[0][2] * self.m[2][0]) * invdet
-            )
-            tmp.m[2][1] = (
-                -(self.m[0][0] * self.m[2][1] - self.m[0][1] * self.m[2][0]) * invdet
-            )
+            tmp.m[0][1] = -(self.m[0][1] * self.m[2][2] - self.m[0][2] * self.m[2][1]) * invdet
+            tmp.m[1][1] = +(self.m[0][0] * self.m[2][2] - self.m[0][2] * self.m[2][0]) * invdet
+            tmp.m[2][1] = -(self.m[0][0] * self.m[2][1] - self.m[0][1] * self.m[2][0]) * invdet
 
-            tmp.m[0][2] = (
-                +(self.m[0][1] * self.m[1][2] - self.m[0][2] * self.m[1][1]) * invdet
-            )
-            tmp.m[1][2] = (
-                -(self.m[0][0] * self.m[1][2] - self.m[0][2] * self.m[1][0]) * invdet
-            )
-            tmp.m[2][2] = (
-                +(self.m[0][0] * self.m[1][1] - self.m[0][1] * self.m[1][0]) * invdet
-            )
+            tmp.m[0][2] = +(self.m[0][1] * self.m[1][2] - self.m[0][2] * self.m[1][1]) * invdet
+            tmp.m[1][2] = -(self.m[0][0] * self.m[1][2] - self.m[0][2] * self.m[1][0]) * invdet
+            tmp.m[2][2] = +(self.m[0][0] * self.m[1][1] - self.m[0][1] * self.m[1][0]) * invdet
 
             return tmp
         except:
