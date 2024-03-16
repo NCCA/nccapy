@@ -25,3 +25,8 @@ build-backend = "setuptools.build_meta"
 pythonpath = [
   "src"
 ]
+
+[tool.mypy]
+plugins = "pydantic.mypy"
+
+
