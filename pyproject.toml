@@ -1,0 +1,27 @@
+[project]
+name = "nccapy"
+authors = [
+  { name="Jon Macey", email="jmacey@bournemouth.ac.uk" },
+]
+description = "nccapy is a python package use for teaching graphics at the NCCA"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dynamic = ["version"]
+license = {file = "LICENSE.txt"}
+
+[project.urls]
+Homepage = "https://github.com/NCCA/nccapy"
+Issues = "https://github.com/NCCA/nccapy/issues"
+
+[build-system]
+requires = ["setuptools>=67.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]

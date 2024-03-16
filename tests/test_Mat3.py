@@ -1,8 +1,8 @@
 import math
 import pytest
 
-from Math.Mat3 import Mat3, Mat3NotSquare, Mat3Error
-from Math.Vec3 import Vec3
+from nccapy.Math.Mat3 import Mat3, Mat3NotSquare, Mat3Error
+from nccapy.Math.Vec3 import Vec3
 import tests.mat3Data as mat3Data  # this is generated from the julia file gen_mat4_tests.jl
 
 

@@ -4,7 +4,7 @@ Simple Float only Vec3 class for 3D graphics, very similar to the pyngl ones
 
 import math
 import json
-from nccapy.Math.Util import clamp
+from .Util import clamp
 
 
 class Vec4:

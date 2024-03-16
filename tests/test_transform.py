@@ -1,10 +1,10 @@
 import math
 import unittest
 import pytest
-from Math.Vec3 import Vec3 as Vec3
-from Math.Vec4 import Vec4 as Vec4
-from Math.Mat4 import Mat4 as Mat4
-from Math.Transform import Transform, TransformRotationOrder
+from nccapy.Math.Vec3 import Vec3 as Vec3
+from nccapy.Math.Vec4 import Vec4 as Vec4
+from nccapy.Math.Mat4 import Mat4 as Mat4
+from nccapy.Math.Transform import Transform, TransformRotationOrder
 
 orders = ["xyz", "yzx", "zxy", "xzy", "yxz", "zyx"]
 

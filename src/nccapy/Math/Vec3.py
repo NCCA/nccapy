@@ -2,7 +2,7 @@
 Simple Float only Vec3 class for 3D graphics, very similar to the pyngl ones
 """
 import math
-from nccapy.Math.Util import clamp
+from .Util import clamp
 import json
 
 
@@ -130,7 +130,7 @@ class Vec3:
         return "[{},{},{}]".format(self.x, self.y, self.z)
 
     def outer(self, rhs):
-        from nccapy.Math.Mat3 import Mat3
+        from .Mat3 import Mat3
 
         return Mat3.from_list(
             [

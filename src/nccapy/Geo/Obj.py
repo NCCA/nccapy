@@ -1,4 +1,4 @@
-from Math.Vec3 import Vec3
+from nccapy.Math import Vec3
 
 from .BaseMesh import BaseMesh, Face
 

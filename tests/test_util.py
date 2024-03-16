@@ -1,9 +1,9 @@
 import math
 import pytest
 
-from Math.Mat4 import Mat4
-from Math.Util import clamp, look_at, perspective
-from Math.Vec3 import Vec3
+from nccapy.Math.Mat4 import Mat4
+from nccapy.Math.Util import clamp, look_at, perspective
+from nccapy.Math.Vec3 import Vec3
 
 def test_clamp():
     assert clamp(2, 10, 20) == 10  # test  int up

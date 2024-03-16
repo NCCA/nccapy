@@ -1,7 +1,7 @@
 import math
 import pytest
-from Math.Vec4 import Vec4
-from Math.Mat4 import Mat4
+from nccapy.Math.Vec4 import Vec4
+from nccapy.Math.Mat4 import Mat4
 
 
 def test_ctor():
