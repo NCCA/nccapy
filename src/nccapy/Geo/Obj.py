@@ -1,5 +1,4 @@
-from nccapy.Math import Vec3
-
+from ..Math.Vec3 import Vec3
 from .BaseMesh import BaseMesh, Face
 
 
@@ -17,7 +16,7 @@ class Obj(BaseMesh):
 
     def _parse_vertex(self, tokens):
         try:
-            self.verts.append(Vec3(float(tokens[1]), float(tokens[2]), float(tokens[3])))
+            self.vertex.append(Vec3(float(tokens[1]), float(tokens[2]), float(tokens[3])))
             self._current_vertex_offset += 1
             if len(tokens) == 7:  # we have the non standard colour
                 if not hasattr(self, "colour"):
@@ -56,7 +55,7 @@ class Obj(BaseMesh):
                 if idx < 0:  # negative index so grab the index
                     # note we index from 0 not 1 like obj so adjust
                     idx = self._current_vertex_offset + (idx + 1)
-                f.vert.append(idx)
+                f.vertex.append(idx)
                 # same for UV
                 idx = int(vn[1]) - 1
                 if idx < 0:  # negative index so grab the index
@@ -84,7 +83,7 @@ class Obj(BaseMesh):
                 if idx < 0:  # negative index so grab the index
                     # note we index from 0 not 1 like obj so adjust
                     idx = self._current_vertex_offset + (idx + 1)
-                f.vert.append(idx)
+                f.vertex.append(idx)
             except ValueError:
                 raise ObjParseError
         self.faces.append(f)
@@ -101,7 +100,7 @@ class Obj(BaseMesh):
                 if idx < 0:  # negative index so grab the index
                     # note we index from 0 not 1 like obj so adjust
                     idx = self._current_vertex_offset + (idx + 1)
-                f.vert.append(idx)
+                f.vertex.append(idx)
                 # same for normals
                 idx = int(vn[1]) - 1
                 if idx < 0:  # negative index so grab the index
@@ -124,7 +123,7 @@ class Obj(BaseMesh):
                 if idx < 0:  # negative index so grab the index
                     # note we index from 0 not 1 like obj so adjust
                     idx = self._current_vertex_offset + (idx + 1)
-                f.vert.append(idx)
+                f.vertex.append(idx)
                 # same for uv
                 idx = int(vn[1]) - 1
                 if idx < 0:  # negative index so grab the index
@@ -177,11 +176,11 @@ class Obj(BaseMesh):
         obj.load(fname)
         return obj
 
-    def add_vertex(self, vert):
-        self.verts.append(vert)
+    def add_vertex(self, vertex):
+        self.vertex.append(vertex)
 
-    def add_vertex_colour(self, vert, colour):
-        self.verts.append(vert)
+    def add_vertex_colour(self, vertex, colour):
+        self.vertex.append(vertex)
         if hasattr(self, "colour") == False:
             self.colour = []
         self.colour.append(colour)
@@ -198,7 +197,7 @@ class Obj(BaseMesh):
     def save(self, filename):
         with open(filename, "w") as obj_file:
             obj_file.write("# This file was created by nccapy/Geo/Obj.py exporter\n")
-            for i, v in enumerate(self.verts):
+            for i, v in enumerate(self.vertex):
                 obj_file.write(f"v {v.x} {v.y} {v.z} ")
                 if hasattr(self, "colour") == True:  # write colour if present
                     obj_file.write(f"{self.colour[i].x} {self.colour[i].y} {self.colour[i].z} ")
@@ -210,8 +209,8 @@ class Obj(BaseMesh):
             # faces
             for face in self.faces:
                 obj_file.write("f ")
-                for i in range(0, len(face.vert)):
-                    obj_file.write(f"{face.vert[i]+1}")  # vert first
+                for i in range(0, len(face.vertex)):
+                    obj_file.write(f"{face.vertex[i]+1}")  # vert first
                     if len(face.uv) != 0:
                         obj_file.write(f"/{face.uv[i]+1}")
                     if len(face.normal) != 0:

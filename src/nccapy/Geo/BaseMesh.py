@@ -1,15 +1,15 @@
 class Face:
-    slots = ("vert", "uv", "normal")
+    slots = ("vertex", "uv", "normal")
 
     def __init__(self):
-        self.vert = []
+        self.vertex = []
         self.uv = []
         self.normal = []
 
 
 class BaseMesh:
     def __init__(self):
-        self.verts = []
+        self.vertex = []
         self.normals = []
         self.uv = []
         self.faces = []
