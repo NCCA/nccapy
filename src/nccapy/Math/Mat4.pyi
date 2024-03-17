@@ -1,6 +1,6 @@
 from typing import Any, Union
 
-from Math.Vec4 import Vec4
+from .Vec4 import Vec4
 
 class Mat4Error(Exception): ...
 class Mat4NotSquare(Exception): ...

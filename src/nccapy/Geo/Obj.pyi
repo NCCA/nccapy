@@ -1,4 +1,4 @@
-from Math.Vec3 import Vec3
+from ..Math.Vec3 import Vec3
 
 from .BaseMesh import BaseMesh as BaseMesh, Face as Face
 

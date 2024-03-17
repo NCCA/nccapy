@@ -1,5 +1,5 @@
-from Math.Mat4 import Mat4
-from Math.Vec3 import Vec3
+from .Mat4 import Mat4
+from .Vec3 import Vec3
 
 def clamp(num, low, high): ...
 def look_at(eye: Vec3, look: Vec3, up: Vec3) -> Mat4: ...

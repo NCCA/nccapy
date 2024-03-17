@@ -25,6 +25,15 @@ build-backend = "setuptools.build_meta"
 pythonpath = [
   "src"
 ]
+[tool.mypy]
+disable_error_code = "import-untyped"
+warn_return_any = true
+warn_unused_configs = true
+follow_imports="skip"
+exclude = "tests/*" 
+namespace_packages = true
+explicit_package_bases = true
+
 
 
 [tool.black]

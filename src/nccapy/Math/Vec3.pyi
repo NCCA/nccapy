@@ -1,6 +1,6 @@
 from typing import Any, Union
 
-from Math.Mat3 import Mat3
+from .Mat3 import Mat3
 
 class Vec3:
     x: float
