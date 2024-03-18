@@ -17,3 +17,29 @@ pip install nccapy
 ## Modules
 
 
+## Developer notes
+
+To build the package run the following command
+
+```bash
+python -m pip install build
+python -m build
+```
+
+To run the tests use the following command
+
+```
+pytest -v .
+```
+
+for coverage reports use the following command
+
+```bash
+coverage run --source=src/nccapy -m pytest -v tests && coverage report -m
+```
+
+This will create a dist folder with the package in it. You can then install the package using pip
+
+```bash
+pip install dist/nccapy-0.0.1-py3-none-any.whl
+```

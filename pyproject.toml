@@ -11,9 +11,10 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 license = {file = "LICENSE.txt"}
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
-    "pillow"]
+    "pillow",
+    "typing_extensions"]
 [project.urls]
 Homepage = "https://github.com/NCCA/nccapy"
 Issues = "https://github.com/NCCA/nccapy/issues"
