@@ -10,9 +10,10 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-dynamic = ["version"]
 license = {file = "LICENSE.txt"}
-
+version = "0.0.3"
+dependencies = [
+    "pillow"]
 [project.urls]
 Homepage = "https://github.com/NCCA/nccapy"
 Issues = "https://github.com/NCCA/nccapy/issues"
