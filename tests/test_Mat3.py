@@ -91,6 +91,7 @@ def test_mult_error():
     with pytest.raises(Mat3Error):
         a = Mat3()
         c = a @ 2
+        a*"a"
 
 def test_mat3_times_mat3():
     for a, b, result in zip(mat3Data.a, mat3Data.b, mat3Data.a_times_b):
@@ -137,6 +138,14 @@ def test_mat3_plus_equal():
         m1 += m2
         assert m1.get_matrix() == pytest.approx(result)
 
+def test_mat3_mult_float():
+    a= Mat3.from_list([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    b = a * 2
+    result = [2, 4, 6, 8, 10, 12, 14, 16, 18]
+    assert b.get_matrix() == pytest.approx(result)
+    with pytest.raises(Mat3Error):
+        a = a * "hello"
+
 def test_mat3_minus_mat3():
     for a, b, result in zip(mat3Data.a, mat3Data.b, mat3Data.a_minus_b):
         m1 = Mat3.from_list(a)
@@ -156,10 +165,38 @@ def test_det():
         m1 = Mat3.from_list(a)
         value = m1.determinant()
         assert value == pytest.approx(result[0])
-
-        
+            
 def test_inverse():
     for a, result in zip(mat3Data.a, mat3Data.a_inv):
         m1 = Mat3.from_list(a)
         value = m1.inverse()
         assert value.get_matrix() == pytest.approx(result)
+    with pytest.raises(Mat3Error):
+        m= Mat3.zero()
+        m.inverse()
+def test_subscript() :
+    a = Mat3.from_list([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    assert a[0][0] == 1
+    assert a[0][1] == 2
+    assert a[0][2] == 3
+    assert a[1][0] == 4
+    assert a[1][1] == 5
+    assert a[1][2] == 6
+    assert a[2][0] == 7
+    assert a[2][1] == 8
+    assert a[2][2] == 9
+
+def test_subscript_set() :
+    a = Mat3.identity()
+    a[0]= [1,1,1]
+    a[1]= [2,2,2]
+    a[2]= [3,3,3]
+
+    assert a[0] == [1,1,1]
+    assert a[1] == [2,2,2]
+    assert a[2] == [3,3,3]
+
+def test_strings() :
+    a=Mat3.identity()
+    assert str(a) == "[[1.0, 0.0, 0.0]\n[0.0, 1.0, 0.0]\n[0.0, 0.0, 1.0]]"
+    assert repr(a) == "Mat3([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])"

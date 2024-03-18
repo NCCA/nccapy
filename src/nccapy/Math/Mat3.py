@@ -294,8 +294,8 @@ class Mat3:
             if rhs is not a number
         """
         if isinstance(rhs, (int, float)):
-            for i in len(self.m):
-                for j in len(self.m[i]):
+            for i in range(0,len(self.m)):
+                for j in range(0,len(self.m[i])):
                     self.m[i][j] *= rhs
             return self
         raise Mat3Error
@@ -391,7 +391,7 @@ class Mat3:
         try:
             invdet = 1 / det
             tmp = Mat3()
-            # minor matrix + cofactor
+            # minor matrix + co-factor
             tmp.m[0][0] = +(self.m[1][1] * self.m[2][2] - self.m[1][2] * self.m[2][1]) * invdet
             tmp.m[1][0] = -(self.m[1][0] * self.m[2][2] - self.m[1][2] * self.m[2][0]) * invdet
             tmp.m[2][0] = +(self.m[1][0] * self.m[2][1] - self.m[1][1] * self.m[2][0]) * invdet
@@ -412,11 +412,6 @@ class Mat3:
         """return string representation"""
         return f"[{self.m[0]}\n{self.m[1]}\n{self.m[2]}]"
 
-    def to_json(self):
-        """dump as json  string"""
-        return json.dumps(
-            self,
-            default=lambda o: {key: getattr(self, key, None) for key in self.__slots__},
-            sort_keys=True,
-            indent=4,
-        )
+    def __repr__(self):
+        """return string representation"""
+        return f"Mat3({self.m})"

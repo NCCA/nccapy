@@ -132,13 +132,12 @@ class Vec3:
         self.z = clamp(self.z, low, high)
 
     def __repr__(self):
-        "may update to f-strings soon"
-        return "Vec3 [{},{},{}]".format(self.x, self.y, self.z)
-
+        "object representation for debugging"
+        return f"Vec3 [{self.x},{self.y},{self.z}]"
     def __str__(self):
-        "may update to f-strings soon"
-        return "[{},{},{}]".format(self.x, self.y, self.z)
-
+        "object representation for debugging"
+        return f"[{self.x},{self.y},{self.z}]"
+    
     def outer(self, rhs):
         from .Mat3 import Mat3
 
@@ -172,6 +171,3 @@ class Vec3:
             self.x * rhs.m[0][2] + self.y * rhs.m[1][2] + self.z * rhs.m[2][2],
         )
 
-    def to_json(self):
-        a = {"Vec3": [self.x, self.y, self.z]}
-        return json.dumps(a, sort_keys=True, indent=4)

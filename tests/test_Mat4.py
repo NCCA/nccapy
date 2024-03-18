@@ -194,3 +194,35 @@ def test_inverse():
         m1 = Mat4.from_list(a)
         value = m1.inverse()
         assert value.get_matrix() == pytest.approx(result)
+    with pytest.raises(Mat4Error):
+        m1 = Mat4.zero()
+        m1.inverse()
+
+
+def test_subscript() :
+    a = Mat4.from_list([[1, 2, 3,4], [5, 6, 7,8], [9, 10, 11,12],[13, 14, 15, 16]])
+    assert a[0] == [1,2,3,4]
+    assert a[1] == [5,6,7,8]
+    assert a[2] == [9,10,11,12]
+    assert a[3] == [13,14,15,16]
+
+def test_subscript_set() :
+    a= Mat4()
+    a[0] = [1,2,3,4]
+    a[1] = [5,6,7,8]
+    a[2] = [9,10,11,12]
+    a[3] = [13,14,15,16]
+    assert a.get_matrix() == pytest.approx([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16])
+
+def test_mult() :
+    a = Mat4.from_list([[1, 2, 3,4], [5, 6, 7,8], [9, 10, 11,12],[13, 14, 15, 16]])
+    b = a * 2
+    result = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32]
+    assert b.get_matrix() == pytest.approx(result)
+    with pytest.raises(Mat4Error):
+        a = a * "hello"
+
+def test_strings() :
+    a=Mat4.identity()
+    assert str(a) == "[[1.0, 0.0, 0.0, 0.0]\n[0.0, 1.0, 0.0, 0.0]\n[0.0, 0.0, 1.0, 0.0]\n[0.0, 0.0, 0.0, 1.0]]"
+    assert repr(a) == 'Mat4([[1.0, 0.0, 0.0, 0.0], [0.0, 1.0, 0.0, 0.0], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, 0.0, 1.0]])'

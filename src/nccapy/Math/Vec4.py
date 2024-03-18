@@ -152,17 +152,8 @@ class Vec4:
         )
 
     def __repr__(self):
-        "may update to f-strings soon"
-        return "Vec4 [{},{},{},{}]".format(self.x, self.y, self.z, self.z)
-
+        "repr for debugging purposes"
+        return f"Vec4 [{self.x},{self.y},{self.z},{self.w}]"
     def __str__(self):
-        "may update to f-strings soon"
-        return "[{},{},{},{}]".format(self.x, self.y, self.z, self.w)
-
-    def to_json(self):
-        return json.dumps(
-            self,
-            default=lambda o: {key: getattr(self, key, None) for key in self.__slots__},
-            sort_keys=True,
-            indent=4,
-        )
+        "print out the vector as a string"
+        return f"[{self.x},{self.y},{self.z},{self.w}]"

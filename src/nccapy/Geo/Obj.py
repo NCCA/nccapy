@@ -2,7 +2,16 @@ from ..Math.Vec3 import Vec3
 from .BaseMesh import BaseMesh, Face
 
 
-class ObjParseError(Exception):
+class ObjParseVertexError(Exception):
+    pass
+
+class ObjParseNormalError(Exception):
+    pass
+
+class ObjParseUVError(Exception):
+    pass
+
+class ObjParseFaceError(Exception):
     pass
 
 
@@ -23,14 +32,14 @@ class Obj(BaseMesh):
                     self.colour = []
                 self.colour.append(Vec3(float(tokens[4]), float(tokens[5]), float(tokens[6])))
         except:
-            raise ObjParseError
+            raise ObjParseVertexError
 
     def _parse_normal(self, tokens):
         try:
             self.normals.append(Vec3(float(tokens[1]), float(tokens[2]), float(tokens[3])))
             self._current_normal_offset += 1
         except:
-            raise ObjParseError
+            raise ObjParseNormalError
 
     def _parse_uv(self, tokens):
         try:
@@ -41,7 +50,7 @@ class Obj(BaseMesh):
             self.uv.append(Vec3(float(tokens[1]), float(tokens[2]), z))
             self._current_uv_offset += 1
         except:
-            raise ObjParseError
+            raise ObjParseUVError
 
     def _parse_face_vertex_normal_uv(self, tokens):
         """f v/vt/vn v/vt/vn v/vt/vn v/vt/vn"""
@@ -69,7 +78,7 @@ class Obj(BaseMesh):
                     idx = self._current_normal_offset + (idx + 1)
                 f.normal.append(idx)
             except ValueError:
-                raise ObjParseError
+                raise ObjParseFaceError
         self.faces.append(f)
 
     def _parse_face_vertex(self, tokens):
@@ -85,7 +94,7 @@ class Obj(BaseMesh):
                     idx = self._current_vertex_offset + (idx + 1)
                 f.vertex.append(idx)
             except ValueError:
-                raise ObjParseError
+                raise ObjParseFaceError
         self.faces.append(f)
 
     def _parse_face_vertex_normal(self, tokens):
@@ -108,7 +117,7 @@ class Obj(BaseMesh):
                     idx = self._current_normal_offset + (idx + 1)
                 f.normal.append(idx)
             except ValueError:
-                raise ObjParseError
+                raise ObjParseFaceError
         self.faces.append(f)
 
     def _parse_face_vertex_uv(self, tokens):
@@ -131,7 +140,7 @@ class Obj(BaseMesh):
                     idx = self._current_uv_offset + (idx + 1)
                 f.uv.append(idx)
             except ValueError:
-                raise ObjParseError
+                raise ObjParseFaceError
         self.faces.append(f)
 
     def _parse_face(self, tokens):

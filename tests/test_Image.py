@@ -29,6 +29,9 @@ def test_save():
     assert image.save("green.png")
     image.clear(0, 0, 255, 255)
     assert image.save("blue.png")
+    
+    # try to write to a forbidden directory
+    assert not image.save("/test.png")
 
 def test_load():
     image = Image(0, 0)
@@ -40,6 +43,8 @@ def test_load():
         assert pixel.green() == 0
         assert pixel.blue() == 0
         assert pixel.alpha() == 255
+    with pytest.raises(IOError):
+        assert not image.load("nonexistent.png")
 
 def test_set_get():
     image = Image(10, 10)
@@ -47,6 +52,11 @@ def test_set_get():
         for y in range(0, 10):
             image.set_pixel(x, y, 128, 255, 64, 255)
     assert image.save("setPixel.png")
+
+    with pytest.raises(IndexError):
+        image.set_pixel(11, 11, 128, 255, 64, 255)
+    with pytest.raises(IndexError):
+        r,b,b,a= image.get_pixel(11, 11) 
 
     for x in range(0, 10):
         for y in range(0, 10):

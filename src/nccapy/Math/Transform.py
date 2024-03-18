@@ -93,5 +93,3 @@ class Transform:
     def __str__(self):
         return f"pos {self.position}\nrot {self.rotation}\nscale {self.scale}"
 
-    def to_json(self):
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)

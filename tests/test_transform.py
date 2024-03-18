@@ -121,6 +121,11 @@ def test_set_rotation_order():
     with pytest.raises(TransformRotationOrder):
         tx.set_order("bogus")
 
+def test_str() :
+    tx = Transform()
+    assert str(tx) == 'pos [0.0,0.0,0.0]\nrot [0.0,0.0,0.0]\nscale [1.0,1.0,1.0]'
+
+
 def test_rotation_orders():
     tx = Transform()
     tx.set_rotation(45, 25, 35)

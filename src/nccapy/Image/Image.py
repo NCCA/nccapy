@@ -1,21 +1,20 @@
 from io import BytesIO
-from typing import Tuple
+from typing import Any, Union,Type, Tuple
 
 import PIL.Image
-from typing_extensions import Self
 
 from .RGBA import RGBA
 
 
 class Image:
-    def __init__(self, width: int, height: int):
+    def __init__(self, width: int, height: int) -> None:
         self.width = width
         self.height = height
         self.pixels = list()
         for i in range(width * height):
             self.pixels.append(RGBA())
 
-    def clear(self, r: int, g: int, b: int, a: int = 255):
+    def clear(self, r: int, g: int, b: int, a: int = 255) -> None:
         for pixel in self.pixels:
             pixel.set(r, g, b, a)
 
@@ -46,7 +45,7 @@ class Image:
                     )
 
         except IOError:
-            return False
+            raise IOError
         return True
 
     def set_pixel(self, x: int, y: int, r: int, g: int, b: int, a: int = 255) -> None:
@@ -54,18 +53,17 @@ class Image:
         try:
             self.pixels[offset].set(r, g, b, a)
         except IndexError:
-            # print(f"error out of bounds for {x=} {y=}")
-            pass
+            raise IndexError
 
-    def get_pixel(self, x: int, y: int) -> Tuple[int, int, int, int]:
+    def get_pixel(self, x: int, y: int) -> Tuple[int, int, int, int] :
+        
         offset = (y * self.width) + x
         try:
             pixel = self.pixels[offset]
             return pixel.red(), pixel.green(), pixel.blue(), pixel.alpha()
         except IndexError:
-            # print(f"error out of bounds for {x=} {y=}")
-            pass
-
+            raise IndexError
+        
     def get_average_rgba(self):
         average_pixel = int(sum(x.pixel for x in self.pixels) / len(self.pixels))
         new_pixel = RGBA.from_pixel(average_pixel)

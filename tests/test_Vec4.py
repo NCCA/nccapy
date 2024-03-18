@@ -114,16 +114,23 @@ def test_normalize():
     assert a.y == pytest.approx(0.4373, rel=1e-2)
     assert a.z == pytest.approx(0.0179, rel=1e-2)
     assert a.w == pytest.approx(-0.0716, rel=1e-2)
+    with pytest.raises(ZeroDivisionError):
+        a = Vec4(0, 0, 0,0)
+        a.normalize()
+
 
 def test_equal():
     a = Vec4(0.1, 0.2, 0.3, 0.4)
     b = Vec4(0.1, 0.2, 0.3, 0.4)
     assert a == b
+    assert a.__eq__(1) == NotImplemented
+
 
 def test_not_equal():
     a = Vec4(0.3, 0.4, 0.3)
     b = Vec4(0.1, 0.2, 0.3)
     assert a != b
+    assert a.__neq__(1) == NotImplemented
 
 def test_negate():
     a = Vec4(0.1, 0.5, -12, 5)
@@ -175,3 +182,8 @@ def test_matmul():
     assert c.y == pytest.approx(-0.707107)
     assert c.z == pytest.approx(3.535534)
     assert c.w == pytest.approx(1.0)
+
+def test_string() :
+    a = Vec4(1, 2, 3,4)
+    assert str(a) == "[1,2,3,4]"
+    assert repr(a) == "Vec4 [1,2,3,4]"

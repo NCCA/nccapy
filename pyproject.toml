@@ -13,8 +13,7 @@ classifiers = [
 license = {file = "LICENSE.txt"}
 version = "0.0.4"
 dependencies = [
-    "pillow",
-    "typing_extensions"]
+    "pillow"]
 [project.urls]
 Homepage = "https://github.com/NCCA/nccapy"
 Issues = "https://github.com/NCCA/nccapy/issues"

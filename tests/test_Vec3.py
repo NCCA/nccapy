@@ -52,6 +52,7 @@ def test_plus_equals():
     assert a.y == pytest.approx(7)
     assert a.z == pytest.approx(9)
 
+
 def test_sub():
     a = Vec3(1, 2, 3)
     b = Vec3(4, 5, 6)
@@ -77,10 +78,10 @@ def test_set():
     assert a.y == pytest.approx(0.1)
     assert a.z == pytest.approx(0.5)
     
-    def test_error_set(self):
-        with pytest.raises(ValueError):
-            a = Vec3()
-            a.set(2, 3, "hello")
+def test_error_set():
+    with pytest.raises(ValueError):
+        a = Vec3()
+        a.set(2, 3, "hello")
 
 def test_dot():
     a = Vec3(1.0, 2.0, 3.0)
@@ -101,18 +102,37 @@ def test_normalize():
     assert a.x == pytest.approx(0.912266, rel=1e-2)
     assert a.y == pytest.approx(0.0204544, rel=1e-2)
     assert a.z == pytest.approx(0.409088, rel=1e-2)
-
+    with pytest.raises(ZeroDivisionError):
+        a = Vec3(0, 0, 0)
+        a.normalize()
 
 
 def test_equal():
     a = Vec3(0.1, 0.2, 0.3)
     b = Vec3(0.1, 0.2, 0.3)
     assert a == b
+    assert a.__eq__(1) == NotImplemented
+
 
 def test_not_equal():
     a = Vec3(0.3, 0.4, 0.3)
     b = Vec3(0.1, 0.2, 0.3)
     assert a != b
+    a = Vec3(0.3, 0.4, 0.3)
+    b = Vec3(0.3, 0.2, 0.3)
+    assert a != b
+    a = Vec3(0.3, 0.2, 0.3)
+    b = Vec3(0.3, 0.4, 0.3)
+    assert a != b
+    
+    a = Vec3(0.3, 0.4, 0.3)
+    b = Vec3(0.3, 0.4, 0.5)
+    assert a != b
+    
+
+
+
+    assert a.__neq__(1) == NotImplemented
  
 def test_inner():
     a = Vec3(1.0, 2.0, 3.0)
@@ -207,3 +227,8 @@ def test_matmul():
     assert c.x == pytest.approx(1.0)
     assert c.y == pytest.approx(-0.707107, rel=1e-2)
     assert c.z == pytest.approx(3.535534, rel=1e-2)
+
+def test_string() :
+    a = Vec3(1, 2, 3)
+    assert str(a) == "[1,2,3]"
+    assert repr(a) == "Vec3 [1,2,3]"

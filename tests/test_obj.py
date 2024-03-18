@@ -3,7 +3,7 @@ import os
 import pytest
 from os.path import exists
 
-from nccapy.Geo.Obj import Face,Obj
+from nccapy.Geo.Obj import Face,Obj,ObjParseVertexError,ObjParseNormalError,ObjParseUVError,ObjParseFaceError
 from nccapy.Math.Mat4 import Mat4
 from nccapy.Math.Vec3 import Vec3
 
@@ -17,7 +17,9 @@ validfiles = [
     "tests/files/TriMessedFormat.obj",
     "tests/files/CubeNegativeIndex.obj",
 ]
-invalidfiles = ["files/BrokenFloats.obj"]
+invalidfiles = ["files/BrokenFloats.obj",
+                "files/BrokenNormal.obj",
+                "files/BrokenUV.obj"]
 
 
 def test_ctor():
@@ -28,7 +30,6 @@ def test_ctor():
     assert len(o.uv) == 0
 
 
-    
 
 def test_load_valid():
     o = Obj()
@@ -43,15 +44,21 @@ def test_load_not_found():
 def test_parse_vertex():
     obj = Obj.from_file("tests/files/Triangle1.obj")
     assert len(obj.vertex) == 3
+    with pytest.raises(ObjParseVertexError):
+        obj = Obj.from_file("tests/files/BrokenFloats.obj")    
 
 def test_parse_normal():
     obj = Obj.from_file("tests/files/Triangle1.obj")
     assert len(obj.normals) == 3
+    with pytest.raises(ObjParseNormalError):
+        obj = Obj.from_file("tests/files/BrokenNormals.obj")    
 
 
 def test_parse_uv():
     obj = Obj.from_file("tests/files/Triangle1.obj")
     assert len(obj.uv) == 3
+    with pytest.raises(ObjParseUVError):
+        obj = Obj.from_file("tests/files/BrokenUV.obj")
 
 def test_check_verts():
     obj = Obj.from_file("tests/files/Triangle1.obj")
@@ -114,6 +121,9 @@ def test_check_face_vert_only_negative_index():
         assert obj.faces[i].vertex[2] == idx + 2
         assert obj.faces[i].vertex[3] == idx + 3
         idx += 4
+
+    
+
 
 def test_check_face():
     obj = Obj.from_file("tests/files/Triangle1.obj")

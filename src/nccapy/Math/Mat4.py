@@ -142,16 +142,36 @@ class Mat4:
         "set items remember this is a list of lists [[4],[4],[4],[4]]"
         self.m[idx] = item
 
+    # def __mul__(self, rhs):
+    #     "multiply matrix by another matrix"
+    #     if type(rhs) != Mat4:
+    #         raise Mat4Error
+    #     mat_t = rhs.get_transpose()
+    #     mulmat = Mat4()
+    #     for x in range(4):
+    #         for y in range(4):
+    #             mulmat[x][y] = sum([item[0] * item[1] for item in zip(self.m[x], mat_t[y])])
+    #     return mulmat
+
     def __mul__(self, rhs):
-        "multiply matrix by another matrix"
-        if type(rhs) != Mat4:
-            raise Mat4Error
-        mat_t = rhs.get_transpose()
-        mulmat = Mat4()
-        for x in range(4):
-            for y in range(4):
-                mulmat[x][y] = sum([item[0] * item[1] for item in zip(self.m[x], mat_t[y])])
-        return mulmat
+        """Multiply matrix by scalar
+
+        Parameters
+        __________
+            rhs : float int
+                multiply each matrix element by rhs
+
+        raises : Mat3Error
+            if rhs is not a number
+        """
+        if isinstance(rhs, (int, float)):
+            for i in range(0,len(self.m)):
+                for j in range(0,len(self.m[i])):
+                    self.m[i][j] *= rhs
+            return self
+        raise Mat4Error
+
+
 
     def _mat_mul(self, rhs):
         "matrix mult internal function"
@@ -422,10 +442,5 @@ class Mat4:
         except:
             raise Mat4Error
 
-    def to_json(self):
-        return json.dumps(
-            self,
-            default=lambda o: {key: getattr(self, key, None) for key in self.__slots__},
-            sort_keys=True,
-            indent=4,
-        )
+    def __repr__(self) -> str:
+        return f"Mat4({self.m})"
