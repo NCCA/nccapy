@@ -5,6 +5,13 @@ import PIL.Image
 
 from .RGBA import RGBA
 
+class ImageXBoundsError(Exception) :
+    pass
+
+
+class ImageYBoundsError(Exception) :
+    pass
+
 
 class Image:
     def __init__(self, width: int, height: int) -> None:
@@ -49,6 +56,10 @@ class Image:
         return True
 
     def set_pixel(self, x: int, y: int, r: int, g: int, b: int, a: int = 255) -> None:
+        if 0 < x >= self.width :
+            raise ImageXBoundsError
+        if 0 < y >= self.height :
+            raise ImageYBoundsError        
         offset = (y * self.width) + x
         try:
             self.pixels[offset].set(r, g, b, a)
@@ -56,7 +67,11 @@ class Image:
             raise IndexError
 
     def get_pixel(self, x: int, y: int) -> Tuple[int, int, int, int] :
-        
+        if 0 < x >= self.width :
+            raise ImageXBoundsError
+        if 0 < y >= self.height :
+            raise ImageYBoundsError
+
         offset = (y * self.width) + x
         try:
             pixel = self.pixels[offset]
