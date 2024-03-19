@@ -1,6 +1,6 @@
 import pytest
 
-from nccapy.Image import *
+from nccapy.Image import Image,RGBA
 
 
 def test_ctor():

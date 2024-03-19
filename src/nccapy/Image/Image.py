@@ -8,7 +8,6 @@ from .RGBA import RGBA
 class ImageXBoundsError(Exception) :
     pass
 
-
 class ImageYBoundsError(Exception) :
     pass
 
