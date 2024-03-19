@@ -53,8 +53,11 @@ def test_set_get():
             image.set_pixel(x, y, 128, 255, 64, 255)
     assert image.save("setPixel.png")
 
-    with pytest.raises(IndexError):
-        image.set_pixel(11, 11, 128, 255, 64, 255)
+    with pytest.raises(ImageYBoundsError):
+        image.set_pixel(9, 11, 128, 255, 64, 255)
+    with pytest.raises(ImageXBoundsError):
+        image.set_pixel(11, 9, 128, 255, 64, 255)
+
     with pytest.raises(IndexError):
         r,b,b,a= image.get_pixel(11, 11) 
 
