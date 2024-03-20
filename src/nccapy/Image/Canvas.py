@@ -1,7 +1,7 @@
 from typing import Any, Union, Type, Tuple
 
 import pygame
-
+from .Image import Image
 class Canvas :
     """
     A class to represent a canvas for interactive rendering of 2D images
@@ -62,5 +62,10 @@ class Canvas :
                 return True
         return False
 
-    def draw_point(self, x: int, y: int, r: int, g: int, b: int, a: int = 255) -> None:
-        self.display.set_at((x, y), (r, g, b, a))
+    def put_pixel(self, x: int, y: int, r: int, g: int, b: int, a: int = 255) -> None:
+        #self.display.set_at((x, y), (r, g, b, a))
+        pixel_array = pygame.PixelArray(self.display)
+        pixel_array[x, y] = (r, g, b, a)
+        pixel_array.close()
+    def put_image(self, image : Image):
+        ...
