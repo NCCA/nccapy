@@ -3,7 +3,14 @@ import os
 import pytest
 from os.path import exists
 
-from nccapy.Geo.Obj import Face,Obj,ObjParseVertexError,ObjParseNormalError,ObjParseUVError,ObjParseFaceError
+from nccapy.Geo.Obj import (
+    Face,
+    Obj,
+    ObjParseVertexError,
+    ObjParseNormalError,
+    ObjParseUVError,
+    ObjParseFaceError,
+)
 from nccapy.Math.Mat4 import Mat4
 from nccapy.Math.Vec3 import Vec3
 
@@ -17,9 +24,7 @@ validfiles = [
     "tests/files/TriMessedFormat.obj",
     "tests/files/CubeNegativeIndex.obj",
 ]
-invalidfiles = ["files/BrokenFloats.obj",
-                "files/BrokenNormal.obj",
-                "files/BrokenUV.obj"]
+invalidfiles = ["files/BrokenFloats.obj", "files/BrokenNormal.obj", "files/BrokenUV.obj"]
 
 
 def test_ctor():
@@ -30,28 +35,30 @@ def test_ctor():
     assert len(o.uv) == 0
 
 
-
 def test_load_valid():
     o = Obj()
     for file in validfiles:
         assert o.load(file)
+
 
 def test_load_not_found():
     o = Obj()
     with pytest.raises(FileNotFoundError):
         o.load("bogus.obj")
 
+
 def test_parse_vertex():
     obj = Obj.from_file("tests/files/Triangle1.obj")
     assert len(obj.vertex) == 3
     with pytest.raises(ObjParseVertexError):
-        obj = Obj.from_file("tests/files/BrokenFloats.obj")    
+        obj = Obj.from_file("tests/files/BrokenFloats.obj")
+
 
 def test_parse_normal():
     obj = Obj.from_file("tests/files/Triangle1.obj")
     assert len(obj.normals) == 3
     with pytest.raises(ObjParseNormalError):
-        obj = Obj.from_file("tests/files/BrokenNormals.obj")    
+        obj = Obj.from_file("tests/files/BrokenNormals.obj")
 
 
 def test_parse_uv():
@@ -59,6 +66,7 @@ def test_parse_uv():
     assert len(obj.uv) == 3
     with pytest.raises(ObjParseUVError):
         obj = Obj.from_file("tests/files/BrokenUV.obj")
+
 
 def test_check_verts():
     obj = Obj.from_file("tests/files/Triangle1.obj")
@@ -73,15 +81,13 @@ def test_check_normals():
     result = [Vec3(0.0, 0.0, 1.0), Vec3(0.0, 0.0, 1.0), Vec3(0.0, 0.0, 1.0)]
     assert [r == v for r, v in zip(result, obj.normals)]
 
+
 def test_check_uvs():
     obj = Obj.from_file("tests/files/Triangle1.obj")
 
-    result = [
-        Vec3(1.0, 0.0, 0.0),
-        Vec3(0.5, 1.0, 0.0),
-        Vec3(0.004399, 0.008916, 0.0),
-    ]
+    result = [Vec3(1.0, 0.0, 0.0), Vec3(0.5, 1.0, 0.0), Vec3(0.004399, 0.008916, 0.0)]
     assert [r == v for r, v in zip(result, obj.uv)]
+
 
 def test_check_face_vert_only():
     obj = Obj.from_file("tests/files/TriangleVertsOnly.obj")
@@ -90,15 +96,17 @@ def test_check_face_vert_only():
     assert obj.faces[0].vertex[1] == 1
     assert obj.faces[0].vertex[2] == 2
 
+
 def test_check_face_vert_normal():
     obj = Obj.from_file("tests/files/TriangleVertNormal.obj")
-    # face is f 1/1/1 2/2/2 3/3/3 but we index from 0  
+    # face is f 1/1/1 2/2/2 3/3/3 but we index from 0
     assert obj.faces[0].vertex[0] == 0
     assert obj.faces[0].vertex[1] == 1
     assert obj.faces[0].vertex[2] == 2
     assert obj.faces[0].normal[0] == 0
     assert obj.faces[0].normal[1] == 1
     assert obj.faces[0].normal[2] == 2
+
 
 def test_check_face_vert_uv():
     obj = Obj.from_file("tests/files/TriangleVertsUV.obj")
@@ -108,7 +116,6 @@ def test_check_face_vert_uv():
     assert obj.faces[0].uv[0] == 0
     assert obj.faces[0].uv[1] == 1
     assert obj.faces[0].uv[2] == 2
-
 
 
 def test_check_face_vert_only_negative_index():
@@ -122,8 +129,6 @@ def test_check_face_vert_only_negative_index():
         assert obj.faces[i].vertex[3] == idx + 3
         idx += 4
 
-    
-
 
 def test_check_face():
     obj = Obj.from_file("tests/files/Triangle1.obj")
@@ -133,12 +138,14 @@ def test_check_face():
         assert obj.faces[0].normal[i] == i
         assert obj.faces[0].uv[i] == i
 
+
 def test_add_vertex():
     obj = Obj()
     for i in range(0, 20):
         obj.add_vertex(Vec3(i, i, i))
     for i in range(0, 20):
         assert obj.vertex[i] == Vec3(i, i, i)
+
 
 def test_add_normal():
     obj = Obj()
@@ -147,12 +154,14 @@ def test_add_normal():
     for i in range(0, 20):
         assert obj.normals[i] == Vec3(i, i, i)
 
+
 def test_add_uv():
     obj = Obj()
     for i in range(0, 20):
         obj.add_uv(Vec3(i, i, i))
     for i in range(0, 20):
         assert obj.uv[i] == Vec3(i, i, i)
+
 
 def test_add_face():
     f = Face()
@@ -166,6 +175,7 @@ def test_add_face():
         assert obj.faces[0].vertex[i] == i
         assert obj.faces[0].normal[i] == i
         assert obj.faces[0].uv[i] == i
+
 
 def test_build_obj():
     obj = Obj()
@@ -202,7 +212,7 @@ def test_build_obj():
     assert new.faces[0].uv == [0, 1, 2]
     assert new.faces[0].normal == [0, 0, 0]
 
-    
+
 def test_build_obj_with_colour():
     obj = Obj()
     obj.add_vertex_colour(Vec3(2.0, 0.0, 0.0), Vec3(1.0, 0.0, 0.0))
@@ -242,13 +252,12 @@ def test_build_obj_with_colour():
     assert new.colour[1] == Vec3(0.0, 1.0, 0.0)
     assert new.colour[2] == Vec3(0.0, 0.0, 1.0)
 
-    
+
 def test_obj_with_colour():
     obj = Obj.from_file("tests/files/TriColour.obj")
-    
+
     assert hasattr(obj, "colour")
     assert len(obj.colour) == 3
     assert obj.colour[0] == Vec3(1.0, 0.0, 0.0)
     assert obj.colour[1] == Vec3(0.0, 1.0, 0.0)
     assert obj.colour[2] == Vec3(0.0, 0.0, 1.0)
-

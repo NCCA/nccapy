@@ -294,8 +294,8 @@ class Mat3:
             if rhs is not a number
         """
         if isinstance(rhs, (int, float)):
-            for i in range(0,len(self.m)):
-                for j in range(0,len(self.m[i])):
+            for i in range(0, len(self.m)):
+                for j in range(0, len(self.m[i])):
                     self.m[i][j] *= rhs
             return self
         raise Mat3Error

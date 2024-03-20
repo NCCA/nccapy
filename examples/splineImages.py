@@ -5,6 +5,7 @@ import sys
 import numpy as np
 from nccapy.Image import Image
 
+
 def splat(image, x, y, r, g, b, splat_size=10, flow=10):
     for i in range(random.randint(10, 10 + flow)):
         r_var = random.randint(-25, 25)

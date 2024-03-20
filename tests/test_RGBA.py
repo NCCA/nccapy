@@ -9,7 +9,8 @@ def test_ctor():
     assert r == 0
     assert g == 0
     assert b == 0
-    assert a ==  255
+    assert a == 255
+
 
 def test_ctor_user():
     pixel = RGBA(123, 255, 0, 255)
@@ -20,22 +21,25 @@ def test_ctor_user():
     assert b == 0
     assert a == 255
 
+
 def test_colour_access():
     pixel = RGBA(128, 255, 56, 25)
     assert pixel.red() == 128
     assert pixel.green() == 255
-    assert pixel.blue()  == 56
+    assert pixel.blue() == 56
     assert pixel.alpha() == 25
+
 
 def test_from_hex():
     pixel = RGBA.from_hex("FF2F3F00")
     assert pixel.red() == 255
     assert pixel.green() == 47
     assert pixel.blue() == 63
-    assert pixel.alpha() ==  0
+    assert pixel.alpha() == 0
 
     with pytest.raises(ValueError):
         pixel = RGBA.from_hex("nonsense")
+
 
 def test_set():
     pixel = RGBA()
@@ -44,6 +48,7 @@ def test_set():
     assert pixel.green() == 0
     assert pixel.blue() == 0
     assert pixel.alpha() == 255
+
 
 def test_to_hsv():
     test_values = [

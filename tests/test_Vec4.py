@@ -11,6 +11,7 @@ def test_ctor():
     assert v.z == pytest.approx(0.0)
     assert v.w == pytest.approx(1.0)
 
+
 def test_userCtor():
     v = Vec4(2.0, 3.0, 4.0, 5.0)
     assert v.x == pytest.approx(2.0)
@@ -18,13 +19,13 @@ def test_userCtor():
     assert v.z == pytest.approx(4.0)
     assert v.w == pytest.approx(5.0)
 
+
 def test_ctor_single_value():
     v = Vec4(x=2.0)
     assert v.x == pytest.approx(2.0)
     assert v.y == pytest.approx(0.0)
     assert v.z == pytest.approx(0.0)
     assert v.w == pytest.approx(1.0)
-
 
     v = Vec4(y=2.0)
     assert v.x == pytest.approx(0.0)
@@ -43,6 +44,7 @@ def test_ctor_single_value():
     assert v.y == pytest.approx(0.0)
     assert v.z == pytest.approx(0.0)
     assert v.w == pytest.approx(9.2)
+
 
 def test_add():
     a = Vec4(1, 2, 3, 4)
@@ -63,6 +65,7 @@ def test_plus_equal():
     assert a.z == pytest.approx(10.0)
     assert a.w == pytest.approx(12.0)
 
+
 def test_sub():
     a = Vec4(1, 2, 3)
     b = Vec4(4, 5, 6)
@@ -71,6 +74,7 @@ def test_sub():
     assert c.y == pytest.approx(-3.0)
     assert c.z == pytest.approx(-3.0)
     assert c.w == pytest.approx(0.0)
+
 
 def test_sub_equals():
     a = Vec4(1, 2, 3)
@@ -81,6 +85,7 @@ def test_sub_equals():
     assert a.z == pytest.approx(-3.0)
     assert a.w == pytest.approx(0.0)
 
+
 def test_set():
     a = Vec4()
     a.set(2.5, 0.1, 0.5, 0.2)
@@ -89,23 +94,28 @@ def test_set():
     assert a.z == pytest.approx(0.5)
     assert a.w == pytest.approx(0.2)
 
+
 def test_error_set():
     with pytest.raises(ValueError):
         a = Vec4()
         a.set("a", 2, 3, 5)
+
 
 def test_dot():
     a = Vec4(1.0, 2.0, 3.0, 4.0)
     b = Vec4(5.0, 6.0, 7.0, 8.0)
     assert a.dot(b) == pytest.approx(70.0)
 
+
 def test_length():
     a = Vec4(22, 1, 32, 12)
     assert a.length() == pytest.approx(40.657, rel=1e-3)
 
+
 def test_length_squared():
     a = Vec4(22, 1, 32, 12)
     assert a.length_squared() == pytest.approx(1653.0, rel=1e-3)
+
 
 def test_normalize():
     a = Vec4(25.0, 12.2, 0.5, -2.0)
@@ -115,7 +125,7 @@ def test_normalize():
     assert a.z == pytest.approx(0.0179, rel=1e-2)
     assert a.w == pytest.approx(-0.0716, rel=1e-2)
     with pytest.raises(ZeroDivisionError):
-        a = Vec4(0, 0, 0,0)
+        a = Vec4(0, 0, 0, 0)
         a.normalize()
 
 
@@ -132,6 +142,7 @@ def test_not_equal():
     assert a != b
     assert a.__neq__(1) == NotImplemented
 
+
 def test_negate():
     a = Vec4(0.1, 0.5, -12, 5)
     a = -a
@@ -139,6 +150,7 @@ def test_negate():
     assert a.y == pytest.approx(-0.5)
     assert a.z == pytest.approx(12)
     assert a.w == pytest.approx(-5.0)
+
 
 def test_getAttr():
     a = Vec4(1, 2, 3, 5)
@@ -149,7 +161,7 @@ def test_getAttr():
     # check to see if we can get non attr
     with pytest.raises(AttributeError):
         getattr(a, "b")
-    
+
     # check to see that adding an attrib fails
     with pytest.raises(AttributeError):
         setattr(a, "b", 20.0)
@@ -163,7 +175,6 @@ def test_mul_scalar():
     assert a.z == pytest.approx(4.0)
     assert a.w == pytest.approx(2.0)
 
-    
     a = Vec4(1.5, 4.2, 2.8, 4.5)
     a = 2 * a
     assert a.x == pytest.approx(3.0)
@@ -183,7 +194,8 @@ def test_matmul():
     assert c.z == pytest.approx(3.535534)
     assert c.w == pytest.approx(1.0)
 
-def test_string() :
-    a = Vec4(1, 2, 3,4)
+
+def test_string():
+    a = Vec4(1, 2, 3, 4)
     assert str(a) == "[1,2,3,4]"
     assert repr(a) == "Vec4 [1,2,3,4]"

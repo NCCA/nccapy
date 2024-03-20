@@ -8,6 +8,7 @@ from nccapy.Math.Transform import Transform, TransformRotationOrder
 
 orders = ["xyz", "yzx", "zxy", "xzy", "yxz", "zyx"]
 
+
 def test_ctor():
     tx = Transform()
     assert tx.position.x == pytest.approx(0.0)
@@ -29,13 +30,11 @@ def test_set_position():
     assert tx.position.y == pytest.approx(3.5)
     assert tx.position.z == pytest.approx(4.2)
 
-    
     tx.set_position(Vec3(2.0, 3.5, 4.2))
     assert tx.position.x == pytest.approx(2.0)
     assert tx.position.y == pytest.approx(3.5)
     assert tx.position.z == pytest.approx(4.2)
-    
-    
+
     tx.set_position(Vec4(2.0, 3.5, 4.2))
     assert tx.position.x == pytest.approx(2.0)
     assert tx.position.y == pytest.approx(3.5)
@@ -62,7 +61,6 @@ def test_set_rotation():
     assert tx.rotation.y == pytest.approx(-20.0)
     assert tx.rotation.z == pytest.approx(340.0)
 
-
     tx.set_rotation(Vec3(45.0, -20.0, 340))
     assert tx.rotation.x == pytest.approx(45.0)
     assert tx.rotation.y == pytest.approx(-20.0)
@@ -73,10 +71,9 @@ def test_set_rotation():
     assert tx.rotation.y == pytest.approx(-20.0)
     assert tx.rotation.z == pytest.approx(340.0)
 
-    
-    
     with pytest.raises(ValueError):
         tx.set_rotation("hello", 43, 5)
+
 
 def test_set_scale():
     tx = Transform()
@@ -85,12 +82,11 @@ def test_set_scale():
     assert tx.scale.y == pytest.approx(5.0)
     assert tx.scale.z == pytest.approx(2.1)
 
-
     tx.set_scale(Vec3(2.0, 5.0, 2.1))
     assert tx.scale.x == pytest.approx(2.0)
     assert tx.scale.y == pytest.approx(5.0)
     assert tx.scale.z == pytest.approx(2.1)
-    
+
     tx.set_scale(Vec4(2.0, 5.0, 2.1))
     assert tx.scale.x == pytest.approx(2.0)
     assert tx.scale.y == pytest.approx(5.0)
@@ -98,6 +94,7 @@ def test_set_scale():
 
     with pytest.raises(ValueError):
         tx.set_scale("hello", 43, 5)
+
 
 def test_get_matrix_default():
 
@@ -113,6 +110,7 @@ def test_get_matrix_default():
         # fmt: on
         assert matrix.get_matrix() == ident
 
+
 def test_set_rotation_order():
     tx = Transform()
     for o in orders:
@@ -121,9 +119,10 @@ def test_set_rotation_order():
     with pytest.raises(TransformRotationOrder):
         tx.set_order("bogus")
 
-def test_str() :
+
+def test_str():
     tx = Transform()
-    assert str(tx) == 'pos [0.0,0.0,0.0]\nrot [0.0,0.0,0.0]\nscale [1.0,1.0,1.0]'
+    assert str(tx) == "pos [0.0,0.0,0.0]\nrot [0.0,0.0,0.0]\nscale [1.0,1.0,1.0]"
 
 
 def test_rotation_orders():

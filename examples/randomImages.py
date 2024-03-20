@@ -5,6 +5,7 @@ import sys
 
 from nccapy import Image
 
+
 def splat(image, r, g, b, splat_size=10):
     x = random.randint(0, image.width)
     y = random.randint(0, image.height)

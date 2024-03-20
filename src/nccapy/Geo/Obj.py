@@ -5,11 +5,14 @@ from .BaseMesh import BaseMesh, Face
 class ObjParseVertexError(Exception):
     pass
 
+
 class ObjParseNormalError(Exception):
     pass
 
+
 class ObjParseUVError(Exception):
     pass
+
 
 class ObjParseFaceError(Exception):
     pass

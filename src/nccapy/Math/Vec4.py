@@ -11,14 +11,14 @@ from .Util import clamp
 class Vec4:
 
     __slots__ = ["x", "y", "z", "w"]
-    "by using slots we fix our class attributes to x,y,z,W"
+    "by using slots we fix our class attributes to x,y,z,w"
 
     def __init__(self, x=0.0, y=0.0, z=0.0, w=1.0):
         """simple ctor"""
-        self.x = x
-        self.y = y
-        self.z = z
-        self.w = w
+        self.x = x  # x component of vector : float
+        self.y = y  # y component of vector : float
+        self.z = z  # z component of vector : float
+        self.w = w  # w component of vector : float
 
     def __add__(self, rhs):
         "return a+b vector addition"
@@ -154,6 +154,7 @@ class Vec4:
     def __repr__(self):
         "repr for debugging purposes"
         return f"Vec4 [{self.x},{self.y},{self.z},{self.w}]"
+
     def __str__(self):
         "print out the vector as a string"
         return f"[{self.x},{self.y},{self.z},{self.w}]"

@@ -92,4 +92,3 @@ class Transform:
 
     def __str__(self):
         return f"pos {self.position}\nrot {self.rotation}\nscale {self.scale}"
-
