@@ -69,3 +69,10 @@ class Canvas :
         pixel_array.close()
     def put_image(self, image : Image):
         ...
+
+    def get_pixel(self, x: int, y: int) -> Tuple[int, int, int, int]:
+        pixel_array = pygame.PixelArray(self.display)
+        pixel = pixel_array[x, y]
+        pixel_array.close()
+        colour = self.display.unmap_rgb(pixel)
+        return colour.r,colour.g,colour.b,colour.a
