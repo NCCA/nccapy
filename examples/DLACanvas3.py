@@ -30,7 +30,7 @@ def _clear_walk_path(canvas) :
                 if r == 255 and g == 0 and b == 0 : # and a == 128 :
                     canvas.put_pixel(x, y, 255, 255, 255, 255)
 
-def walk(canvas) -> bool:
+def walk(canvas) :
     x,y = _random_start(canvas.width, canvas.height)
     walking =True
 

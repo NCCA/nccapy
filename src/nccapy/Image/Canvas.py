@@ -23,7 +23,7 @@ class Canvas :
 
     def set_title(self, title : str) ->None:
         pygame.display.set_caption(title)
-    def get_title(self) -> str:
+    def get_title(self) -> tuple[str, str]:
         return pygame.display.get_caption()
 
     def clear(self, r: int, g: int, b: int, a: int = 255) -> None:
@@ -73,7 +73,7 @@ class Canvas :
 
     def get_pixel(self, x: int, y: int) -> Tuple[int, int, int, int]:
         pixel_array = pygame.PixelArray(self.display)
-        pixel = pixel_array[x, y]
+        pixel = pixel_array[x,y]
         pixel_array.close()
         colour = self.display.unmap_rgb(pixel)
         return colour.r,colour.g,colour.b,colour.a
