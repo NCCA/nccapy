@@ -1,5 +1,5 @@
 import pytest
-
+import random
 from nccapy.Image import Canvas
 
 
@@ -35,3 +35,11 @@ def test_get_set_pixel():
     assert canvas.display.get_at((0, 0)) == (255, 0, 0, 255)
     canvas.put_pixel(10, 10, 0, 0, 0)
     assert canvas.display.get_at((10, 10)) == (0, 0, 0, 255)
+    for x in range(0, 128):
+        for y in range(0, 128):
+            r = random.randint(0, 255)
+            g = random.randint(0, 255)
+            b = random.randint(0, 255)
+            a = random.randint(0, 255)
+            canvas.put_pixel(x, y, r, g, b, a)
+            assert canvas.get_pixel(x, y) == (r, g, b, a)
