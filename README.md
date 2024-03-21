@@ -1,7 +1,6 @@
 # nccapy
 
-[![Python package](https://github.com/NCCA/nccapy/actions/workflows/python-package.yml/badge.svg)]
-
+[![Python package](https://github.com/NCCA/nccapy/actions/workflows/python-package.yml/badge.svg)](https://github.com/NCCA/nccapy/actions/workflows/python-package.yml)
 
 The code in this python package is used in various units taught in the NCCA and in particlar [Jon's programming courses](https://nccastaff.bournemouth.ac.uk/jmacey/)
 
