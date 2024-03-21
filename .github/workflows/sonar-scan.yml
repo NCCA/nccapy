@@ -1,29 +1,20 @@
-name: Run Sonar Scanner
-
+name: Sonar Scanner
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
-
+    types: [opened, synchronize, reopened]
 jobs:
-    sonarqube:
-      runs-on: ubuntu-latest
-      steps:
-      - uses: actions/checkout@v4
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
         with:
-          # Disabling shallow clones is recommended for improving the relevancy of reporting
-          fetch-depth: 0
-
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
-        with:
-            projectBaseDir: src/nccapy
-            args: >
-                -Dsonar.python.coverage.reportPaths=coverage.xml
-                -Dsonar.tests=tests/
-                -Dsonar.verbose=true
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
         env:
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-            SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
