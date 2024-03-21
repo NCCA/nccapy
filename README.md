@@ -1,6 +1,6 @@
 # nccapy
 
-[![Python package](https://github.com/NCCA/nccapy/actions/workflows/python-package.yml/badge.svg)](https://github.com/NCCA/nccapy/actions/workflows/python-package.yml)
+[![Python package](https://github.com/NCCA/nccapy/actions/workflows/python-package.yml/badge.svg)](https://github.com/NCCA/nccapy/actions/workflows/python-package.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NCCA_nccapy&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=NCCA_nccapy) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=NCCA_nccapy&metric=bugs)](https://sonarcloud.io/summary/new_code?id=NCCA_nccapy) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=NCCA_nccapy&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=NCCA_nccapy) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=NCCA_nccapy&metric=coverage)](https://sonarcloud.io/summary/new_code?id=NCCA_nccapy) [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=NCCA_nccapy&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=NCCA_nccapy)
 
 The code in this python package is used in various units taught in the NCCA and in particlar [Jon's programming courses](https://nccastaff.bournemouth.ac.uk/jmacey/)
 
