@@ -35,6 +35,12 @@ def test_get_set_pixel():
     assert canvas.display.get_at((0, 0)) == (255, 0, 0, 255)
     canvas.put_pixel(10, 10, 0, 0, 0)
     assert canvas.display.get_at((10, 10)) == (0, 0, 0, 255)
+    canvas.put_pixel(0, 0, 255, 0, 0, 0)
+    canvas.put_pixel(0, 1, 0, 255, 0, 128)
+    canvas.put_pixel(0, 2, 0, 0, 255, 255)
+    assert canvas.get_pixel(0, 0) == (255, 0, 0, 0)
+    assert canvas.get_pixel(0, 1) == (0, 255, 0, 128)
+    assert canvas.get_pixel(0, 2) == (0, 0, 255, 255)
     for x in range(0, 128):
         for y in range(0, 128):
             r = random.randint(0, 255)
