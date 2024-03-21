@@ -19,9 +19,12 @@ class Canvas :
         self.width = width
         self.height = height
         self.display = pygame.display.set_mode((width, height))
+        self.set_title("nccapy canvas")
 
     def set_title(self, title : str) ->None:
         pygame.display.set_caption(title)
+    def get_title(self) -> str:
+        return pygame.display.get_caption()
 
     def clear(self, r: int, g: int, b: int, a: int = 255) -> None:
         """
@@ -47,8 +50,7 @@ class Canvas :
         pygame.display.flip()
 
     def __enter__(self):
-        """Start a timer if using with statement."""
-        return self
+       return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.quit()
@@ -63,7 +65,6 @@ class Canvas :
         return False
 
     def put_pixel(self, x: int, y: int, r: int, g: int, b: int, a: int = 255) -> None:
-        #self.display.set_at((x, y), (r, g, b, a))
         pixel_array = pygame.PixelArray(self.display)
         pixel_array[x, y] = (r, g, b, a)
         pixel_array.close()
