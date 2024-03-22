@@ -21,7 +21,7 @@ jobs:
             python -m pip install --upgrade pip
             python -m pip install pytest pillow pygame coverage
             coverage run --source=src/nccapy -m pytest --ignore=tests/test_Canvas.py -v tests && coverage report -m
-
+            coverage xml 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
