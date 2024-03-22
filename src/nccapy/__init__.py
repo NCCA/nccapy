@@ -10,8 +10,6 @@ Math
     This contains simple Vec3,Vec4,Mat3,Mat4 and Transform classes for 3D math.
 Geo
     Provides a Simple Mesh type class for creating and loading Obj files
-timer
-    Provides a class for timing operations.
 Image
     Provides classes for simple images and RGBA color values allowing the setting and getting of pixels
 
@@ -39,5 +37,4 @@ RGBA
 
 from nccapy.Math import Vec3, Vec4, Mat3, Mat4, Transform
 from nccapy.Geo import Obj
-from nccapy.timer import Timer
 from nccapy.Image import Image, RGBA,Canvas
