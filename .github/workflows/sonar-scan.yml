@@ -10,11 +10,22 @@ jobs:
     name: SonarCloud
     runs-on: ubuntu-latest
     steps:
+        
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+            python-version: "3.9"
+            - name : Install dependencies
+            run: |
+                python -m pip install --upgrade pip
+                pip install -r coverage
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      
