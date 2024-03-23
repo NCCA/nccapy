@@ -1,10 +1,10 @@
 import nccapy
 
-a=nccapy.Vec3()
+a = nccapy.Vec3()
 print(a)
-b=nccapy.Vec4()
+b = nccapy.Vec4()
 print(b)
-c=nccapy.Mat3()
+c = nccapy.Mat3()
 print(c)
-d=nccapy.Mat4()
+d = nccapy.Mat4()
 print(d)

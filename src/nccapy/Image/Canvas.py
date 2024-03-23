@@ -2,7 +2,9 @@ from typing import Any, Union, Type, Tuple
 
 import pygame
 from .Image import Image
-class Canvas :
+
+
+class Canvas:
     """
     A class to represent a canvas for interactive rendering of 2D images
     Attributes
@@ -15,14 +17,15 @@ class Canvas :
         pygame display object used to render too
     """
 
-    def __init__(self, width : int , height : int ):
+    def __init__(self, width: int, height: int):
         self.width = width
         self.height = height
         self.display = pygame.display.set_mode((width, height))
         self.set_title("nccapy canvas")
 
-    def set_title(self, title : str) ->None:
+    def set_title(self, title: str) -> None:
         pygame.display.set_caption(title)
+
     def get_title(self) -> tuple[str, str]:
         return pygame.display.get_caption()
 
@@ -50,12 +53,12 @@ class Canvas :
         pygame.display.flip()
 
     def __enter__(self):
-       return self
+        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.quit()
 
-    def get_event(self) -> Union[Type[pygame.event.Event], Tuple[Type[pygame.event.Event]]] :
+    def get_event(self) -> Union[Type[pygame.event.Event], Tuple[Type[pygame.event.Event]]]:
         return pygame.event.get()
 
     def should_quit(self) -> bool:
@@ -68,12 +71,12 @@ class Canvas :
         pixel_array = pygame.PixelArray(self.display)
         pixel_array[x, y] = (r, g, b, a)
         pixel_array.close()
-    def put_image(self, image : Image):
-        ...
+
+    def put_image(self, image: Image): ...
 
     def get_pixel(self, x: int, y: int) -> Tuple[int, int, int, int]:
         pixel_array = pygame.PixelArray(self.display)
-        pixel = pixel_array[x,y]
+        pixel = pixel_array[x, y]
         pixel_array.close()
         colour = self.display.unmap_rgb(pixel)
-        return colour.r,colour.g,colour.b,colour.a
+        return colour.r, colour.g, colour.b, colour.a

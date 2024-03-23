@@ -14,7 +14,6 @@ all matrix values are stored in a 3x3 list in the format
 
 import copy
 import functools
-import json
 import math
 import operator
 
