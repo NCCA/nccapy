@@ -50,7 +50,7 @@ class Image:
         self.width = width
         self.height = height
         self.pixels = list()
-        for i in range(width * height):
+        for _ in range(width * height):
             self.pixels.append(RGBA())
 
     def clear(self, r: int, g: int, b: int, a: int = 255) -> None:

@@ -14,12 +14,7 @@ class TransformRotationOrder(Exception):
 
 
 class Transform:
-    position = Vec3(0.0, 0.0, 0.0)
-    rotation = Vec3(0.0, 0.0, 0.0)
-    scale = Vec3(1.0, 1.0, 1.0)
-    matrix = Mat4()
-    need_recalc = True
-    order = "xyz"
+
     rot_order = {
         "xyz": "rz@ry@rx",
         "yzx": "rx@rz@ry",
@@ -30,7 +25,12 @@ class Transform:
     }
 
     def __init__(self):
-        pass
+        self.position = Vec3(0.0, 0.0, 0.0)
+        self.rotation = Vec3(0.0, 0.0, 0.0)
+        self.scale = Vec3(1.0, 1.0, 1.0)
+        self.matrix = Mat4()
+        self.need_recalc = True
+        self.order = "xyz"
 
     def _set_value(self, args):
         v = Vec3()
@@ -80,9 +80,9 @@ class Transform:
             rx = Mat4.rotate_x(self.rotation.x)
             ry = Mat4.rotate_y(self.rotation.y)
             rz = Mat4.rotate_z(self.rotation.z)
-            rotationScale = eval(self.rot_order.get(self.order)) @ scale
+            rotation_scale = eval(self.rot_order.get(self.order)) @ scale
             print("eval\n {}\n".format(eval(self.rot_order.get(self.order))))
-            self.matrix = rotationScale
+            self.matrix = rotation_scale
             self.matrix.m[3][0] = self.position.x
             self.matrix.m[3][1] = self.position.y
             self.matrix.m[3][2] = self.position.z

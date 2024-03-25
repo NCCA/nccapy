@@ -142,16 +142,6 @@ class Mat4:
         "set items remember this is a list of lists [[4],[4],[4],[4]]"
         self.m[idx] = item
 
-    # def __mul__(self, rhs):
-    #     "multiply matrix by another matrix"
-    #     if type(rhs) != Mat4:
-    #         raise Mat4Error
-    #     mat_t = rhs.get_transpose()
-    #     mulmat = Mat4()
-    #     for x in range(4):
-    #         for y in range(4):
-    #             mulmat[x][y] = sum([item[0] * item[1] for item in zip(self.m[x], mat_t[y])])
-    #     return mulmat
 
     def __mul__(self, rhs):
         """Multiply matrix by scalar
@@ -437,7 +427,7 @@ class Mat4:
                 - self.m[0][2] * self.m[1][1] * self.m[2][0]
             ) * invdet
             return tmp
-        except:
+        except ZeroDivisionError:
             raise Mat4Error
 
     def __repr__(self) -> str:
