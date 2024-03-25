@@ -187,7 +187,7 @@ def test_mul_scalar():
 
 def test_matmul():
     a = Vec4(1, 2, 3, 1)
-    b = Mat4.rotateX(45.0)
+    b = Mat4.rotate_x(45.0)
     c = a @ b
     assert c.x == pytest.approx(1.0)
     assert c.y == pytest.approx(-0.707107)

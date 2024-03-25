@@ -226,7 +226,7 @@ def test_getAttr():
 
 def test_matmul():
     a = Vec3(1, 2, 3)
-    b = Mat3.rotateX(45.0)
+    b = Mat3.rotate_x(45.0)
     c = a @ b
     assert c.x == pytest.approx(1.0)
     assert c.y == pytest.approx(-0.707107, rel=1e-2)

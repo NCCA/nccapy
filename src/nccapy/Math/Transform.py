@@ -77,9 +77,9 @@ class Transform:
         if self.need_recalc is True:
             trans = Mat4()
             scale = Mat4.scale(self.scale.x, self.scale.y, self.scale.z)
-            rx = Mat4.rotateX(self.rotation.x)
-            ry = Mat4.rotateY(self.rotation.y)
-            rz = Mat4.rotateZ(self.rotation.z)
+            rx = Mat4.rotate_x(self.rotation.x)
+            ry = Mat4.rotate_y(self.rotation.y)
+            rz = Mat4.rotate_z(self.rotation.z)
             rotationScale = eval(self.rot_order.get(self.order)) @ scale
             print("eval\n {}\n".format(eval(self.rot_order.get(self.order))))
             self.matrix = rotationScale

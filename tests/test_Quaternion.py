@@ -18,17 +18,17 @@ def test_Quaternion():
 
 
 def test_from_mat4():
-    test = Quaternion.from_mat4(Mat4.rotateX(45.0))
+    test = Quaternion.from_mat4(Mat4.rotate_x(45.0))
     assert test.s == pytest.approx(0.92388, rel=1e-3)
     assert test.x == pytest.approx(0.38268, rel=1e-3)
     assert test.y == pytest.approx(0.0)
     assert test.z == pytest.approx(0.0)
-    test = Quaternion.from_mat4(Mat4.rotateY(45.0))
+    test = Quaternion.from_mat4(Mat4.rotate_y(45.0))
     assert test.s == pytest.approx(0.92388, rel=1e-3)
     assert test.x == pytest.approx(0.0)
     assert test.y == pytest.approx(0.38268, rel=1e-3)
     assert test.z == pytest.approx(0.0)
-    test = Quaternion.from_mat4(Mat4.rotateZ(45.0))
+    test = Quaternion.from_mat4(Mat4.rotate_z(45.0))
     assert test.s == pytest.approx(0.92388, rel=1e-3)
     assert test.x == pytest.approx(0.0)
     assert test.y == pytest.approx(0.0)

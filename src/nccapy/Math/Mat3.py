@@ -171,7 +171,7 @@ class Mat3:
         return s
 
     @classmethod
-    def rotateX(cls, angle: float):
+    def rotate_x(cls, angle: float):
         """return a matrix as the rotation around the Cartesian X axis by angle degrees
 
         Parameters
@@ -201,7 +201,7 @@ class Mat3:
         return x
 
     @classmethod
-    def rotateY(self, angle: float):
+    def rotate_y(cls, angle: float):
         """return a matrix as the rotation around the Cartesian Y axis by angle degrees
 
         Parameters
@@ -231,7 +231,7 @@ class Mat3:
         return y
 
     @classmethod
-    def rotateZ(self, angle: float):
+    def rotate_z(cls, angle: float):
         """return a matrix as the rotation around the Cartesian Z axis by angle degrees
 
         Parameters

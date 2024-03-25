@@ -34,14 +34,14 @@ class Obj(BaseMesh):
                 if not hasattr(self, "colour"):
                     self.colour = []
                 self.colour.append(Vec3(float(tokens[4]), float(tokens[5]), float(tokens[6])))
-        except:
+        except ValueError:
             raise ObjParseVertexError
 
     def _parse_normal(self, tokens):
         try:
             self.normals.append(Vec3(float(tokens[1]), float(tokens[2]), float(tokens[3])))
             self._current_normal_offset += 1
-        except:
+        except ValueError:
             raise ObjParseNormalError
 
     def _parse_uv(self, tokens):
@@ -52,7 +52,7 @@ class Obj(BaseMesh):
                 z = float(tokens[3])
             self.uv.append(Vec3(float(tokens[1]), float(tokens[2]), z))
             self._current_uv_offset += 1
-        except:
+        except ValueError:
             raise ObjParseUVError
 
     def _parse_face_vertex_normal_uv(self, tokens):

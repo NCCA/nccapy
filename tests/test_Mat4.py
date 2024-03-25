@@ -76,8 +76,8 @@ def test_scale():
     assert value == pytest.approx(result)
 
 
-def test_rotateX():
-    a = Mat4.rotateX(45.0)
+def test_rotate_x():
+    a = Mat4.rotate_x(45.0)
     value = a.get_matrix()
     # fmt: off
     result = [1.0,0.0,0.0,0.0,
@@ -89,8 +89,8 @@ def test_rotateX():
     assert value == pytest.approx(result)
 
 
-def test_rotateY():
-    a = Mat4.rotateY(25.0)
+def test_rotate_y():
+    a = Mat4.rotate_y(25.0)
     value = a.get_matrix()
     # fmt: off
     result = [0.906308,0.0,-0.422618,0.0,
@@ -102,8 +102,8 @@ def test_rotateY():
     assert value == pytest.approx(result)
 
 
-def test_rotateZ():
-    a = Mat4.rotateZ(-36.0)
+def test_rotate_z():
+    a = Mat4.rotate_z(-36.0)
     value = a.get_matrix()
     # fmt: off
     result = [0.809,-0.5877,0.0,0.0,
@@ -123,8 +123,8 @@ def test_mat4_times_mat4():
 
 
 def test_rotate_mat4_mat4():
-    t1 = Mat4.rotateX(45.0)
-    t2 = Mat4.rotateY(35.0)
+    t1 = Mat4.rotate_x(45.0)
+    t2 = Mat4.rotate_y(35.0)
     test = t1 @ t2
     # fmt: off
     result=[0.819152,0.405580,-0.405580,0.0,
@@ -155,7 +155,7 @@ def test_mult_mat4_equal():
 
 def test_mat4_mult_vec4():
     test = Vec4(1.0, 2.0, 3.0, 1.0)
-    t1 = Mat4.rotateX(45.0)
+    t1 = Mat4.rotate_x(45.0)
     test = t1 @ test
     assert test.x == pytest.approx(1.0)
     assert test.y == pytest.approx(3.535534)

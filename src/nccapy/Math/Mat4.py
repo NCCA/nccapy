@@ -96,7 +96,7 @@ class Mat4:
         return a
 
     @classmethod
-    def rotateX(cls, angle):
+    def rotate_x(cls, angle):
         "return a rotation around the X axis by angle degrees"
         a = Mat4()
         beta = math.radians(angle)
@@ -109,7 +109,7 @@ class Mat4:
         return a
 
     @classmethod
-    def rotateY(self, angle):
+    def rotate_y(cls, angle):
         "return a rotation around the Y axis by angle degrees"
         a = Mat4()
         beta = math.radians(angle)
@@ -122,7 +122,7 @@ class Mat4:
         return a
 
     @classmethod
-    def rotateZ(self, angle):
+    def rotate_z(cls, angle):
         "return a rotation around the Z axis by angle degrees"
         a = Mat4()
         beta = math.radians(angle)

@@ -56,8 +56,8 @@ class RGBA:
             blue = int(pixel[4:6], 16)
             alpha = int(pixel[6:8], 16)
             return cls(red, green, blue, alpha)
-        except:
-            raise ValueError
+        except ValueError:
+            raise ValueError("Invalid hex string")
 
     @classmethod
     def from_pixel(cls, pixel: int) -> "RGBA":
