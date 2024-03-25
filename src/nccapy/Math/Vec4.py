@@ -79,14 +79,14 @@ class Vec4:
 
     def normalize(self):
         "normalize this vector"
-        len = self.length()
+        length = self.length()
         try:
-            self.x /= len
-            self.y /= len
-            self.z /= len
-            self.w /= len
+            self.x /= length
+            self.y /= length
+            self.z /= length
+            self.w /= length
         except ZeroDivisionError:
-            raise
+            raise ZeroDivisionError("cannot normalize the zero vector")
 
     def __eq__(self, rhs):
         "test a==b using math.isclose"
