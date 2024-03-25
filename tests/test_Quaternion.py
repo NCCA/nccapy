@@ -34,6 +34,45 @@ def test_from_mat4():
     assert test.y == pytest.approx(0.0)
     assert test.z == pytest.approx(0.38268, rel=1e-3)
 
+    # The following tests add coverage for each of the paths in the code
+    # +2.179450 [-0.344124i,+0.688247j,-0.344124k]
+    matrix = Mat4.from_list(
+        [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0]
+    )
+
+    quat = Quaternion.from_mat4(matrix)
+    assert quat.s == pytest.approx(2.179450)
+    assert quat.x == pytest.approx(-0.344123, rel=1e-3)
+    assert quat.y == pytest.approx(0.688247)
+    assert quat.z == pytest.approx(-0.34412, rel=1e-3)
+
+    # +1.802776 [+0.000000i,+0.000000j,+0.000000k]
+    # +0.000000 [+2.236068i,+0.223607j,+0.223607k]
+    matrix = Mat4.from_list([-1.0, 1, 1, 1, 1, -10, 1, 1, 1, 1, -10, 1, 1, 1, 1, 1])
+
+    quat = Quaternion.from_mat4(matrix)
+    assert quat.s == pytest.approx(0)
+    assert quat.x == pytest.approx(2.236068)
+    assert quat.y == pytest.approx(0.223607)
+    assert quat.z == pytest.approx(0.223607)
+    # +0.185695i,+2.692582j,+0.185695k
+    matrix = Mat4.from_list([-20.0, 1, 1, 1, 1, -10, 1, 1, 1, 1, -18, 1, 1, 1, 1, 1])
+
+    quat = Quaternion.from_mat4(matrix)
+    assert quat.s == pytest.approx(0)
+    assert quat.x == pytest.approx(0.185695, rel=1e-3)
+    assert quat.y == pytest.approx(2.692582, rel=1e-3)
+    assert quat.z == pytest.approx(0.185695, rel=1e-3)
+
+    # +0.000000 +0.208514i,+0.208514j,+2.397916k
+    matrix = Mat4.from_list([-20.0, 1, 1, 1, 1, -10, 1, 1, 1, 1, -8, 1, 1, 1, 1, 1])
+
+    quat = Quaternion.from_mat4(matrix)
+    assert quat.s == pytest.approx(0)
+    assert quat.x == pytest.approx(0.208514, rel=1e-3)
+    assert quat.y == pytest.approx(0.208514, rel=1e-3)
+    assert quat.z == pytest.approx(2.397916, rel=1e-3)
+
 
 def test_addition():
     a = Quaternion(0.5, 1.0, 0.0, 0.0)
@@ -89,3 +128,8 @@ def test_multiply():
     assert c.x == pytest.approx(3.0, rel=1e-3)
     assert c.y == pytest.approx(36.7, rel=1e-3)
     assert c.z == pytest.approx(-6.6, rel=1e-3)
+
+def test_str_repr() :
+    quat=Quaternion(1.0, 2.0, 3.0, 4.0)
+    assert str(quat) == "Quaternion(1.0, [2.0, 3.0, 4.0])"
+    assert repr(quat) == "Quaternion(1.0, [2.0, 3.0, 4.0])"

@@ -128,11 +128,9 @@ def test_not_equal():
     a = Vec3(0.3, 0.2, 0.3)
     b = Vec3(0.3, 0.4, 0.3)
     assert a != b
-
     a = Vec3(0.3, 0.4, 0.3)
     b = Vec3(0.3, 0.4, 0.5)
     assert a != b
-
     assert a.__neq__(1) == NotImplemented
 
 

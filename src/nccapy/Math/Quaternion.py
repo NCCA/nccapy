@@ -77,13 +77,17 @@ class Quaternion:
     def __add__(self, rhs):
         return Quaternion(self.s + rhs.s, self.x + rhs.x, self.y + rhs.y, self.z + rhs.z)
 
-    def __radd__(self, rhs):
-        return self.__add__(rhs)
+    def __iadd__(self, rhs):
+        self.s += rhs.s
+        self.x += rhs.x
+        self.y += rhs.y
+        self.z += rhs.z
+        return self
 
     def __sub__(self, rhs):
         return Quaternion(self.s - rhs.s, self.x - rhs.x, self.y - rhs.y, self.z - rhs.z)
 
-    def __rsub__(self, rhs):
+    def __isub__(self, rhs):
         return self.__sub__(rhs)
 
     def __mul__(self, rhs):

@@ -29,9 +29,9 @@ class Vec3:
             y (float, optional): The y-coordinate of the vector. Defaults to 0.0.
             z (float, optional): The z-coordinate of the vector. Defaults to 0.0.
         """
-        self.x = x # x component of vector : float
-        self.y = y # y component of vector : float
-        self.z = z # z component of vector : float
+        self.x = x  # x component of vector : float
+        self.y = y  # y component of vector : float
+        self.z = z  # z component of vector : float
 
     def __add__(self, rhs):
         """
