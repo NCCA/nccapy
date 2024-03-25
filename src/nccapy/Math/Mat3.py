@@ -404,7 +404,7 @@ class Mat3:
             tmp.m[2][2] = +(self.m[0][0] * self.m[1][1] - self.m[0][1] * self.m[1][0]) * invdet
 
             return tmp
-        except:
+        except ZeroDivisionError:
             raise Mat3Error
 
     def __str__(self):
