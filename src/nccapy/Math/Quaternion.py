@@ -26,10 +26,10 @@ class Quaternion:
             z (float): The z-coordinate of the vector part of the quaternion.
 
         """
-        self.s = s
-        self.x = x
-        self.y = y
-        self.z = z
+        self.s = float(s)
+        self.x = float(x)
+        self.y = float(y)
+        self.z = float(z)
 
     @staticmethod
     def from_mat4(mat: "Mat4") -> "Quaternion":
@@ -76,6 +76,23 @@ class Quaternion:
 
     def __add__(self, rhs):
         return Quaternion(self.s + rhs.s, self.x + rhs.x, self.y + rhs.y, self.z + rhs.z)
+
+    def __radd__(self, rhs):
+        return self.__add__(rhs)
+
+    def __sub__(self, rhs):
+        return Quaternion(self.s - rhs.s, self.x - rhs.x, self.y - rhs.y, self.z - rhs.z)
+
+    def __rsub__(self, rhs):
+        return self.__sub__(rhs)
+
+    def __mul__(self, rhs):
+        return Quaternion(
+            self.s * rhs.s - self.x * rhs.x - self.y * rhs.y - self.z * rhs.z,
+            self.s * rhs.x + self.x * rhs.s + self.y * rhs.z - self.z * rhs.y,
+            self.s * rhs.y - self.x * rhs.z + self.y * rhs.s + self.z * rhs.x,
+            self.s * rhs.z + self.x * rhs.y - self.y * rhs.x + self.z * rhs.s,
+        )
 
     def __str__(self) -> str:
         """

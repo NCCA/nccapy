@@ -1,6 +1,7 @@
 import pytest
 from nccapy.Math.Quaternion import Quaternion
 from nccapy.Math.Mat4 import Mat4
+import math
 
 
 def test_Quaternion():
@@ -42,3 +43,49 @@ def test_addition():
     assert c.x == 1.0
     assert c.y == 1.0
     assert c.z == 0.0
+
+
+def test_plus_equal():
+    a = Quaternion(0.5, 1.0, 0.0, 0.0)
+    b = Quaternion(0.2, 0.0, 1.0, 0.0)
+    a += b
+    assert a.s == 0.7
+    assert a.x == 1.0
+    assert a.y == 1.0
+    assert a.z == 0.0
+
+
+def test_subtraction():
+    a = Quaternion(0.5, 1.0, 0.0, 0.0)
+    b = Quaternion(0.2, 0.0, 1.0, 0.0)
+    c = a - b
+    assert c.s == 0.3
+    assert c.x == 1.0
+    assert c.y == -1.0
+    assert c.z == 0.0
+
+
+def test_minus_equal():
+    a = Quaternion(0.5, 1.0, 0.0, 0.0)
+    b = Quaternion(0.2, 0.0, 1.0, 0.0)
+    a -= b
+    assert a.s == 0.3
+    assert a.x == 1.0
+    assert a.y == -1.0
+    assert a.z == 0.0
+
+
+# from https://www.wolframalpha.com/input/?i=quaternion+-Sin%5BPi%5D%2B3i%2B4j%2B3k+multiplied+by+-1j%2B3.9i%2B4-3k
+# (-sin(π) + 3i + 4j + 3k) × (4 + 3.9i -1j -3k)
+# 1.3 + 3 i + 36.7 j - 6.6 k
+
+
+def test_multiply():
+    a = Quaternion(0.0, 3.0, 4.0, 3.0)
+    b = Quaternion(4.0, 3.9, -1.0, -3.0)
+    c = a * b
+    # 1.3000000000000007, 3.0, 36.7, -6.600000000000001 from Julia Quat package
+    assert c.s == pytest.approx(1.3, rel=1e-3)
+    assert c.x == pytest.approx(3.0, rel=1e-3)
+    assert c.y == pytest.approx(36.7, rel=1e-3)
+    assert c.z == pytest.approx(-6.6, rel=1e-3)
