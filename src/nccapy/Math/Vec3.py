@@ -18,7 +18,7 @@ class Vec3:
 
     """
 
-    __slots__ = ["x", "y", "z"]  # fix the attributes to x,y,z
+    __slots__ = ["_x", "_y", "_z"]  # fix the attributes to x,y,z
 
     def __init__(self, x=0.0, y=0.0, z=0.0):
         """
@@ -29,9 +29,61 @@ class Vec3:
             y (float, optional): The y-coordinate of the vector. Defaults to 0.0.
             z (float, optional): The z-coordinate of the vector. Defaults to 0.0.
         """
-        self.x = x  # x component of vector : float
-        self.y = y  # y component of vector : float
-        self.z = z  # z component of vector : float
+        self._x = x  # x component of vector : float
+        self._y = y  # y component of vector : float
+        self._z = z  # z component of vector : float
+
+    @property
+    def x(self):
+        """
+        The x-coordinate of the vector.
+        """
+        return self._x
+    
+    @x.setter
+    def x(self, x):
+        """
+        The x-coordinate of the vector.
+        """
+        if isinstance(x, (int, float)):
+            self._x = x
+        else:
+            raise ValueError("need float or int")
+        
+    @property
+    def y(self):
+        """
+        The y-coordinate of the vector.
+        """
+        return self._y
+    
+    @y.setter
+    def y(self, y):
+        """
+        The y-coordinate of the vector.
+        """
+        if isinstance(y, (int, float)):
+            self._y = y
+        else:
+            raise ValueError("need float or int")
+        
+    @property
+    def z(self):
+        """
+        The z-coordinate of the vector.
+        """
+        return self._z
+    
+    @z.setter
+    def z(self, z):
+        """
+        The z-coordinate of the vector.
+        """
+        if isinstance(z, (int, float)):
+            self._z = z
+        else:
+            raise ValueError("need float or int")
+        
 
     def __add__(self, rhs):
         """
