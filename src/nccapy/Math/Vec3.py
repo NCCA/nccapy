@@ -39,7 +39,7 @@ class Vec3:
         The x-coordinate of the vector.
         """
         return self._x
-    
+
     @x.setter
     def x(self, x):
         """
@@ -49,14 +49,14 @@ class Vec3:
             self._x = x
         else:
             raise ValueError("need float or int")
-        
+
     @property
     def y(self):
         """
         The y-coordinate of the vector.
         """
         return self._y
-    
+
     @y.setter
     def y(self, y):
         """
@@ -66,14 +66,14 @@ class Vec3:
             self._y = y
         else:
             raise ValueError("need float or int")
-        
+
     @property
     def z(self):
         """
         The z-coordinate of the vector.
         """
         return self._z
-    
+
     @z.setter
     def z(self, z):
         """
@@ -83,7 +83,6 @@ class Vec3:
             self._z = z
         else:
             raise ValueError("need float or int")
-        
 
     def __add__(self, rhs):
         """

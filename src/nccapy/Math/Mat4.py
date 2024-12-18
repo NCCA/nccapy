@@ -142,7 +142,6 @@ class Mat4:
         "set items remember this is a list of lists [[4],[4],[4],[4]]"
         self.m[idx] = item
 
-
     def __mul__(self, rhs):
         """Multiply matrix by scalar
 

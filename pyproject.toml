@@ -5,13 +5,13 @@ authors = [
 ]
 description = "nccapy is a python package use for teaching graphics at the NCCA"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
 license = {file = "LICENSE.txt"}
-version = "0.0.7"
+version = "0.0.8"
 dependencies = [
     "pillow",
     "pygame"]
@@ -40,11 +40,11 @@ explicit_package_bases = true
 
 [tool.black]
 line-length = 99
-target-version = ["py37", "py38", "py39", "py310", "py311"]
+target-version = [ "py39", "py310", "py311","py312","py313"]
 skip-magic-trailing-comma = true
 
 [tool.isort]
-py_version = 37
+py_version = 39
 profile = "black"
 line_length = 99
 combine_as_imports = true
