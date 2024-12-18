@@ -72,7 +72,8 @@ class Canvas:
         pixel_array[x, y] = (r, g, b, a)
         pixel_array.close()
 
-    def put_image(self, image: Image): ...
+    def put_image(self, image: Image):
+        ...
 
     def get_pixel(self, x: int, y: int) -> Tuple[int, int, int, int]:
         pixel_array = pygame.PixelArray(self.display)

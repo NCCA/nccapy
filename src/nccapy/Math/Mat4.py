@@ -58,13 +58,13 @@ class Mat4:
         return v
 
     @classmethod
-    def from_list(cls, l):
+    def from_list(cls, lst):
         "class method to create mat4 from list"
         v = Mat4()
-        v.m = l
+        v.m = lst
         if not v._is_square():
-            if len(l) == 16:  # can convert
-                v.m = [l[0:4], l[4:8], l[8:12], l[12:16]]
+            if len(lst) == 16:  # can convert
+                v.m = [lst[0:4], lst[4:8], lst[8:12], lst[12:16]]
                 return v
             else:
                 raise Mat4NotSquare

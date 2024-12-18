@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import nccapy
-import math
 import random
 
 
@@ -36,7 +35,6 @@ class DLA:
         found = False
 
         while walking:
-
             while True:
                 if not (1 <= x <= self.width - 2) or not (1 <= y <= self.height - 2):
                     # print(f"hit edge {x} {y}")
@@ -86,7 +84,6 @@ class DLA:
 
 
 def run_sim(width: int, height: int, num_seeds: int = 100):
-
     dla = DLA(width, height)
     # for _ in range(0, num_seeds):
     #     dla.random_seed()

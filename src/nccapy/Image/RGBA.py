@@ -50,7 +50,6 @@ class RGBA:
     @classmethod
     def from_hex(cls, pixel: str) -> "RGBA":
         try:
-
             red = int(pixel[0:2], 16)
             green = int(pixel[2:4], 16)
             blue = int(pixel[4:6], 16)

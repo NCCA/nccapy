@@ -95,7 +95,6 @@ def test_set_scale():
 
 
 def test_get_matrix_default():
-
     for o in orders:
         tx = Transform()
         tx.set_order(o)

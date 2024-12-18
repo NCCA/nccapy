@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import nccapy
-import math
 import random
 
 
@@ -58,7 +57,6 @@ class DLA:
 
 
 def run_sim(width: int, height: int, num_steps: int, num_seeds: int = 100):
-
     dla = DLA(width, height)
     for _ in range(0, num_seeds):
         dla.random_seed()

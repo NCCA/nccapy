@@ -56,7 +56,6 @@ def test_get_transpose():
 
 
 def test_scale():
-
     a = Mat3.scale(2.0, 3.0, 4.0)
     result = [2.0, 0.0, 0.0, 0.0, 3.0, 0.0, 0.0, 0.0, 4.0]
     assert a.get_matrix() == pytest.approx(result)

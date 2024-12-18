@@ -5,9 +5,7 @@ Simple Float only Vec3 class for 3D graphics, very similar to the pyngl ones
 import math
 
 
-
 class Vec4:
-
     __slots__ = ["_x", "_y", "_z", "_w"]
     "by using slots we fix our class attributes to x,y,z,w"
 

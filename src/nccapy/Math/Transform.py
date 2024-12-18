@@ -11,7 +11,6 @@ class TransformRotationOrder(Exception):
 
 
 class Transform:
-
     rot_order = {
         "xyz": "rz@ry@rx",
         "yzx": "rx@rz@ry",
@@ -73,9 +72,9 @@ class Transform:
         "return a transform matrix based on rotation order"
         if self.need_recalc is True:
             scale = Mat4.scale(self.scale.x, self.scale.y, self.scale.z)
-            rx = Mat4.rotate_x(self.rotation.x)
-            ry = Mat4.rotate_y(self.rotation.y)
-            rz = Mat4.rotate_z(self.rotation.z)
+            rx = Mat4.rotate_x(self.rotation.x)  # noqa: F841
+            ry = Mat4.rotate_y(self.rotation.y)  # noqa: F841
+            rz = Mat4.rotate_z(self.rotation.z)  # noqa: F841
             rotation_scale = eval(self.rot_order.get(self.order)) @ scale
             print("eval\n {}\n".format(eval(self.rot_order.get(self.order))))
             self.matrix = rotation_scale

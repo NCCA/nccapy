@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import nccapy
-import math
 import random
 
 

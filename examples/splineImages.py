@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import math
 import random
-import sys
 import numpy as np
 from nccapy.Image import Image
 

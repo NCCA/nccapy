@@ -128,7 +128,8 @@ def test_multiply():
     assert c.y == pytest.approx(36.7, rel=1e-3)
     assert c.z == pytest.approx(-6.6, rel=1e-3)
 
-def test_str_repr() :
-    quat=Quaternion(1.0, 2.0, 3.0, 4.0)
+
+def test_str_repr():
+    quat = Quaternion(1.0, 2.0, 3.0, 4.0)
     assert str(quat) == "Quaternion(1.0, [2.0, 3.0, 4.0])"
     assert repr(quat) == "Quaternion(1.0, [2.0, 3.0, 4.0])"

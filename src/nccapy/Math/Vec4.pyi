@@ -1,6 +1,5 @@
 from typing import Union
 
-
 class Vec4:
     x: float
     y: float

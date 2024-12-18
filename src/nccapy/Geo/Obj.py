@@ -193,7 +193,7 @@ class Obj(BaseMesh):
 
     def add_vertex_colour(self, vertex, colour):
         self.vertex.append(vertex)
-        if not hasattr(self, "colour") :
+        if not hasattr(self, "colour"):
             self.colour = []
         self.colour.append(colour)
 
@@ -211,7 +211,7 @@ class Obj(BaseMesh):
             obj_file.write("# This file was created by nccapy/Geo/Obj.py exporter\n")
             for i, v in enumerate(self.vertex):
                 obj_file.write(f"v {v.x} {v.y} {v.z} ")
-                if hasattr(self, "colour") :  # write colour if present
+                if hasattr(self, "colour"):  # write colour if present
                     obj_file.write(f"{self.colour[i].x} {self.colour[i].y} {self.colour[i].z} ")
                 obj_file.write("\n")
             for v in self.uv:

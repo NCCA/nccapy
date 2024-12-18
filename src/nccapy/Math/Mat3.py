@@ -85,12 +85,12 @@ class Mat3:
         return v
 
     @classmethod
-    def from_list(cls, l):
+    def from_list(cls, lst):
         """class method to create Mat3 from list
 
         Parameters
         ----------
-        l : list
+        lst : list
 
             list of 9 numbers to construct a new Mat3 from, we will accept either 9 floats or 3 lists of size 3
 
@@ -110,10 +110,10 @@ class Mat3:
 
         """
         v = Mat3()
-        v.m = l
+        v.m = lst
         if not v._is_square():
-            if len(l) == 9:  # can convert
-                v.m = [l[0:3], l[3:6], l[6:]]
+            if len(lst) == 9:  # can convert
+                v.m = [lst[0:3], lst[3:6], lst[6:]]
                 return v
             else:
                 raise Mat3NotSquare
