@@ -138,6 +138,7 @@ def test_inner():
     a = Vec3(1.0, 2.0, 3.0)
     b = Vec3(3.0, 4.0, 5.0)
     inner = a.inner(b)
+    assert inner == pytest.approx(26.0)
 
 
 def test_negate():

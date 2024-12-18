@@ -1,4 +1,3 @@
-import math
 import pytest
 
 from nccapy.Math.Mat3 import Mat3, Mat3NotSquare, Mat3Error
@@ -99,7 +98,7 @@ def test_mult_mat3_mat3():
 def test_mult_error():
     with pytest.raises(Mat3Error):
         a = Mat3()
-        c = a @ 2
+        _ = a @ 2
         a * "a"
 
 

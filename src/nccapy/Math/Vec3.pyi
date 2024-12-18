@@ -1,4 +1,4 @@
-from typing import Any, Union
+from typing import Union
 
 from .Mat3 import Mat3
 

@@ -1,6 +1,5 @@
-from typing import Any, Union
+from typing import Union
 
-from .Mat4 import Mat4
 
 class Vec4:
     x: float

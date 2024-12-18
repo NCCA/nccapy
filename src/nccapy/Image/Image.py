@@ -1,5 +1,4 @@
-from io import BytesIO
-from typing import Any, Union, Type, Tuple
+from typing import Tuple
 
 import PIL.Image
 

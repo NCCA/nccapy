@@ -1,4 +1,3 @@
-import math
 import pytest
 
 from nccapy.Math.Mat4 import Mat4, Mat4Error, Mat4NotSquare
@@ -142,7 +141,7 @@ def test_rotate_mat4_mat4():
 def test_mult_error():
     with pytest.raises(Mat4Error):
         a = Mat4()
-        c = a @ 2
+        _ = a @ 2
 
 
 def test_mult_mat4_equal():

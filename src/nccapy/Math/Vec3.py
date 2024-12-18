@@ -2,7 +2,6 @@
 Simple float only Vec3 class for 3D graphics, very similar to the pyngl ones
 """
 
-import json
 import math
 
 from .Util import clamp

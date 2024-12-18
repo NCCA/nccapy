@@ -6,7 +6,6 @@ from nccapy.Geo.Obj import (
     ObjParseVertexError,
     ObjParseNormalError,
     ObjParseUVError,
-    ObjParseFaceError,
 )
 from nccapy.Math.Vec3 import Vec3
 

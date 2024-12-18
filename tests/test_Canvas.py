@@ -1,4 +1,3 @@
-import pytest
 import random
 from nccapy.Image import Canvas
 
@@ -25,7 +24,7 @@ def test_clear():
 
 
 def test_with():
-    with Canvas(128, 128) as canvas:
+    with Canvas(128, 128) as _:
         pass
 
 

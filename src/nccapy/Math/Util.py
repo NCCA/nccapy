@@ -18,7 +18,6 @@ def look_at(eye, look, up):
     Calculate 4x4 matrix for camera lookAt
     """
     from .Mat4 import Mat4
-    from .Vec3 import Vec3
 
     n = look - eye
     v = n.cross(up)

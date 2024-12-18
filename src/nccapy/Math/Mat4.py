@@ -4,7 +4,6 @@ Simple Mat4 class which can be used with the Vec4 class
 
 import copy
 import functools
-import json
 import math
 import operator
 

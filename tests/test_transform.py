@@ -1,5 +1,3 @@
-import math
-import unittest
 import pytest
 from nccapy.Math.Vec3 import Vec3 as Vec3
 from nccapy.Math.Vec4 import Vec4 as Vec4

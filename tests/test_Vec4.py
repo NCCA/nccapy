@@ -1,4 +1,3 @@
-import math
 import pytest
 from nccapy.Math.Vec4 import Vec4
 from nccapy.Math.Mat4 import Mat4

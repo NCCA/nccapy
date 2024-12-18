@@ -1,7 +1,4 @@
-import math
 import pytest
-
-from nccapy.Math.Mat4 import Mat4
 from nccapy.Math.Util import clamp, look_at, perspective
 from nccapy.Math.Vec3 import Vec3
 
