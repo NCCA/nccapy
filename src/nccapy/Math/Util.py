@@ -46,11 +46,11 @@ def perspective(fov, aspect, near, far):
 
     m = Mat4.zero()  # as per glm
     print(m)
-    range = math.tan(math.radians(fov / 2.0)) * near
-    left = -range * aspect
-    right = range * aspect
-    bottom = -range
-    top = range
+    _range = math.tan(math.radians(fov / 2.0)) * near
+    left = -_range * aspect
+    right = _range * aspect
+    bottom = -_range
+    top = _range
     m.m[0][0] = (2.0 * near) / (right - left)
     m.m[1][1] = (2.0 * near) / (top - bottom)
     m.m[2][2] = -(far + near) / (far - near)
