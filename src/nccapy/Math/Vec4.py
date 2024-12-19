@@ -29,62 +29,6 @@ class Vec4:
         else:
             setattr(self, name, v)
 
-    @property
-    def x(self):
-        """
-        The x-coordinate of the vector.
-        """
-        return self._x
-
-    @x.setter
-    def x(self, x):
-        """
-        The x-coordinate of the vector.
-        """
-        self._validate_and_set(x, "_x")
-
-    @property
-    def y(self):
-        """
-        The y-coordinate of the vector.
-        """
-        return self._y
-
-    @y.setter
-    def y(self, y):
-        """
-        The y-coordinate of the vector.
-        """
-        self._validate_and_set(y, "_y")
-
-    @property
-    def z(self):
-        """
-        The z-coordinate of the vector.
-        """
-        return self._z
-
-    @z.setter
-    def z(self, z):
-        """
-        The z-coordinate of the vector.
-        """
-        self._validate_and_set(z, "_z")
-
-    @property
-    def w(self):
-        """
-        The w-coordinate of the vector.
-        """
-        return self._w
-
-    @w.setter
-    def w(self, w):
-        """
-        The w-coordinate of the vector.
-        """
-        self._validate_and_set(w, "_w")
-
     def __add__(self, rhs):
         "return a+b vector addition"
         r = Vec4()
@@ -223,3 +167,19 @@ class Vec4:
     def __str__(self):
         "print out the vector as a string"
         return f"[{self.x},{self.y},{self.z},{self.w}]"
+
+
+# Helper function to create properties
+def _create_property(attr_name):
+    def getter(self):
+        return getattr(self, f"_{attr_name}")
+
+    def setter(self, value):
+        self._validate_and_set(value, f"_{attr_name}")
+
+    return property(getter, setter)
+
+
+# Dynamically add properties for x, y, z,w
+for attr in ["x", "y", "z", "w"]:
+    setattr(Vec4, attr, _create_property(attr))

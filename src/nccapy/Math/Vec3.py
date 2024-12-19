@@ -45,48 +45,6 @@ class Vec3:
         else:
             setattr(self, name, v)
 
-    @property
-    def x(self):
-        """
-        The x-coordinate of the vector.
-        """
-        return self._x
-
-    @x.setter
-    def x(self, x):
-        """
-        The x-coordinate of the vector.
-        """
-        self._validate_and_set(x, "_x")
-
-    @property
-    def y(self):
-        """
-        The y-coordinate of the vector.
-        """
-        return self._y
-
-    @y.setter
-    def y(self, y):
-        """
-        The y-coordinate of the vector.
-        """
-        self._validate_and_set(y, "_y")
-
-    @property
-    def z(self):
-        """
-        The z-coordinate of the vector.
-        """
-        return self._z
-
-    @z.setter
-    def z(self, z):
-        """
-        The z-coordinate of the vector.
-        """
-        self._validate_and_set(z, "_z")
-
     def __add__(self, rhs):
         """
         vector addition a+b
@@ -373,3 +331,19 @@ class Vec3:
             self.x * rhs.m[0][1] + self.y * rhs.m[1][1] + self.z * rhs.m[2][1],
             self.x * rhs.m[0][2] + self.y * rhs.m[1][2] + self.z * rhs.m[2][2],
         )
+
+
+# Helper function to create properties
+def _create_property(attr_name):
+    def getter(self):
+        return getattr(self, f"_{attr_name}")
+
+    def setter(self, value):
+        self._validate_and_set(value, f"_{attr_name}")
+
+    return property(getter, setter)
+
+
+# Dynamically add properties for x, y, z
+for attr in ["x", "y", "z"]:
+    setattr(Vec3, attr, _create_property(attr))
