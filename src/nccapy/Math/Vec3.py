@@ -44,6 +44,7 @@ class Vec3:
             raise ValueError("need float or int")
         else:
             setattr(self, name, v)
+
     @property
     def x(self):
         """
