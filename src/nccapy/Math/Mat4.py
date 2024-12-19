@@ -244,6 +244,7 @@ class Mat4:
     def __add__(self, rhs):
         "piecewise addition of elements"
         return self._addfunc(rhs)
+
     def __iadd__(self, rhs):
         "piecewise addition of elements to this"
         return self._addfunc(rhs)
@@ -254,6 +255,7 @@ class Mat4:
         for i in range(0, len(temp.m)):
             temp.m[i] = [a - b for a, b in zip(self.m[i], rhs.m[i])]
         return temp
+
     def __sub__(self, rhs):
         "piecewise subtraction of elements"
         return self._sub(rhs)

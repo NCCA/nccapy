@@ -365,20 +365,21 @@ class Mat3:
         "piecewise addition of elements to this"
         return self._add(rhs)
 
-    def _sub(self,rhs) :
+    def _sub(self, rhs):
         "internal subtract function"
         temp = Mat3()
         for i in range(0, len(temp.m)):
             temp.m[i] = [a - b for a, b in zip(self.m[i], rhs.m[i])]
         return temp
+
     def __sub__(self, rhs):
         "piecewise subtraction of elements"
         return self._sub(rhs)
-    
+
     def __isub__(self, rhs):
         "piecewise subtraction of elements to this"
         return self._sub(rhs)
-    
+
     def determinant(self):
         "determinant of matrix"
         return (

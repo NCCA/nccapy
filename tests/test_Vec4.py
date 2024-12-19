@@ -3,6 +3,26 @@ from nccapy.Math.Vec4 import Vec4
 from nccapy.Math.Mat4 import Mat4
 
 
+def test_properties():
+    v = Vec4()
+    v.x = 2.0
+    v.y = 3.0
+    v.z = 4.0
+    v.w = 5.0
+    assert v.x == pytest.approx(2.0)
+    assert v.y == pytest.approx(3.0)
+    assert v.z == pytest.approx(4.0)
+    assert v.w == pytest.approx(5.0)
+    with pytest.raises(ValueError):
+        v.x = "fail"
+    with pytest.raises(ValueError):
+        v.y = "fail"
+    with pytest.raises(ValueError):
+        v.z = "fail"
+    with pytest.raises(ValueError):
+        v.w = "fail"
+
+
 def test_ctor():
     v = Vec4()
     assert v.x == pytest.approx(0.0)

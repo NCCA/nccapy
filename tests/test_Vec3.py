@@ -3,6 +3,22 @@ from nccapy.Math.Vec3 import Vec3
 from nccapy.Math.Mat3 import Mat3
 
 
+def test_properties():
+    v = Vec3()
+    v.x = 2.0
+    v.y = 3.0
+    v.z = 4.0
+    assert v.x == pytest.approx(2.0)
+    assert v.y == pytest.approx(3.0)
+    assert v.z == pytest.approx(4.0)
+    with pytest.raises(ValueError):
+        v.x = "fail"
+    with pytest.raises(ValueError):
+        v.y = "fail"
+    with pytest.raises(ValueError):
+        v.z = "fail"
+
+
 def test_ctor():
     v = Vec3()
     assert v.x == pytest.approx(0.0)

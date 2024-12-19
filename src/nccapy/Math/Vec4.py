@@ -16,6 +16,19 @@ class Vec4:
         self._z = z  # z component of vector : float
         self._w = w  # w component of vector : float
 
+    def _is_valid(self, v):
+        """
+        check if v is a float or int
+        Args:
+            v (number): The value to check.
+        Raises:
+            ValueError: If v is not a float or int.
+        """
+        if not isinstance(v, (int, float)):
+            raise ValueError("need float or int")
+        else:
+            return True
+
     @property
     def x(self):
         """
@@ -28,10 +41,8 @@ class Vec4:
         """
         The x-coordinate of the vector.
         """
-        if isinstance(x, (int, float)):
+        if self._is_valid(x):
             self._x = x
-        else:
-            raise ValueError("need float or int")
 
     @property
     def y(self):
@@ -45,10 +56,8 @@ class Vec4:
         """
         The y-coordinate of the vector.
         """
-        if isinstance(y, (int, float)):
+        if self._is_valid(y):
             self._y = y
-        else:
-            raise ValueError("need float or int")
 
     @property
     def z(self):
@@ -62,10 +71,8 @@ class Vec4:
         """
         The z-coordinate of the vector.
         """
-        if isinstance(z, (int, float)):
+        if self._is_valid(z):
             self._z = z
-        else:
-            raise ValueError("need float or int")
 
     @property
     def w(self):
@@ -79,10 +86,8 @@ class Vec4:
         """
         The w-coordinate of the vector.
         """
-        if isinstance(w, (int, float)):
+        if self._is_valid(w):
             self._w = w
-        else:
-            raise ValueError("need float or int")
 
     def __add__(self, rhs):
         "return a+b vector addition"
