@@ -209,27 +209,39 @@ class Obj(BaseMesh):
     def save(self, filename):
         with open(filename, "w") as obj_file:
             obj_file.write("# This file was created by nccapy/Geo/Obj.py exporter\n")
-            for i, v in enumerate(self.vertex):
-                obj_file.write(f"v {v.x} {v.y} {v.z} ")
-                if hasattr(self, "colour"):  # write colour if present
-                    obj_file.write(f"{self.colour[i].x} {self.colour[i].y} {self.colour[i].z} ")
-                obj_file.write("\n")
-            for v in self.uv:
-                obj_file.write(f"vt {v.x} {v.y} \n")
-            for v in self.normals:
-                obj_file.write(f"vn {v.x} {v.y} {v.z} \n")
-            # faces
-            for face in self.faces:
-                obj_file.write("f ")
-                for i in range(0, len(face.vertex)):
-                    obj_file.write(f"{face.vertex[i]+1}")  # vert first
-                    if len(face.uv) != 0:
-                        obj_file.write(f"/{face.uv[i]+1}")
-                    if len(face.normal) != 0:
+            self._write_vertices(obj_file)
+            self._write_uvs(obj_file)
+            self._write_normals(obj_file)
+            self._write_faces(obj_file)
+
+    def _write_vertices(self, obj_file):
+        for i, v in enumerate(self.vertex):
+            obj_file.write(f"v {v.x} {v.y} {v.z} ")
+            if hasattr(self, "colour"):  # write colour if present
+                obj_file.write(f"{self.colour[i].x} {self.colour[i].y} {self.colour[i].z} ")
+            obj_file.write("\n")
+
+    def _write_uvs(self, obj_file):
+        for v in self.uv:
+            obj_file.write(f"vt {v.x} {v.y} \n")
+
+    def _write_normals(self, obj_file):
+        for v in self.normals:
+            obj_file.write(f"vn {v.x} {v.y} {v.z} \n")
+
+    def _write_faces(self, obj_file):
+        for face in self.faces:
+            obj_file.write("f ")
+            for i in range(len(face.vertex)):
+                obj_file.write(f"{face.vertex[i]+1}")  # vert first
+                if len(face.uv) != 0:
+                    obj_file.write(f"/{face.uv[i]+1}")
+                if len(face.normal) != 0:
+                    obj_file.write("/")
+                    # weird case where we do f 1//1
+                    if len(face.uv) == 0:
                         obj_file.write("/")
-                        # weird case where we do f 1//1
-                        if len(face.uv) == 0:
-                            obj_file.write("/")
-                        obj_file.write(f"{face.normal[i]+1} ")
-                    obj_file.write(" ")
-                obj_file.write("\n")
+                    obj_file.write(f"{face.normal[i]+1} ")
+                obj_file.write(" ")
+            obj_file.write("\n")
+
