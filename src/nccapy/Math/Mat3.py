@@ -350,32 +350,35 @@ class Mat3:
         else:
             raise Mat3Error
 
-    def __add__(self, rhs):
-        "piecewise addition of elements"
+    def _add(self, rhs):
+        "internal add function"
         temp = Mat3()
         for i in range(0, len(temp.m)):
             temp.m[i] = [a + b for a, b in zip(self.m[i], rhs.m[i])]
         return temp
 
+    def __add__(self, rhs):
+        "piecewise addition of elements"
+        return self._add(rhs)
+
     def __iadd__(self, rhs):
         "piecewise addition of elements to this"
-        for i in range(0, len(self.m)):
-            self.m[i] = [a + b for a, b in zip(self.m[i], rhs.m[i])]
-        return self
+        return self._add(rhs)
 
-    def __sub__(self, rhs):
-        "piecewise subtraction of elements"
+    def _sub(self,rhs) :
+        "internal subtract function"
         temp = Mat3()
         for i in range(0, len(temp.m)):
             temp.m[i] = [a - b for a, b in zip(self.m[i], rhs.m[i])]
         return temp
-
+    def __sub__(self, rhs):
+        "piecewise subtraction of elements"
+        return self._sub(rhs)
+    
     def __isub__(self, rhs):
         "piecewise subtraction of elements to this"
-        for i in range(0, len(self.m)):
-            self.m[i] = [a - b for a, b in zip(self.m[i], rhs.m[i])]
-        return self
-
+        return self._sub(rhs)
+    
     def determinant(self):
         "determinant of matrix"
         return (

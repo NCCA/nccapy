@@ -76,7 +76,7 @@ class Mat4:
         return len(self.m) == 4 and all(len(i) == 4 for i in self.m)
 
     def transpose(self):
-        "traspose this matrix"
+        "transpose this matrix"
         self.m = [list(item) for item in zip(*self.m)]
 
     def get_transpose(self):
@@ -234,31 +234,33 @@ class Mat4:
     def __str__(self):
         return f"[{self.m[0]}\n{self.m[1]}\n{self.m[2]}\n{self.m[3]}]"
 
-    def __add__(self, rhs):
-        "piecewise addition of elements"
+    def _addfunc(self, rhs):
+        "internal add function"
         temp = Mat4()
         for i in range(0, len(temp.m)):
             temp.m[i] = [a + b for a, b in zip(self.m[i], rhs.m[i])]
         return temp
 
+    def __add__(self, rhs):
+        "piecewise addition of elements"
+        return self._addfunc(rhs)
     def __iadd__(self, rhs):
         "piecewise addition of elements to this"
-        for i in range(0, len(self.m)):
-            self.m[i] = [a + b for a, b in zip(self.m[i], rhs.m[i])]
-        return self
+        return self._addfunc(rhs)
 
-    def __sub__(self, rhs):
-        "piecewise subtraction of elements"
+    def _sub(self, rhs):
+        "internal sub function"
         temp = Mat4()
         for i in range(0, len(temp.m)):
             temp.m[i] = [a - b for a, b in zip(self.m[i], rhs.m[i])]
         return temp
+    def __sub__(self, rhs):
+        "piecewise subtraction of elements"
+        return self._sub(rhs)
 
     def __isub__(self, rhs):
         "piecewise subtraction of elements to this"
-        for i in range(0, len(self.m)):
-            self.m[i] = [a - b for a, b in zip(self.m[i], rhs.m[i])]
-        return self
+        return self._sub(rhs)
 
     def determinant(self):
         "determinant of matrix"
