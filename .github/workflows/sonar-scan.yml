@@ -23,7 +23,7 @@ jobs:
       - name : Install dependencies and run coverag  
         run: |
           python -m pip install --upgrade pip
-          python -m pip install pytest pillow pygame coverage
+          python -m pip install pytest pillow pygame numpy coverage
           coverage run --source=src/nccapy -m pytest --ignore=tests/test_Canvas.py -v tests && coverage report -m
           coverage xml 
       - name: SonarCloud Scan

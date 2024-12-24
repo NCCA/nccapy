@@ -11,10 +11,11 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 license = {file = "LICENSE.txt"}
-version = "0.0.8"
+version = "0.0.10"
 dependencies = [
     "pillow",
-    "pygame"]
+    "pygame",
+    "numpy"]
 [project.urls]
 Homepage = "https://github.com/NCCA/nccapy"
 Issues = "https://github.com/NCCA/nccapy/issues"

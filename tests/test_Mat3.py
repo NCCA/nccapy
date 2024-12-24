@@ -18,6 +18,16 @@ def test_identity():
     assert values == pytest.approx(ident)
 
 
+def test_get_numpy():
+    m = Mat3.from_list([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    n = m.get_numpy()
+    value = 1
+    for c in range(0, 3):
+        for r in range(0, 3):
+            assert n[c][r] == value
+            value += 1
+
+
 def test_zero():
     m = Mat3.zero()
     values = m.get_matrix()

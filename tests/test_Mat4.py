@@ -35,6 +35,16 @@ def test_zero():
     assert values == pytest.approx(ident)
 
 
+def test_get_numpy():
+    m = Mat4.from_list([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
+    n = m.get_numpy()
+    value = 1
+    for c in range(0, 4):
+        for r in range(0, 4):
+            assert n[c][r] == value
+            value += 1
+
+
 def test_from_list():
     m = Mat4.from_list([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
     result = [i for i in range(1, 17)]

@@ -244,4 +244,3 @@ class Obj(BaseMesh):
                     obj_file.write(f"{face.normal[i]+1} ")
                 obj_file.write(" ")
             obj_file.write("\n")
-

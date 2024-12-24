@@ -15,7 +15,10 @@ def splat(image, x, y, r, g, b, splat_size=10, flow=10):
         radius = splat_size + random.randint(-10, 10) * math.sqrt(random.random())
         rx = int(radius * math.cos(alpha))
         ry = int(radius * math.sin(alpha))
-        image.set_pixel(x + rx, y + ry, r + r_var, g + g_var, b + b_var)
+        try:
+            image.set_pixel(x + rx, y + ry, r + r_var, g + g_var, b + b_var)
+        except:
+            pass
 
 
 def randxy(w, h):
@@ -31,6 +34,7 @@ def lerp(a, b, t):
 
 
 def create_images(number=1, width=200, height=200, base_name="test"):
+    splat_size = 10
     for i in range(0, number):
         image = Image(width, height)
         # clear to white
@@ -41,10 +45,10 @@ def create_images(number=1, width=200, height=200, base_name="test"):
             b = random.randint(10, 255)
 
             spline_points = [
-                randxy(width, height),
-                randxy(width, height),
-                randxy(width, height),
-                randxy(width, height),
+                randxy(width + splat_size, height - splat_size),
+                randxy(width + splat_size, height - splat_size),
+                randxy(width + splat_size, height - splat_size),
+                randxy(width + splat_size, height - splat_size),
             ]
             for t in np.arange(0, 1, random.uniform(0.001, 0.1)):
                 l1 = lerp(spline_points[0], spline_points[1], t)
@@ -60,7 +64,7 @@ def create_images(number=1, width=200, height=200, base_name="test"):
                     r,
                     g,
                     b,
-                    splat_size=random.randint(1, 25),
+                    splat_size=random.randint(1, splat_size),
                     flow=random.randint(100, 500),
                 )
         print(f"saving {base_name}.{i:04}.png")

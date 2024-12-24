@@ -6,6 +6,7 @@ import copy
 import functools
 import math
 import operator
+import numpy as np
 
 
 class Mat4Error(Exception):
@@ -38,6 +39,10 @@ class Mat4:
     def get_matrix(self):
         "return matrix elements as list ideal for OpenGL etc"
         return functools.reduce(operator.concat, self.m)
+
+    def get_numpy(self):
+        "return matrix as a numpy array ideal for WebGPU etc"
+        return np.array(self.get_matrix()).reshape([4, 4])
 
     @classmethod
     def identity(cls):
