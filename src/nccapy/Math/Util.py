@@ -56,3 +56,7 @@ def perspective(fov, aspect, near, far):
     m.m[2][3] = -1.0
     m.m[3][2] = -(2.0 * far * near) / (far - near)
     return m
+
+
+def lerp(a, b, t):
+    return a + (b - a) * t

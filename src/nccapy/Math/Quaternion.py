@@ -7,8 +7,9 @@ Attributes:
     z (float): The z-coordinate of the vector part of the quaternion.
 """
 
-from nccapy.Math.Mat4 import Mat4
 import math
+
+from nccapy.Math.Mat4 import Mat4
 
 
 class Quaternion:

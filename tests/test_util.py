@@ -1,5 +1,6 @@
 import pytest
-from nccapy.Math.Util import clamp, look_at, perspective
+
+from nccapy.Math.Util import clamp, lerp, look_at, perspective
 from nccapy.Math.Vec3 import Vec3
 
 
@@ -8,6 +9,12 @@ def test_clamp():
     assert clamp(200, 10, 20) == 20  # test int down
     assert clamp(0.1, 0.01, 1.0) == 0.1
     assert clamp(2.1, 0.01, 1.2) == 1.2
+
+
+def test_lerp():
+    assert lerp(0, 1, 0.5) == 0.5
+    assert lerp(0, 1, 0.1) == 0.1
+    assert lerp(0, 1, 0.9) == 0.9
 
 
 def test_clamp_error():

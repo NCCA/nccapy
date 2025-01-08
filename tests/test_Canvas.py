@@ -1,4 +1,5 @@
 import random
+
 from nccapy.Image import Canvas
 
 

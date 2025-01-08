@@ -6,8 +6,8 @@ pack the data into a single 32-bit integer which is use quite a lot in computer 
 
 """
 
+from .Canvas import Canvas
 from .Image import Image
 from .RGBA import RGBA
-from .Canvas import Canvas
 
 __all__ = ["Image", "RGBA", "Canvas"]

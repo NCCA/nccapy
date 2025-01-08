@@ -1,9 +1,8 @@
+import mat4Data as mat4Data  # this is generated from the julia file gen_mat4_tests.jl
 import pytest
 
 from nccapy.Math.Mat4 import Mat4, Mat4Error, Mat4NotSquare
 from nccapy.Math.Vec4 import Vec4
-
-import mat4Data as mat4Data  # this is generated from the julia file gen_mat4_tests.jl
 
 
 def test_ctor():

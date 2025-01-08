@@ -1,6 +1,7 @@
-from typing import Union, Type, Tuple
+from typing import Tuple, Type, Union
 
 import pygame
+
 from .Image import Image
 
 

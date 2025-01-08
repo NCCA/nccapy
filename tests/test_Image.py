@@ -1,6 +1,6 @@
 import pytest
 
-from nccapy.Image.Image import Image, ImageYBoundsError, ImageXBoundsError
+from nccapy.Image.Image import Image, ImageXBoundsError, ImageYBoundsError
 
 
 def test_ctor():

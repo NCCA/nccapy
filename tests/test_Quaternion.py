@@ -1,6 +1,7 @@
 import pytest
-from nccapy.Math.Quaternion import Quaternion
+
 from nccapy.Math.Mat4 import Mat4
+from nccapy.Math.Quaternion import Quaternion
 
 
 def test_Quaternion():

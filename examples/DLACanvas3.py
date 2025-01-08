@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-import nccapy
 import random
+
+import nccapy
 
 
 class Found(Exception):

@@ -35,10 +35,10 @@ RGBA
     A class for RGBA color values.
 """
 
-from nccapy.Math import Vec3, Vec4, Mat3, Mat4, Transform, Util
-from nccapy.Math.Util import perspective, look_at
 from nccapy.Geo import Obj
-from nccapy.Image import Image, RGBA, Canvas
+from nccapy.Image import RGBA, Canvas, Image
+from nccapy.Math import Mat3, Mat4, Transform, Util, Vec3, Vec4
+from nccapy.Math.Util import clamp, lerp, look_at, perspective
 
 __all__ = [
     "Vec3",
@@ -53,4 +53,6 @@ __all__ = [
     "Util",
     "perspective",
     "look_at",
+    "clamp",
+    "lerp",
 ]

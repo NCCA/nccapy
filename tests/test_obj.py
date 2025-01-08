@@ -1,8 +1,7 @@
 import pytest
 
-from nccapy.Geo.Obj import Face, Obj, ObjParseVertexError, ObjParseNormalError, ObjParseUVError
+from nccapy.Geo.Obj import Face, Obj, ObjParseNormalError, ObjParseUVError, ObjParseVertexError
 from nccapy.Math.Vec3 import Vec3
-
 
 validfiles = [
     "tests/files/Triangle1.obj",
