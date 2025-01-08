@@ -45,7 +45,6 @@ def perspective(fov, aspect, near, far):
     from .Mat4 import Mat4
 
     m = Mat4.zero()  # as per glm
-    print(m)
     _range = math.tan(math.radians(fov / 2.0)) * near
     left = -_range * aspect
     right = _range * aspect

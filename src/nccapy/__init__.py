@@ -36,7 +36,21 @@ RGBA
 """
 
 from nccapy.Math import Vec3, Vec4, Mat3, Mat4, Transform, Util
+from nccapy.Math.Util import perspective, look_at
 from nccapy.Geo import Obj
 from nccapy.Image import Image, RGBA, Canvas
 
-__all__ = ["Vec3", "Vec4", "Mat3", "Mat4", "Transform", "Obj", "Image", "RGBA", "Canvas","Util"]
+__all__ = [
+    "Vec3",
+    "Vec4",
+    "Mat3",
+    "Mat4",
+    "Transform",
+    "Obj",
+    "Image",
+    "RGBA",
+    "Canvas",
+    "Util",
+    "perspective",
+    "look_at",
+]
