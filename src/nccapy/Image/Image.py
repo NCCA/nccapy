@@ -145,9 +145,13 @@ class Image:
                 If the y-coordinate is out of bounds.
         """
         if not 0 <= x <= self.width - 1:
-            raise ImageXBoundsError(f"x index out of bounds in set_pixel {x=} {self.width=}")
+            raise ImageXBoundsError(
+                f"x index out of bounds in set_pixel {x=} {self.width=}"
+            )
         if not 0 <= y <= self.height - 1:
-            raise ImageYBoundsError(f"y index out of bounds in set_pixel {y=} {self.height=}")
+            raise ImageYBoundsError(
+                f"y index out of bounds in set_pixel {y=} {self.height=}"
+            )
         offset = (y * self.width) + x
         self.pixels[offset].set(r, g, b, a)
 
@@ -175,9 +179,13 @@ class Image:
                 If the y-coordinate is out of bounds.
         """
         if not 0 <= x <= self.width - 1:
-            raise ImageXBoundsError(f"x index out of bounds in get_pixel {x=} {self.width=}")
+            raise ImageXBoundsError(
+                f"x index out of bounds in get_pixel {x=} {self.width=}"
+            )
         if not 0 <= y <= self.height - 1:
-            raise ImageYBoundsError(f"y index out of bounds in get_pixel {y=} {self.height=}")
+            raise ImageYBoundsError(
+                f"y index out of bounds in get_pixel {y=} {self.height=}"
+            )
 
         offset = (y * self.width) + x
         pixel = self.pixels[offset]

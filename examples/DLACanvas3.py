@@ -45,7 +45,16 @@ def walk(canvas):
             walking = False
             break
         else:
-            to_check = [(-1, 1), (0, 1), (1, 1), (-1, 0), (1, 0), (-1, -1), (0, -1), (1, -1)]
+            to_check = [
+                (-1, 1),
+                (0, 1),
+                (1, 1),
+                (-1, 0),
+                (1, 0),
+                (-1, -1),
+                (0, -1),
+                (1, -1),
+            ]
             for x_offset, y_offset in to_check:
                 r, g, b, a = canvas.get_pixel(x + x_offset, y + y_offset)
 

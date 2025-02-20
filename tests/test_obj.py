@@ -1,6 +1,12 @@
 import pytest
 
-from nccapy.Geo.Obj import Face, Obj, ObjParseNormalError, ObjParseUVError, ObjParseVertexError
+from nccapy.Geo.Obj import (
+    Face,
+    Obj,
+    ObjParseNormalError,
+    ObjParseUVError,
+    ObjParseVertexError,
+)
 from nccapy.Math.Vec3 import Vec3
 
 validfiles = [
@@ -12,7 +18,11 @@ validfiles = [
     "tests/files/TriMessedFormat.obj",
     "tests/files/CubeNegativeIndex.obj",
 ]
-invalidfiles = ["files/BrokenFloats.obj", "files/BrokenNormal.obj", "files/BrokenUV.obj"]
+invalidfiles = [
+    "files/BrokenFloats.obj",
+    "files/BrokenNormal.obj",
+    "files/BrokenUV.obj",
+]
 
 
 def test_ctor():

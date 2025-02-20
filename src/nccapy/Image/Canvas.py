@@ -59,7 +59,9 @@ class Canvas:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.quit()
 
-    def get_event(self) -> Union[Type[pygame.event.Event], Tuple[Type[pygame.event.Event]]]:
+    def get_event(
+        self,
+    ) -> Union[Type[pygame.event.Event], Tuple[Type[pygame.event.Event]]]:
         return pygame.event.get()
 
     def should_quit(self) -> bool:
@@ -73,8 +75,7 @@ class Canvas:
         pixel_array[x, y] = (r, g, b, a)
         pixel_array.close()
 
-    def put_image(self, image: Image):
-        ...
+    def put_image(self, image: Image): ...
 
     def get_pixel(self, x: int, y: int) -> Tuple[int, int, int, int]:
         pixel_array = pygame.PixelArray(self.display)

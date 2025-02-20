@@ -37,7 +37,24 @@ def test_from_mat4():
     # The following tests add coverage for each of the paths in the code
     # +2.179450 [-0.344124i,+0.688247j,-0.344124k]
     matrix = Mat4.from_list(
-        [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0]
+        [
+            1.0,
+            2.0,
+            3.0,
+            4.0,
+            5.0,
+            6.0,
+            7.0,
+            8.0,
+            9.0,
+            10.0,
+            11.0,
+            12.0,
+            13.0,
+            14.0,
+            15.0,
+            16.0,
+        ]
     )
 
     quat = Quaternion.from_mat4(matrix)

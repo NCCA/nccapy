@@ -1,5 +1,5 @@
 """
-Class to represent a transform using translate, rotate and scale, 
+Class to represent a transform using translate, rotate and scale,
 """
 
 from .Mat4 import Mat4
@@ -76,7 +76,7 @@ class Transform:
             ry = Mat4.rotate_y(self.rotation.y)  # noqa: F841
             rz = Mat4.rotate_z(self.rotation.z)  # noqa: F841
             rotation_scale = eval(self.rot_order.get(self.order)) @ scale
-            #print("eval\n {}\n".format(eval(self.rot_order.get(self.order))))
+            # print("eval\n {}\n".format(eval(self.rot_order.get(self.order))))
             self.matrix = rotation_scale
             self.matrix.m[3][0] = self.position.x
             self.matrix.m[3][1] = self.position.y

@@ -28,18 +28,24 @@ class Obj(BaseMesh):
 
     def _parse_vertex(self, tokens):
         try:
-            self.vertex.append(Vec3(float(tokens[1]), float(tokens[2]), float(tokens[3])))
+            self.vertex.append(
+                Vec3(float(tokens[1]), float(tokens[2]), float(tokens[3]))
+            )
             self._current_vertex_offset += 1
             if len(tokens) == 7:  # we have the non standard colour
                 if not hasattr(self, "colour"):
                     self.colour = []
-                self.colour.append(Vec3(float(tokens[4]), float(tokens[5]), float(tokens[6])))
+                self.colour.append(
+                    Vec3(float(tokens[4]), float(tokens[5]), float(tokens[6]))
+                )
         except ValueError:
             raise ObjParseVertexError
 
     def _parse_normal(self, tokens):
         try:
-            self.normals.append(Vec3(float(tokens[1]), float(tokens[2]), float(tokens[3])))
+            self.normals.append(
+                Vec3(float(tokens[1]), float(tokens[2]), float(tokens[3]))
+            )
             self._current_normal_offset += 1
         except ValueError:
             raise ObjParseNormalError
@@ -218,7 +224,9 @@ class Obj(BaseMesh):
         for i, v in enumerate(self.vertex):
             obj_file.write(f"v {v.x} {v.y} {v.z} ")
             if hasattr(self, "colour"):  # write colour if present
-                obj_file.write(f"{self.colour[i].x} {self.colour[i].y} {self.colour[i].z} ")
+                obj_file.write(
+                    f"{self.colour[i].x} {self.colour[i].y} {self.colour[i].z} "
+                )
             obj_file.write("\n")
 
     def _write_uvs(self, obj_file):
@@ -233,14 +241,14 @@ class Obj(BaseMesh):
         for face in self.faces:
             obj_file.write("f ")
             for i in range(len(face.vertex)):
-                obj_file.write(f"{face.vertex[i]+1}")  # vert first
+                obj_file.write(f"{face.vertex[i] + 1}")  # vert first
                 if len(face.uv) != 0:
-                    obj_file.write(f"/{face.uv[i]+1}")
+                    obj_file.write(f"/{face.uv[i] + 1}")
                 if len(face.normal) != 0:
                     obj_file.write("/")
                     # weird case where we do f 1//1
                     if len(face.uv) == 0:
                         obj_file.write("/")
-                    obj_file.write(f"{face.normal[i]+1} ")
+                    obj_file.write(f"{face.normal[i] + 1} ")
                 obj_file.write(" ")
             obj_file.write("\n")

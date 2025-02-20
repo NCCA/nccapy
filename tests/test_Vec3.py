@@ -66,8 +66,6 @@ def test_add():
     assert c.x == pytest.approx(-3)
     assert c.y == pytest.approx(-3)
     assert c.z == pytest.approx(-3)
-    
-
 
 
 def test_plus_equals():
@@ -267,26 +265,26 @@ def test_string():
     assert repr(a) == "Vec3 [1,2,3]"
 
 
-def test_iterable() :
-    a=Vec3(1,2,3)
+def test_iterable():
+    a = Vec3(1, 2, 3)
     b = [x for x in a]
-    assert b == [1,2,3]
+    assert b == [1, 2, 3]
     assert a[0] == 1
     assert a[1] == 2
     assert a[2] == 3
     with pytest.raises(IndexError):
         a[3]
 
-    v=[]
+    v = []
     v.extend(a)
-    assert v == [1,2,3]
-    
-        
-def test_copy() :
-    a=Vec3(1,2,3)
-    b=copy.copy(a)
-    assert a==b
-    b.x=10
-    assert a!=b
-    assert a.x==1
-    assert b.x==10
+    assert v == [1, 2, 3]
+
+
+def test_copy():
+    a = Vec3(1, 2, 3)
+    b = copy.copy(a)
+    assert a == b
+    b.x = 10
+    assert a != b
+    assert a.x == 1
+    assert b.x == 10

@@ -57,7 +57,7 @@ class Vec3:
             return components[index]
         except IndexError:
             raise IndexError("Index out of range. Valid indices are 0, 1, and 2.")
-    
+
     def _validate_and_set(self, v, name):
         """
         check if v is a float or int
@@ -274,7 +274,9 @@ class Vec3:
         """
         d = self.dot(n)
         #  I - 2.0 * dot(N, I) * N
-        return Vec3(self.x - 2.0 * d * n.x, self.y - 2.0 * d * n.y, self.z - 2.0 * d * n.z)
+        return Vec3(
+            self.x - 2.0 * d * n.x, self.y - 2.0 * d * n.y, self.z - 2.0 * d * n.z
+        )
 
     def clamp(self, low, high):
         """
@@ -330,7 +332,9 @@ class Vec3:
             self.z *= rhs
             return self
         else:
-            raise ValueError(f"can only do piecewise multiplication with a scalar {rhs=}")
+            raise ValueError(
+                f"can only do piecewise multiplication with a scalar {rhs=}"
+            )
 
     def __rmul__(self, rhs):
         """

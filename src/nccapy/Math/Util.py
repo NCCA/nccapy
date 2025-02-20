@@ -1,6 +1,6 @@
 """Utility math module, contains various useful functions for 3D.
 
-Most of these functions are based on functions found in other libraries such as GLM, NGL or GLU 
+Most of these functions are based on functions found in other libraries such as GLM, NGL or GLU
 """
 
 import math

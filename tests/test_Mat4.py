@@ -106,7 +106,7 @@ def test_rotate_y():
                 0.422618,0.0,0.906308,0.0,
                 0.0,0.0,0.0,1.0]
 
-#         # fmt: on
+    #         # fmt: on
     assert value == pytest.approx(result)
 
 
@@ -234,7 +234,9 @@ def test_subscript_set():
     a[1] = [5, 6, 7, 8]
     a[2] = [9, 10, 11, 12]
     a[3] = [13, 14, 15, 16]
-    assert a.get_matrix() == pytest.approx([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+    assert a.get_matrix() == pytest.approx(
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+    )
 
 
 def test_mult():

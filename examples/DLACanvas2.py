@@ -65,8 +65,12 @@ class DLA:
                 for x_offset in steps:
                     for y_offset in steps:
                         try:
-                            r, g, b, a = self.image.get_pixel(x + x_offset, y + y_offset)
-                            self.image.put_pixel(x + x_offset, y + y_offset, 255, 0, 0, 128)
+                            r, g, b, a = self.image.get_pixel(
+                                x + x_offset, y + y_offset
+                            )
+                            self.image.put_pixel(
+                                x + x_offset, y + y_offset, 255, 0, 0, 128
+                            )
                             if r == 0 and g == 0 and b == 0:
                                 self.image.put_pixel(x, y, 0, 0, 0, 255)
 

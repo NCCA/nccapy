@@ -43,7 +43,9 @@ class DLA:
                 for x_offset in steps:
                     for y_offset in steps:
                         try:
-                            r, g, b, a = self.image.get_pixel(x + x_offset, y + y_offset)
+                            r, g, b, a = self.image.get_pixel(
+                                x + x_offset, y + y_offset
+                            )
                             if a == 0:
                                 self.image.put_pixel(x, y, 255, 0, 0, 255)
                                 walking = False

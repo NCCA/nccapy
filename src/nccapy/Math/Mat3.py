@@ -317,7 +317,7 @@ class Mat3:
         a20 = self.m[2][0]
         a21 = self.m[2][1]
         a22 = self.m[2][2] 
-        
+
         b00 = rhs.m[0][0]
         b01 = rhs.m[0][1]
         b02 = rhs.m[0][2] 
@@ -401,17 +401,35 @@ class Mat3:
             invdet = 1 / det
             tmp = Mat3()
             # minor matrix + co-factor
-            tmp.m[0][0] = +(self.m[1][1] * self.m[2][2] - self.m[1][2] * self.m[2][1]) * invdet
-            tmp.m[1][0] = -(self.m[1][0] * self.m[2][2] - self.m[1][2] * self.m[2][0]) * invdet
-            tmp.m[2][0] = +(self.m[1][0] * self.m[2][1] - self.m[1][1] * self.m[2][0]) * invdet
+            tmp.m[0][0] = (
+                +(self.m[1][1] * self.m[2][2] - self.m[1][2] * self.m[2][1]) * invdet
+            )
+            tmp.m[1][0] = (
+                -(self.m[1][0] * self.m[2][2] - self.m[1][2] * self.m[2][0]) * invdet
+            )
+            tmp.m[2][0] = (
+                +(self.m[1][0] * self.m[2][1] - self.m[1][1] * self.m[2][0]) * invdet
+            )
 
-            tmp.m[0][1] = -(self.m[0][1] * self.m[2][2] - self.m[0][2] * self.m[2][1]) * invdet
-            tmp.m[1][1] = +(self.m[0][0] * self.m[2][2] - self.m[0][2] * self.m[2][0]) * invdet
-            tmp.m[2][1] = -(self.m[0][0] * self.m[2][1] - self.m[0][1] * self.m[2][0]) * invdet
+            tmp.m[0][1] = (
+                -(self.m[0][1] * self.m[2][2] - self.m[0][2] * self.m[2][1]) * invdet
+            )
+            tmp.m[1][1] = (
+                +(self.m[0][0] * self.m[2][2] - self.m[0][2] * self.m[2][0]) * invdet
+            )
+            tmp.m[2][1] = (
+                -(self.m[0][0] * self.m[2][1] - self.m[0][1] * self.m[2][0]) * invdet
+            )
 
-            tmp.m[0][2] = +(self.m[0][1] * self.m[1][2] - self.m[0][2] * self.m[1][1]) * invdet
-            tmp.m[1][2] = -(self.m[0][0] * self.m[1][2] - self.m[0][2] * self.m[1][0]) * invdet
-            tmp.m[2][2] = +(self.m[0][0] * self.m[1][1] - self.m[0][1] * self.m[1][0]) * invdet
+            tmp.m[0][2] = (
+                +(self.m[0][1] * self.m[1][2] - self.m[0][2] * self.m[1][1]) * invdet
+            )
+            tmp.m[1][2] = (
+                -(self.m[0][0] * self.m[1][2] - self.m[0][2] * self.m[1][0]) * invdet
+            )
+            tmp.m[2][2] = (
+                +(self.m[0][0] * self.m[1][1] - self.m[0][1] * self.m[1][0]) * invdet
+            )
 
             return tmp
         except ZeroDivisionError:

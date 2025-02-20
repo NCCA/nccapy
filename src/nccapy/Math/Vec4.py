@@ -56,7 +56,6 @@ class Vec4:
         except IndexError:
             raise IndexError("Index out of range. Valid indices are 0, 1, 2, and 3.")
 
-
     def __add__(self, rhs):
         "return a+b vector addition"
         r = Vec4()

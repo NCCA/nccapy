@@ -44,6 +44,7 @@ class Mat4:
     def get_numpy(self):
         "return matrix as a numpy array ideal for WebGPU etc"
         return np.array(self.get_matrix(), dtype=np.float32).reshape([4, 4])
+
     @classmethod
     def identity(cls):
         "class method to return a new identity matrix"
