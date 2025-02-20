@@ -1,5 +1,5 @@
 import pytest
-
+import copy
 from nccapy.Math.Mat3 import Mat3
 from nccapy.Math.Vec3 import Vec3
 
@@ -58,6 +58,16 @@ def test_add():
     assert c.x == pytest.approx(5)
     assert c.y == pytest.approx(7)
     assert c.z == pytest.approx(9)
+
+    # negative test
+    a = Vec3(1, 2, 3)
+    b = Vec3(-4, -5, -6)
+    c = a + b
+    assert c.x == pytest.approx(-3)
+    assert c.y == pytest.approx(-3)
+    assert c.z == pytest.approx(-3)
+    
+
 
 
 def test_plus_equals():
@@ -255,3 +265,28 @@ def test_string():
     a = Vec3(1, 2, 3)
     assert str(a) == "[1,2,3]"
     assert repr(a) == "Vec3 [1,2,3]"
+
+
+def test_iterable() :
+    a=Vec3(1,2,3)
+    b = [x for x in a]
+    assert b == [1,2,3]
+    assert a[0] == 1
+    assert a[1] == 2
+    assert a[2] == 3
+    with pytest.raises(IndexError):
+        a[3]
+
+    v=[]
+    v.extend(a)
+    assert v == [1,2,3]
+    
+        
+def test_copy() :
+    a=Vec3(1,2,3)
+    b=copy.copy(a)
+    assert a==b
+    b.x=10
+    assert a!=b
+    assert a.x==1
+    assert b.x==10

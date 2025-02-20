@@ -219,3 +219,19 @@ def test_string():
     a = Vec4(1, 2, 3, 4)
     assert str(a) == "[1,2,3,4]"
     assert repr(a) == "Vec4 [1,2,3,4]"
+
+def test_iterable() :
+    a=Vec4(1,2,3,4)
+    b = [x for x in a]
+    assert b == [1,2,3,4]
+    assert a[0] == 1
+    assert a[1] == 2
+    assert a[2] == 3
+    assert a[3] == 4
+    
+    with pytest.raises(IndexError):
+        a[5]
+
+    v=[]
+    v.extend(a)
+    assert v == [1,2,3,4]

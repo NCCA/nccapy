@@ -11,42 +11,69 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 license = {file = "LICENSE.txt"}
-version = "0.0.12"
+version = "0.1.0"
 dependencies = [
     "pillow",
     "pygame",
-    "numpy"]
+    "numpy",
+    "pytest",
+    
+]
+
+[project.optional-dependencies]
+# For devs / ci
+build = ["build", "hatchling"]
+codegen = ["pytest", "numpy", "ruff"]
+lint = ["ruff", "pre-commit"]
+tests = [
+    "pillow",
+    "pygame",
+    "numpy",
+    "pytest",
+    "pytest-cov",
+    "coverage"
+]
+
+
 [project.urls]
 Homepage = "https://github.com/NCCA/nccapy"
 Issues = "https://github.com/NCCA/nccapy/issues"
 
+
 [build-system]
-requires = ["setuptools>=67.0"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+
 
 [tool.pytest.ini_options]
 pythonpath = [
   "src"
 ]
-[tool.mypy]
-disable_error_code = "import-untyped"
-warn_return_any = true
-warn_unused_configs = true
-follow_imports="skip"
-exclude = "tests/*" 
-namespace_packages = true
-explicit_package_bases = true
 
+[tool.coverage.run]
+branch = true
 
+[tool.coverage.report]
+# Regexes for lines to exclude from consideration
+exclude_also = [
+    # Don't complain about missing debug-only code:
+    "def __repr__",
+    "if self\\.debug",
 
-[tool.black]
-line-length = 99
-target-version = [ "py39", "py310", "py311","py312"]
-skip-magic-trailing-comma = true
+    # Don't complain if tests don't hit defensive assertion code:
+    "raise AssertionError",
+    "raise NotImplementedError",
 
-[tool.isort]
-py_version = 39
-profile = "black"
-line_length = 99
-combine_as_imports = true
-skip_gitignore = true
+    # Don't complain if non-runnable code isn't run:
+    "if 0:",
+    "if __name__ == .__main__.:",
+
+    # Don't complain about abstract methods, they aren't run:
+    "@(abc\\.)?abstractmethod",
+    ]
+
+ignore_errors = true
+
+[tool.coverage.html]
+directory = "coverage_html_report"

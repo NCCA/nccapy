@@ -29,6 +29,34 @@ class Vec4:
         else:
             setattr(self, name, v)
 
+    def __iter__(self):
+        """
+        Make the Vec3 class iterable.
+        Yields:
+            float: The x, y, and z components of the vector.
+        """
+        yield self.x
+        yield self.y
+        yield self.z
+        yield self.w
+
+    def __getitem__(self, index):
+        """
+        Get the component of the vector at the given index.
+        Args:
+            index (int): The index of the component (0 for x, 1 for y, 2 for z).
+        Returns:
+            float: The value of the component at the given index.
+        Raises:
+            IndexError: If the index is out of range.
+        """
+        components = [self.x, self.y, self.z, self.w]
+        try:
+            return components[index]
+        except IndexError:
+            raise IndexError("Index out of range. Valid indices are 0, 1, 2, and 3.")
+
+
     def __add__(self, rhs):
         "return a+b vector addition"
         r = Vec4()

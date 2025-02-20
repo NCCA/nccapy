@@ -45,3 +45,10 @@ This will create a dist folder with the package in it. You can then install the 
 ```bash
 pip install dist/nccapy-0.0.1-py3-none-any.whl
 ```
+
+
+Upload via twine
+
+```bash
+uvx twine upload --skip-existing dist/*
+```
