@@ -3,8 +3,10 @@ theme:
   name: material
 nav:
   - Home: index.md
-  - About: about.md
   - API: api.md
+  - Math: math.md
+  - Geo: geo.md
+  - Image: image.md
 plugins:
   - search
   - mkdocstrings:
