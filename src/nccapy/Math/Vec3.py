@@ -327,10 +327,7 @@ class Vec3:
             ValueError: If the right-hand side is not a float.
         """
         if isinstance(rhs, (float, int)):
-            self.x *= rhs
-            self.y *= rhs
-            self.z *= rhs
-            return self
+            return Vec3(self.x * rhs, self.y * rhs, self.z * rhs)
         else:
             raise ValueError(
                 f"can only do piecewise multiplication with a scalar {rhs=}"

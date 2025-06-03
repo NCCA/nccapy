@@ -265,6 +265,9 @@ class Vec2:
         "object representation for debugging"
         return f"Vec2 [{self.x},{self.y}]"
 
+    def __truediv__(self, scalar):
+        return Vec2(self.x / scalar, self.y / scalar)
+
     def __str__(self):
         "object representation for debugging"
         return f"[{self.x},{self.y}]"
@@ -280,9 +283,7 @@ class Vec2:
             ValueError: If the right-hand side is not a float.
         """
         if isinstance(rhs, (float, int)):
-            self.x *= rhs
-            self.y *= rhs
-            return self
+            return Vec2(self.x * rhs, self.y * rhs)
         else:
             raise ValueError(
                 f"can only do piecewise multiplication with a scalar {rhs=}"

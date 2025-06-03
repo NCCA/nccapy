@@ -155,11 +155,8 @@ class Vec4:
 
     def __mul__(self, rhs):
         if isinstance(rhs, (float, int)):
-            self.x *= rhs
-            self.y *= rhs
-            self.z *= rhs
-            self.w *= rhs
-            return self
+            "Vec4 * scalar multiplication"
+            return Vec4(self.x * rhs, self.y * rhs, self.z * rhs, self.w * rhs)
         else:
             raise ValueError
 

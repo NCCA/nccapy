@@ -1,6 +1,6 @@
 import random
 
-from nccapy.Image import Canvas
+from nccapy.Image.Canvas import Canvas
 
 
 def test_ctor():

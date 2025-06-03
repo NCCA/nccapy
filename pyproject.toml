@@ -11,16 +11,21 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 license = {file = "LICENSE.txt"}
-version = "0.1.3"
+version = "0.1.6"
 dependencies = [
     "pillow",
     "pygame",
     "numpy",
-    "pytest",
-    "mkdocs>=1.6.1",
-    "mkdocs-material>=9.6.13",
-    "mkdocstrings[python]>=0.29.1",
-    "ty>=0.0.1a3",
+]
+
+
+[dependency-groups]
+dev = [
+  "pytest >=8.1.1,<9",
+  "mkdocs>=1.6.1",
+  "mkdocs-material>=9.6.13",
+  "mkdocstrings[python]>=0.29.1",
+  "ty>=0.0.1a3",
 ]
 
 [project.optional-dependencies]
