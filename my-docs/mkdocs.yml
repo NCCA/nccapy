@@ -7,6 +7,7 @@ nav:
   - Math: math.md
   - Geo: geo.md
   - Image: image.md
+
 plugins:
   - search
   - mkdocstrings:
@@ -14,10 +15,12 @@ plugins:
         python:
           paths: ["../"]
           options:
-            show_root_heading: true
-            show_source: false
-            show_signature: true
-            show_docstring: true
-            docstring_section_style: list
-            separate_signature: true
-            members_order: source
+            extra:
+              show_root_heading: true
+              show_source: true
+              show_signature: true
+              show_docstring: false
+              docstring_style: google
+              docstring_section_style: spacy
+              separate_signature: true
+              members_order: source

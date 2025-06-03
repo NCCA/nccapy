@@ -20,8 +20,7 @@ dependencies = [
     "mkdocs>=1.6.1",
     "mkdocs-material>=9.6.13",
     "mkdocstrings[python]>=0.29.1",
-
-
+    "ty>=0.0.1a3",
 ]
 
 [project.optional-dependencies]
