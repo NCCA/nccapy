@@ -39,7 +39,7 @@ RGBA
 
 from nccapy.Geo import Obj
 from nccapy.Image import RGBA, Image # note canvas not impoorted as it inits pygame which is not needed for the nccapy module
-from nccapy.Math import Mat3, Mat4, Transform, Util, Vec3, Vec4
+from nccapy.Math import Mat3, Mat4, Transform, Util, Vec3, Vec4,Vec2
 from nccapy.Math.Util import clamp, lerp, look_at, perspective
 
 __all__ = [

@@ -5,13 +5,13 @@ authors = [
 ]
 description = "nccapy is a python package use for teaching graphics at the NCCA"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
 license = {file = "LICENSE.txt"}
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
     "pillow",
     "pygame",
