@@ -1,6 +1,6 @@
 import pytest
 import copy
-from nccapy.Math.Mat3 import Mat3
+from nccapy.Math.Mat2 import Mat2
 from nccapy.Math.Vec2 import Vec2
 
 

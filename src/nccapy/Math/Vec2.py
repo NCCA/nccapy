@@ -132,10 +132,7 @@ class Vec2:
 
         if not isinstance(rhs, Vec2):
             return NotImplemented
-        return (
-            math.isclose(self.x, rhs.x)
-            and math.isclose(self.y, rhs.y)
-        )
+        return math.isclose(self.x, rhs.x) and math.isclose(self.y, rhs.y)
 
     def __neq__(self, rhs):
         """
@@ -148,10 +145,7 @@ class Vec2:
         """
         if not isinstance(rhs, Vec2):
             return NotImplemented
-        return (
-            math.isclose(self.x, rhs.x)
-            or math.isclose(self.y, rhs.y)
-        )
+        return math.isclose(self.x, rhs.x) or math.isclose(self.y, rhs.y)
 
     def __neg__(self):
         """
@@ -190,7 +184,7 @@ class Vec2:
         Returns:
             float: The length of the vector.
         """
-        return math.sqrt(self.x**2 + self.y**2 )
+        return math.sqrt(self.x**2 + self.y**2)
 
     def length_squared(self):
         """
@@ -254,9 +248,7 @@ class Vec2:
         """
         d = self.dot(n)
         #  I - 2.0 * dot(N, I) * N
-        return Vec2(
-            self.x - 2.0 * d * n.x, self.y - 2.0 * d * n.y
-        )
+        return Vec2(self.x - 2.0 * d * n.x, self.y - 2.0 * d * n.y)
 
     def clamp(self, low, high):
         """
@@ -276,7 +268,6 @@ class Vec2:
     def __str__(self):
         "object representation for debugging"
         return f"[{self.x},{self.y}]"
-
 
     def __mul__(self, rhs):
         """
@@ -336,5 +327,5 @@ def _create_property(attr_name):
 
 
 # Dynamically add properties for x, y
-for attr in ["x", "y"] :
+for attr in ["x", "y"]:
     setattr(Vec2, attr, _create_property(attr))

@@ -15,6 +15,8 @@ Image
 
 Classes
 -------
+Vec2
+    A class for 2D vectors.
 Vec3
     A class for 3D vectors.
 Vec4
@@ -36,11 +38,12 @@ RGBA
 """
 
 from nccapy.Geo import Obj
-from nccapy.Image import RGBA, Canvas, Image
+from nccapy.Image import RGBA, Image # note canvas not impoorted as it inits pygame which is not needed for the nccapy module
 from nccapy.Math import Mat3, Mat4, Transform, Util, Vec3, Vec4
 from nccapy.Math.Util import clamp, lerp, look_at, perspective
 
 __all__ = [
+    "Vec2",
     "Vec3",
     "Vec4",
     "Mat3",
@@ -49,7 +52,6 @@ __all__ = [
     "Obj",
     "Image",
     "RGBA",
-    "Canvas",
     "Util",
     "perspective",
     "look_at",
