@@ -1,8 +1,6 @@
 [project]
 name = "nccapy"
-authors = [
-  { name="Jon Macey", email="jmacey@bournemouth.ac.uk" },
-]
+authors = [{ name = "Jon Macey", email = "jmacey@bournemouth.ac.uk" }]
 description = "nccapy is a python package use for teaching graphics at the NCCA"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -10,22 +8,18 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-license = {file = "LICENSE.txt"}
-version = "0.1.6"
-dependencies = [
-    "pillow",
-    "pygame",
-    "numpy",
-]
+license = { file = "LICENSE.txt" }
+version = "0.1.7"
+dependencies = ["pillow", "pygame", "numpy"]
 
 
 [dependency-groups]
 dev = [
-  "pytest >=8.1.1,<9",
-  "mkdocs>=1.6.1",
-  "mkdocs-material>=9.6.13",
-  "mkdocstrings[python]>=0.29.1",
-  "ty>=0.0.1a3",
+    "pytest >=8.1.1,<9",
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.6.13",
+    "mkdocstrings[python]>=0.29.1",
+    "ty>=0.0.1a3",
 ]
 
 [project.optional-dependencies]
@@ -33,14 +27,7 @@ dev = [
 build = ["build", "hatchling"]
 codegen = ["pytest", "numpy", "ruff"]
 lint = ["ruff", "pre-commit"]
-tests = [
-    "pillow",
-    "pygame",
-    "numpy",
-    "pytest",
-    "pytest-cov",
-    "coverage"
-]
+tests = ["pillow", "pygame", "numpy", "pytest", "pytest-cov", "coverage"]
 
 
 [project.urls]
@@ -53,11 +40,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 
-
 [tool.pytest.ini_options]
-pythonpath = [
-  "src"
-]
+pythonpath = ["src"]
 
 [tool.coverage.run]
 branch = true
@@ -79,7 +63,7 @@ exclude_also = [
 
     # Don't complain about abstract methods, they aren't run:
     "@(abc\\.)?abstractmethod",
-    ]
+]
 
 ignore_errors = true
 

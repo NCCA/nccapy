@@ -71,6 +71,14 @@ class Vec3:
         else:
             setattr(self, name, v)
 
+    def clone(self) -> "Vec3":
+        """
+        Create a clone of the current vector.
+        Returns:
+            Vec3: A new instance of Vec3 with the same x, y, and z values.
+        """
+        return Vec3(self.x, self.y, self.z)
+
     def __add__(self, rhs):
         """
         vector addition a+b
@@ -141,11 +149,7 @@ class Vec3:
 
         if not isinstance(rhs, Vec3):
             return NotImplemented
-        return (
-            math.isclose(self.x, rhs.x)
-            and math.isclose(self.y, rhs.y)
-            and math.isclose(self.z, rhs.z)
-        )
+        return math.isclose(self.x, rhs.x) and math.isclose(self.y, rhs.y) and math.isclose(self.z, rhs.z)
 
     def __neq__(self, rhs):
         """
@@ -158,11 +162,7 @@ class Vec3:
         """
         if not isinstance(rhs, Vec3):
             return NotImplemented
-        return (
-            math.isclose(self.x, rhs.x)
-            or math.isclose(self.y, rhs.y)
-            or math.isclose(self.z, rhs.z)
-        )
+        return math.isclose(self.x, rhs.x) or math.isclose(self.y, rhs.y) or math.isclose(self.z, rhs.z)
 
     def __neg__(self):
         """
@@ -274,9 +274,7 @@ class Vec3:
         """
         d = self.dot(n)
         #  I - 2.0 * dot(N, I) * N
-        return Vec3(
-            self.x - 2.0 * d * n.x, self.y - 2.0 * d * n.y, self.z - 2.0 * d * n.z
-        )
+        return Vec3(self.x - 2.0 * d * n.x, self.y - 2.0 * d * n.y, self.z - 2.0 * d * n.z)
 
     def clamp(self, low, high):
         """
@@ -308,13 +306,11 @@ class Vec3:
         """
         from .Mat3 import Mat3
 
-        return Mat3.from_list(
-            [
-                [self.x * rhs.x, self.x * rhs.y, self.x * rhs.z],
-                [self.y * rhs.x, self.y * rhs.y, self.y * rhs.z],
-                [self.z * rhs.x, self.z * rhs.y, self.z * rhs.z],
-            ]
-        )
+        return Mat3.from_list([
+            [self.x * rhs.x, self.x * rhs.y, self.x * rhs.z],
+            [self.y * rhs.x, self.y * rhs.y, self.y * rhs.z],
+            [self.z * rhs.x, self.z * rhs.y, self.z * rhs.z],
+        ])
 
     def __mul__(self, rhs):
         """
@@ -329,9 +325,7 @@ class Vec3:
         if isinstance(rhs, (float, int)):
             return Vec3(self.x * rhs, self.y * rhs, self.z * rhs)
         else:
-            raise ValueError(
-                f"can only do piecewise multiplication with a scalar {rhs=}"
-            )
+            raise ValueError(f"can only do piecewise multiplication with a scalar {rhs=}")
 
     def __rmul__(self, rhs):
         """

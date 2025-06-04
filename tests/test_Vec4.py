@@ -236,3 +236,10 @@ def test_iterable():
     v = []
     v.extend(a)
     assert v == [1, 2, 3, 4]
+
+
+def test_clone():
+    a = Vec4(1, 2, 3, 4)
+    b = a.clone()
+    assert a == b
+    assert a is not b  # Ensure it's a different object

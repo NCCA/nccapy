@@ -246,3 +246,11 @@ def test_copy():
     assert a != b
     assert a.x == 1
     assert b.x == 10
+
+def test_clone():
+    a= Vec2(1, 2)
+    b = a.clone()
+    assert a == b
+    assert a is not b  # Ensure it's a different object
+
+    

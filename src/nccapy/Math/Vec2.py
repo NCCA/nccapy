@@ -37,6 +37,14 @@ class Vec2:
         yield self.x
         yield self.y
 
+    def clone(self) -> "Vec2":
+        """
+        Create a copy of the vector.
+        Returns:
+            Vec2: A new instance of Vec2 with the same x and y values.
+        """
+        return Vec2(self.x, self.y)
+
     def __getitem__(self, index):
         """
         Get the component of the vector at the given index.
@@ -285,9 +293,7 @@ class Vec2:
         if isinstance(rhs, (float, int)):
             return Vec2(self.x * rhs, self.y * rhs)
         else:
-            raise ValueError(
-                f"can only do piecewise multiplication with a scalar {rhs=}"
-            )
+            raise ValueError(f"can only do piecewise multiplication with a scalar {rhs=}")
 
     def __rmul__(self, rhs):
         """
