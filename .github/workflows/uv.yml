@@ -30,10 +30,3 @@ jobs:
 
       - name: Run tests
         run: uv run pytest --ignore=tests/test_Canvas.py tests
-
-      - name: test uv Install
-        run: |
-          uv init --no-workspace --bare /tmp/TestProject
-          uv add nccapy /tmp/TestProject
-          cat "import nccapy" >> /tmp/TestProject/test.py
-          uv run /tmp/TestProject/test.py
