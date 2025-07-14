@@ -113,7 +113,7 @@ class Vec3:
         vector subtraction a-b
 
         Args:
-            rhs (Vec3): The right-hand side vector to add.
+            rhs (Vec3): The right-hand side vector to subtract.
         Returns:
             Vec3: A new vector that is the result of subtracting this vector and the rhs vector.
         """

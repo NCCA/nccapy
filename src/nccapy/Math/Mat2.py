@@ -2,8 +2,10 @@ import copy
 import functools
 import operator
 
+
 class Mat2Error(Exception):
     pass
+
 
 _identity = [[1.0, 0.0], [0.0, 1.0]]
 
@@ -12,7 +14,6 @@ class Mat2:
     __slots__ = ["x", "y"]
 
     def __init__(self, m=None):
-
         """
         Initialize a 2x2 matrix.
 
@@ -39,10 +40,11 @@ class Mat2:
             np.ndarray: The matrix as a NumPy array.
         """
         import numpy as np
+
         return np.array(self.get_matrix()).reshape([2, 2])
 
     @classmethod
-    def identity(cls) -> 'Mat2':
+    def identity(cls) -> "Mat2":
         """
         Create an identity matrix.
 
@@ -72,10 +74,7 @@ class Mat2:
         if isinstance(rhs, Mat2):
             return self._mat_mul(rhs)
         elif isinstance(rhs, Vec2):
-            return Vec2(
-                rhs.x * self.m[0][0] + rhs.y * self.m[0][1],
-                rhs.x * self.m[1][0] + rhs.y * self.m[1][1]
-            )
+            return Vec2(rhs.x * self.m[0][0] + rhs.y * self.m[0][1], rhs.x * self.m[1][0] + rhs.y * self.m[1][1])
         else:
             raise ValueError(f"Can only multiply by Mat2 or Vec2, not {type(rhs)}")
 
