@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: continuous-integration
+    name: CI with uv
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -17,6 +17,7 @@ jobs:
           - "3.11"
           - "3.12"
           - "3.13"
+          - "3.14"
 
     steps:
       - uses: actions/checkout@v4
@@ -30,3 +31,10 @@ jobs:
 
       - name: Run tests
         run: uv run pytest --ignore=tests/test_Canvas.py tests
+
+      - name: test uv Install
+        run: |
+          uv init ./TestProject
+          uv add nccapy ./TestProject
+          cat "import nccapy" >> ./TestProject/test.py
+          uv run ./TestProject/test.py
