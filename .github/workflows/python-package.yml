@@ -19,10 +19,6 @@ jobs:
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 
     steps:
-      - name: Enable caching
-        uses: astral-sh/setup-uv@v6
-        with:
-          enable-cache: true
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v3
