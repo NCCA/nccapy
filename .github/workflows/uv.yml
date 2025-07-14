@@ -34,7 +34,7 @@ jobs:
 
       - name: test uv Install
         run: |
-          uv init ./TestProject
+          uv init --no-workspace --bare ./TestProject
           uv add nccapy ./TestProject
           cat "import nccapy" >> ./TestProject/test.py
           uv run ./TestProject/test.py
