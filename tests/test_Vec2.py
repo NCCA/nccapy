@@ -38,9 +38,8 @@ def test_ctor_single_value():
     assert v.y == pytest.approx(2.0)
 
 
-
 def test_add():
-    a = Vec2(1, 2 )
+    a = Vec2(1, 2)
     b = Vec2(4, 5)
     c = a + b
     assert c.x == pytest.approx(5)
@@ -101,6 +100,7 @@ def test_length():
     a = Vec2(22, 2.5)
     assert a.length() == pytest.approx(22.198, rel=1e-2)
 
+
 def test_length_squared():
     a = Vec2(22, 32)
     assert a.length_squared() == pytest.approx(1508, rel=1e-2)
@@ -109,8 +109,8 @@ def test_length_squared():
 def test_normalize():
     a = Vec2(22.3, 0.5)
     a.normalize()
-    assert a.x == pytest.approx(0.9996,rel=1e-2)
-    assert a.y == pytest.approx(0.0224,rel=1e-2)
+    assert a.x == pytest.approx(0.9996, rel=1e-2)
+    assert a.y == pytest.approx(0.0224, rel=1e-2)
     with pytest.raises(ZeroDivisionError):
         a = Vec2(0, 0)
         a.normalize()
@@ -166,8 +166,6 @@ def test_clamp():
     assert a.y == pytest.approx(1.8)
 
 
-
-
 def test_null():
     a = Vec2(2, 3)
     a.null()
@@ -180,6 +178,7 @@ def test_cross():
     b = Vec2(5.0, 3.2)
     c = a.cross(b)
     assert c == pytest.approx(-8.6, rel=1e-2)  # 2*3.2 - 3*5
+
 
 def test_mul_scalar():
     a = Vec2(1.0, 1.5)
@@ -247,10 +246,9 @@ def test_copy():
     assert a.x == 1
     assert b.x == 10
 
+
 def test_clone():
-    a= Vec2(1, 2)
+    a = Vec2(1, 2)
     b = a.clone()
     assert a == b
     assert a is not b  # Ensure it's a different object
-
-    

@@ -1,3 +1,5 @@
+import platform
+
 import pytest
 
 from nccapy.Image.Image import Image, ImageXBoundsError, ImageYBoundsError
@@ -31,9 +33,9 @@ def test_save():
     assert image.save("green.png")
     image.clear(0, 0, 255, 255)
     assert image.save("blue.png")
-
-    # try to write to a forbidden directory
-    assert not image.save("/test.png")
+    if not any(platform.win32_ver()):
+        # try to write to a forbidden directory
+        assert not image.save("/test.png")
 
 
 def test_load():

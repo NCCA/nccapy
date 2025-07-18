@@ -74,7 +74,10 @@ class Mat2:
         if isinstance(rhs, Mat2):
             return self._mat_mul(rhs)
         elif isinstance(rhs, Vec2):
-            return Vec2(rhs.x * self.m[0][0] + rhs.y * self.m[0][1], rhs.x * self.m[1][0] + rhs.y * self.m[1][1])
+            return Vec2(
+                rhs.x * self.m[0][0] + rhs.y * self.m[0][1],
+                rhs.x * self.m[1][0] + rhs.y * self.m[1][1],
+            )
         else:
             raise ValueError(f"Can only multiply by Mat2 or Vec2, not {type(rhs)}")
 

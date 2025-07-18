@@ -288,7 +288,8 @@ def test_copy():
     assert a != b
     assert a.x == 1
     assert b.x == 10
-    
+
+
 def test_clone():
     a = Vec3(1, 2, 3)
     b = a.clone()
