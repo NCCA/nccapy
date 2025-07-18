@@ -1,4 +1,4 @@
-name: Python Tests
+name: UV Tests
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: CI with uv
+    name: UV tests
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -18,11 +18,6 @@ jobs:
           - "3.11"
           - "3.12"
           - "3.13"
-        # exclude:
-        #   # Python 3.13 is still in alpha and might have issues on some platforms
-        #   - os: windows-latest
-        #     python-version: "3.13"
-
     steps:
       - uses: actions/checkout@v4
 
